@@ -6,7 +6,8 @@ import com.example.BalantaTaller1.model.prod.Productcategory;
 
 public interface ProductcategoryService {
 	
-	public Productcategory save(Productcategory pc);
+	public boolean save(Productcategory pc);
 	
+	public boolean edit(Productcategory pc);
 	
 }
