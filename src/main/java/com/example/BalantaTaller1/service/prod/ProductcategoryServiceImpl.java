@@ -1,9 +1,9 @@
 package com.example.BalantaTaller1.service.prod;
 
-import javax.transaction.Transactional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.repository.prod.ProductcategoryRepository;
 
