@@ -17,6 +17,7 @@ public class ProductcategoryServiceImpl implements ProductcategoryService{
 	}
 	
 	@Override
+	@Transactional
 	public boolean save(Productcategory pc) {
 		try {
 			if (pc.getName().length()>=3 && !pc.getName().equals(null)) {
@@ -41,7 +42,7 @@ public class ProductcategoryServiceImpl implements ProductcategoryService{
 				tempPc.setName(pc.getName());
 				tempPc.setRowguid(pc.getRowguid());
 				tempPc.setProductsubcategories(pc.getProductsubcategories());
-				productcategoryRepository.save(pc);
+				productcategoryRepository.save(tempPc);
 				return true;
 			}else {
 				throw new RuntimeException();
