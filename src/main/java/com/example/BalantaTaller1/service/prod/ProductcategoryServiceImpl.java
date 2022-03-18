@@ -19,7 +19,7 @@ public class ProductcategoryServiceImpl implements ProductcategoryService{
 	@Override
 	public boolean save(Productcategory pc) {
 		try {
-			if (pc.getName().length()>=3) {
+			if (pc.getName().length()>=3 && !pc.getName().equals(null)) {
 				productcategoryRepository.save(pc);
 				return true;
 			}else {
@@ -33,8 +33,22 @@ public class ProductcategoryServiceImpl implements ProductcategoryService{
 	@Override
 	@Transactional
 	public boolean edit(Productcategory pc) {
-		// TODO Auto-generated method stub
-		return false;
+		Productcategory tempPc = productcategoryRepository.getById(pc.getProductcategoryid());
+		
+		try {
+			if (pc.getName().length()>=3 && !pc.getName().equals(null)) {
+				tempPc.setModifieddate(pc.getModifieddate());
+				tempPc.setName(pc.getName());
+				tempPc.setRowguid(pc.getRowguid());
+				tempPc.setProductsubcategories(pc.getProductsubcategories());
+				productcategoryRepository.save(pc);
+				return true;
+			}else {
+				throw new RuntimeException();
+			}
+		} catch (RuntimeException re) {
+			return false;
+		}
 	}
 	
 	

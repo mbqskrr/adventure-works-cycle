@@ -30,8 +30,7 @@ public class Productcategory implements Serializable {
 
 	private Timestamp modifieddate;
 
-	@NotBlank
-	@Size(min = 3)
+	
 	private String name;
 
 	private Integer rowguid;
