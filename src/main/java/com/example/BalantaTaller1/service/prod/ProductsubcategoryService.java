@@ -4,8 +4,8 @@ import com.example.BalantaTaller1.model.prod.Productsubcategory;
 
 public interface ProductsubcategoryService {
 	
-	public boolean save(Productsubcategory psc);
+	public Productsubcategory save(Productsubcategory psc);
 	
-	public boolean edit(Productsubcategory  psc);
+	public Productsubcategory edit(Productsubcategory  psc);
 
 }

@@ -22,16 +22,19 @@ public class ProductsubcategoryServiceImpl implements ProductsubcategoryService{
 
 	@Override
 	@Transactional
-	public boolean save(Productsubcategory psc) {
-		// TODO Auto-generated method stub
-		return false;
+	public Productsubcategory save(Productsubcategory psc) {
+		if(psc.getName().length()>=5 || productcategoryRepository.findById(psc.getProductcategory().getProductcategoryid()).isEmpty()) {
+			throw new RuntimeException();
+		}
+		psc.setProductcategory(productcategoryRepository.getById(psc.getProductcategory().getProductcategoryid()));
+		return productsubcategoryRepository.save(psc);
 	}
 
 	@Override
 	@Transactional
-	public boolean edit(Productsubcategory psc) {
+	public Productsubcategory edit(Productsubcategory psc) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 }
