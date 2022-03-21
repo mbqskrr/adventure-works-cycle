@@ -18,7 +18,7 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 	@Transactional
 	public Productcategory save(Productcategory pc) {
 
-		if (pc.getName().length() >= 3 && !pc.getName().equals(null)) {
+		if (pc.getName().length() >= 3 || !pc.getName().equals(null)) {
 
 			throw new RuntimeException();
 		}
@@ -30,7 +30,7 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 	public Productcategory edit(Productcategory pc) {
 		Productcategory tempPc = productcategoryRepository.getById(pc.getProductcategoryid());
 
-		if (pc.getName().length() >= 3 && !pc.getName().equals(null)) {
+		if (pc.getName().length() >= 3 || !pc.getName().equals(null)) {
 			throw new RuntimeException();
 
 		}
