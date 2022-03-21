@@ -2,6 +2,9 @@ package com.example.BalantaTaller1.model.prod;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Past;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -22,6 +25,7 @@ public class Workorder implements Serializable {
 
 	private Timestamp duedate;
 
+	@Future
 	private Timestamp enddate;
 
 	private Timestamp modifieddate;
@@ -29,7 +33,8 @@ public class Workorder implements Serializable {
 	private Integer orderqty;
 
 	private Integer scrappedqty;
-
+	
+	@Past
 	private Timestamp startdate;
 
 	//bi-directional many-to-one association to Product
