@@ -23,7 +23,8 @@ public class ProductsubcategoryServiceImpl implements ProductsubcategoryService{
 	@Override
 	@Transactional
 	public Productsubcategory save(Productsubcategory psc) {
-		if(psc.getName().length()>=5 || productcategoryRepository.findById(psc.getProductcategory().getProductcategoryid()).isEmpty()) {
+		if(psc.getName().length()>=5 
+				|| productcategoryRepository.findById(psc.getProductcategory().getProductcategoryid()).isEmpty()) {
 			throw new RuntimeException();
 		}
 		psc.setProductcategory(productcategoryRepository.getById(psc.getProductcategory().getProductcategoryid()));
@@ -33,7 +34,8 @@ public class ProductsubcategoryServiceImpl implements ProductsubcategoryService{
 	@Override
 	@Transactional
 	public Productsubcategory edit(Productsubcategory psc) {
-		if(psc.getName().length()>=5 || productcategoryRepository.findById(psc.getProductcategory().getProductcategoryid()).isEmpty()) {
+		if(psc.getName().length()>=5 
+				|| productcategoryRepository.findById(psc.getProductcategory().getProductcategoryid()).isEmpty()) {
 			throw new RuntimeException();
 		}
 		Productsubcategory tempPsc = productsubcategoryRepository.getById(psc.getProductsubcategoryid());

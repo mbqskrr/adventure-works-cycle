@@ -1,10 +1,12 @@
 package com.example.BalantaTaller1.service.prod;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.repository.prod.ProductcategoryRepository;
 
+@Service
 public class ProductcategoryServiceImpl implements ProductcategoryService {
 
 	private ProductcategoryRepository productcategoryRepository;
@@ -18,7 +20,7 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 	@Transactional
 	public Productcategory save(Productcategory pc) {
 
-		if (pc.getName().length() >= 3 || !pc.getName().equals(null)) {
+		if (pc.getName().length() <= 3 || pc.getName().equals(null)) {
 
 			throw new RuntimeException();
 		}
@@ -28,7 +30,7 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 	@Override
 	@Transactional
 	public Productcategory edit(Productcategory pc) {
-		if (pc.getName().length() >= 3 || !pc.getName().equals(null)) {
+		if (pc.getName().length() <= 3 || pc.getName().equals(null)) {
 			throw new RuntimeException();
 
 		}

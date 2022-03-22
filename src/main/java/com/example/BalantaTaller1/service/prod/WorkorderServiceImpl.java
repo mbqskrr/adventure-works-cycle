@@ -1,12 +1,14 @@
 package com.example.BalantaTaller1.service.prod;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.BalantaTaller1.model.prod.Workorder;
 import com.example.BalantaTaller1.repository.prod.ProductRepository;
 import com.example.BalantaTaller1.repository.prod.ScrapreasonRepository;
 import com.example.BalantaTaller1.repository.prod.WorkorderRepository;
 
+@Service
 public class WorkorderServiceImpl implements WorkorderSerivice{
 	
 	private WorkorderRepository workorderRepository;
@@ -22,7 +24,7 @@ public class WorkorderServiceImpl implements WorkorderSerivice{
 
 	@Override
 	public Workorder save(Workorder wo) {
-		if(wo.getOrderqty()>0 || wo.getScrappedqty()>0 || wo.getEnddate().after(wo.getStartdate())) {
+		if(wo.getOrderqty()<0 || wo.getScrappedqty()<0 || !wo.getEnddate().after(wo.getStartdate())) {
 			throw new RuntimeException();
 		}
 		wo.setProduct(productRepository.getById(wo.getProduct().getProductid()));
@@ -32,7 +34,7 @@ public class WorkorderServiceImpl implements WorkorderSerivice{
 
 	@Override
 	public Workorder edit(Workorder wo) {
-		if(wo.getOrderqty()>0 || wo.getScrappedqty()>0 || wo.getEnddate().after(wo.getStartdate())) {
+		if(wo.getOrderqty()<0 || wo.getScrappedqty()<0 || !wo.getEnddate().after(wo.getStartdate())) {
 			throw new RuntimeException();
 		}
 		Workorder tempWo = workorderRepository.getById(wo.getWorkorderid());
