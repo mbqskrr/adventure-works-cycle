@@ -33,16 +33,15 @@ public class ProductsubcategoryServiceImpl implements ProductsubcategoryService{
 	@Override
 	@Transactional
 	public Productsubcategory edit(Productsubcategory psc) {
-		Productsubcategory tempPsc = productsubcategoryRepository.getById(psc.getProductsubcategoryid());
-		
 		if(psc.getName().length()>=5 || productcategoryRepository.findById(psc.getProductcategory().getProductcategoryid()).isEmpty()) {
 			throw new RuntimeException();
 		}
+		Productsubcategory tempPsc = productsubcategoryRepository.getById(psc.getProductsubcategoryid());
 		tempPsc.setModifieddate(psc.getModifieddate());
 		tempPsc.setName(psc.getName());
 		tempPsc.setProducts(psc.getProducts());
 		tempPsc.setProductcategory(productcategoryRepository.getById(psc.getProductcategory().getProductcategoryid()));
-		return productsubcategoryRepository.save(psc);
+		return productsubcategoryRepository.save(tempPsc);
 	}
 
 }

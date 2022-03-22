@@ -28,13 +28,11 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 	@Override
 	@Transactional
 	public Productcategory edit(Productcategory pc) {
-		Productcategory tempPc = productcategoryRepository.getById(pc.getProductcategoryid());
-
 		if (pc.getName().length() >= 3 || !pc.getName().equals(null)) {
 			throw new RuntimeException();
 
 		}
-
+		Productcategory tempPc = productcategoryRepository.getById(pc.getProductcategoryid());
 		tempPc.setModifieddate(pc.getModifieddate());
 		tempPc.setName(pc.getName());
 		tempPc.setRowguid(pc.getRowguid());

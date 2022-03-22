@@ -35,7 +35,17 @@ public class WorkorderServiceImpl implements WorkorderSerivice{
 		if(wo.getOrderqty()>0 || wo.getScrappedqty()>0 || wo.getEnddate().after(wo.getStartdate())) {
 			throw new RuntimeException();
 		}
-		return null;
+		Workorder tempWo = workorderRepository.getById(wo.getWorkorderid());
+		tempWo.setDuedate(wo.getDuedate());
+		tempWo.setEnddate(wo.getEnddate());
+		tempWo.setModifieddate(wo.getModifieddate());
+		tempWo.setOrderqty(wo.getOrderqty());
+		tempWo.setScrappedqty(wo.getScrappedqty());
+		tempWo.setStartdate(wo.getStartdate());
+		tempWo.setWorkorderroutings(wo.getWorkorderroutings());
+		tempWo.setProduct(productRepository.getById(wo.getProduct().getProductid()));
+		tempWo.setScrapreason(scrapreasonRepository.getById(wo.getScrapreason().getScrapreasonid()));
+		return workorderRepository.save(tempWo);
 	}
 
 }
