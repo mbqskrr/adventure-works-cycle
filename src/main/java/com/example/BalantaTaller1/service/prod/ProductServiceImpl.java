@@ -56,7 +56,32 @@ public class ProductServiceImpl implements ProductService{
 				|| productmodelRepository.findById(p.getProductmodel().getProductmodelid()).isEmpty()) {
 			throw new RuntimeException();
 		}
-		return null;
+		Product tempP = new Product();
+		tempP.setBillofmaterials1(p.getBillofmaterials1());
+		tempP.setBillofmaterials2(p.getBillofmaterials2());
+		tempP.setColor(p.getColor());
+		tempP.setDaystomanufacture(p.getDaystomanufacture());
+		tempP.setDiscontinueddate(p.getDiscontinueddate());
+		tempP.setFinishedgoodsflag(p.getFinishedgoodsflag());
+		tempP.setListprice(p.getListprice());
+		tempP.setMakeflag(p.getMakeflag());
+		tempP.setModifieddate(p.getModifieddate());
+		tempP.setName(p.getName());
+		tempP.setProductcosthistories(p.getProductcosthistories());
+		tempP.setProductdocuments(p.getProductdocuments());
+		tempP.setProductinventories(p.getProductinventories());
+		tempP.setProductline(p.getProductline());
+		tempP.setProductnumber(p.getProductnumber());
+		tempP.setWeight(p.getWeight());
+		tempP.setStyle(p.getStyle());
+		tempP.setSize(p.getSize());
+		tempP.setSellstartdate(p.getSellstartdate());
+		tempP.setSellenddate(p.getSellenddate());
+		p.setUnitmeasure1(unitmeasureRepository.getById(p.getUnitmeasure1().getUnitmeasurecode()));
+		p.setUnitmeasure2(unitmeasureRepository.getById(p.getUnitmeasure2().getUnitmeasurecode()));
+		p.setProductsubcategory(productsubcategoryRepository.getById(p.getProductsubcategory().getProductsubcategoryid()));
+		p.setProductmodel(productmodelRepository.getById(p.getProductmodel().getProductmodelid()));
+		return productRepository.save(tempP);
 	}
 
 	
