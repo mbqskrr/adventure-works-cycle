@@ -1,6 +1,9 @@
-package com.example.BalantaTaller1.integration;
+package com.example.BalantaTaller1.test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -8,6 +11,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -19,17 +24,19 @@ import com.example.BalantaTaller1.repository.prod.ProductcategoryRepository;
 import com.example.BalantaTaller1.service.prod.ProductcategoryService;
 import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImpl;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = BalantaTaller1Application.class)
-@ContextConfiguration(classes = ProductcategoryRepository.class)
-class ProductcategoryITest {
 
+//@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = BalantaTaller1Application.class)
+@SpringBootTest()
+class ProductcategoryTest {
+
+	@Mock
 	private ProductcategoryRepository productcategoryRepository;
+	@InjectMocks
 	private ProductcategoryService productcategoryService;
 
 	@Autowired
-	public ProductcategoryITest(ProductcategoryRepository productcategoryRepository) {
-		this.productcategoryRepository = productcategoryRepository;
+	public ProductcategoryTest(ProductcategoryRepository productcategoryRepository) {
 		this.productcategoryService = new ProductcategoryServiceImpl(productcategoryRepository);
 	}
 
@@ -43,18 +50,26 @@ class ProductcategoryITest {
 	class ProductcategoryServiceSave {
 		@Test
 		public void saveCorrectly() {
-			Productcategory productCategory = new Productcategory();
+			Optional<Productcategory> pc = Optional.of(new Productcategory());
+			//Productcategory pc = new Productcategory();
+			pc.get().setProductcategoryid(7);
+			pc.get().setName("Hogar");
+			pc.get().setRowguid(14);
+			pc.get().setModifieddate(null);
+			pc.get().setProductsubcategories(null);
+			when(productcategoryRepository.findById(7)).thenReturn(pc);
 			
 			try {
-				productCategory.setProductcategoryid(13);
-				productCategory.setName("Hogar");
-				productCategory.setModifieddate(null);
-				productCategory.setProductsubcategories(null);
-				productcategoryService.save(productCategory);
-			} catch (RuntimeException e) {
-				e.printStackTrace();
+				productcategoryService.save(pc);
+				
+			}catch(RuntimeException rte) {
+				rte.printStackTrace();
 			}
-			assertTrue(productCategory.equals(productcategoryRepository.findById(productCategory.getProductcategoryid()).get()));
+			
+			Productcategory testPc = productcategoryRepository.findById(7).get();
+			
+			assertFalse(testPc.getName().isEmpty());
+			
 			//fail("Not yet implemented");
 		}
 	}

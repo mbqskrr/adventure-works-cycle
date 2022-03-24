@@ -1,11 +1,13 @@
 package com.example.BalantaTaller1.repository.prod;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.BalantaTaller1.model.prod.Productcategory;
 
-@Repository
+
 public interface ProductcategoryRepository extends JpaRepository<Productcategory, Integer>{
+
+	Productcategory save(Optional<Productcategory> pc);
 
 }
