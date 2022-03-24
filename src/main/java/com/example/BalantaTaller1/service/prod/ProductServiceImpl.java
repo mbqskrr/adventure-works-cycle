@@ -1,6 +1,6 @@
 package com.example.BalantaTaller1.service.prod;
 
-import java.math.BigDecimal;
+//import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +21,9 @@ public class ProductServiceImpl implements ProductService{
 	
 	@Autowired
 	public ProductServiceImpl(UnitmeasureRepository unitmeasureRepository, ProductRepository productRepository, ProductmodelRepository productmodelRepository, ProductsubcategoryRepository productsubcategoryRepository) {
-		this.productmodelRepository = productmodelRepository;
-		this.productRepository = productRepository;
 		this.unitmeasureRepository = unitmeasureRepository;
+		this.productRepository = productRepository;
+		this.productmodelRepository = productmodelRepository;
 		this.productsubcategoryRepository = productsubcategoryRepository;
 	}
 

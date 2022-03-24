@@ -10,18 +10,19 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+//import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+//import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.example.BalantaTaller1.main.BalantaTaller1Application;
 import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.repository.prod.ProductcategoryRepository;
-import com.example.BalantaTaller1.service.prod.ProductcategoryService;
+//import com.example.BalantaTaller1.service.prod.ProductcategoryService;
+//import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImpl;
 import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImpl;
 
 
@@ -33,12 +34,12 @@ class ProductcategoryTest {
 	@Mock
 	private ProductcategoryRepository productcategoryRepository;
 	@InjectMocks
-	private ProductcategoryService productcategoryService;
+	private ProductcategoryServiceImpl productcategoryService;
 
-	@Autowired
+	/*@Autowired
 	public ProductcategoryTest(ProductcategoryRepository productcategoryRepository) {
 		this.productcategoryService = new ProductcategoryServiceImpl(productcategoryRepository);
-	}
+	}*/
 
 	@BeforeAll
 	static void start() {
