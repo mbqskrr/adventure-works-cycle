@@ -21,12 +21,12 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 
 	@Override
 	@Transactional
-	public Optional<Productcategory> save(Optional<Productcategory> pc) {
+	public Productcategory save(Productcategory pc) {
 		//Optional<Productcategory> tempPc = null;
 		
 		//validateConstrains(pc);
 
-		if (pc.isEmpty() || pc.get().getName().length() <= 3 || pc.get().getName().equals(null)) {
+		if (pc.getName().length() <= 3 || pc.getName().equals(null)) {
 
 			throw new RuntimeException("Nombre de categoria no valido");
 		}/*else {

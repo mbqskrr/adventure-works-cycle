@@ -28,7 +28,8 @@ import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImpl;
 @SpringBootTest()
 class ProductcategoryTest {
 
-	Optional<Productcategory> pc; 
+	//Optional<Productcategory> pc;
+	Productcategory pc;
 	SimpleDateFormat df; //= new SimpleDateFormat("dd-MM-yyyy");
 	Date date;  //= df.parse("24-03-2022");
 	long time1; //= date.getTime();
@@ -46,7 +47,8 @@ class ProductcategoryTest {
 	
 	@BeforeEach
 	void setUp() throws ParseException {
-		pc = Optional.of(new Productcategory());
+		//pc = Optional.of(new Productcategory());
+		pc = new Productcategory();
 		df = new SimpleDateFormat("dd-MM-yyyy");
 		date  = df.parse("24-03-2022");
 		time1 = date.getTime();
@@ -59,30 +61,39 @@ class ProductcategoryTest {
 		@Test
 		public void saveCorrectly() throws ParseException {
 			
-			pc.get().setProductcategoryid(7);
+			/*pc.get().setProductcategoryid(7);
 			pc.get().setName("Hogar");
 			pc.get().setRowguid(14);
 			pc.get().setModifieddate(time);
-			pc.get().setProductsubcategories(null);
-			when(productcategoryRepository.findById(7)).thenReturn(pc);
-			
+			pc.get().setProductsubcategories(null);*/
+			pc.setProductcategoryid(7);
+			pc.setName("Hogar");
+			pc.setRowguid(14);
+			pc.setModifieddate(time);
+			pc.setProductsubcategories(null);
+			//when(productcategoryRepository.findById(7)).thenReturn(pc);
+			//Productcategory pdCt = new Productcategory();
+			//when(productcategoryRepository.save(pc)).thenReturn(pc);
+			when(productcategoryRepository.getById(7)).thenReturn(pc);
 			try {
-				//productcategoryService.save(pc);
+				productcategoryService.save(pc);
 				/*Optional<Productcategory> tempPc =productcategoryService.save(pc);*/
-				assertNotNull(productcategoryService.save(pc));
+				//assertNotNull(productcategoryService.save(pc));
+				//Productcategory tempPc =productcategoryService.save(pc);
+				//assertNotNull(productcategoryService.save(pc));
 				
 			}catch(RuntimeException rte) {
 				rte.printStackTrace();
 			}
 			
-			Productcategory testPc = productcategoryRepository.findById(7).get();
+			Productcategory testPc = productcategoryRepository.getById(7);
 			assertNotNull(testPc);
 			assertFalse(testPc.getName().isEmpty());
 			assertEquals(testPc.getProductcategoryid(), 7);
 			assertNull(testPc.getProductsubcategories());
 			assertEquals(testPc.getName(), "Hogar");
 			assertEquals(testPc.getModifieddate(), time);
-			verify(productcategoryRepository).findById(7);
+			verify(productcategoryRepository).getById(7);
 			verify(productcategoryRepository).save(pc);
 			
 		}
@@ -90,18 +101,25 @@ class ProductcategoryTest {
 		@Test
 		public void saveWithNameLesserThanThreeChar() throws ParseException {
 			
-			pc.get().setProductcategoryid(6);
+			/*pc.get().setProductcategoryid(6);
 			pc.get().setName("I");
 			pc.get().setRowguid(13);
 			pc.get().setModifieddate(time);
-			pc.get().setProductsubcategories(null);
+			pc.get().setProductsubcategories(null);*/
+			pc.setProductcategoryid(6);
+			pc.setName("I");
+			pc.setRowguid(13);
+			pc.setModifieddate(time);
+			pc.setProductsubcategories(null);
 			when(productcategoryRepository.findById(6)).thenThrow(RuntimeException.class);
 			
 			try {
 				assertThrows(RuntimeException.class, ()->{
 					productcategoryService.save(pc);
 				});
-				Optional<Productcategory> tempPc =productcategoryService.save(pc);
+				//Optional<Productcategory> tempPc =productcategoryService.save(pc);
+				//assertNull(tempPc);
+				Productcategory tempPc =productcategoryService.save(pc);
 				assertNull(tempPc);
 			}catch(RuntimeException rte) {
 				rte.printStackTrace();
