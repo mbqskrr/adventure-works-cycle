@@ -8,7 +8,7 @@ import com.example.BalantaTaller1.model.prod.Productcategory;
 
 public interface ProductcategoryService {
 	
-	public Productcategory save(Optional<Productcategory> pc);
+	public Optional<Productcategory> save(Optional<Productcategory> pc);
 	
 	public Productcategory edit(Productcategory pc);
 	

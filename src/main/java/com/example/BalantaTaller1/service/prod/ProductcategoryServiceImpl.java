@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.repository.prod.ProductcategoryRepository;
+//import com.sun.istack.NotNull;
 
 @Service
 public class ProductcategoryServiceImpl implements ProductcategoryService {
@@ -20,12 +21,17 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 
 	@Override
 	@Transactional
-	public Productcategory save(Optional<Productcategory> pc) {
+	public Optional<Productcategory> save(Optional<Productcategory> pc) {
+		//Optional<Productcategory> tempPc = null;
+		
+		//validateConstrains(pc);
 
-		if (pc.get().getName().length() <= 3 || pc.get().getName().equals(null)) {
+		if (pc.isEmpty() || pc.get().getName().length() <= 3 || pc.get().getName().equals(null)) {
 
-			throw new RuntimeException();
-		}
+			throw new RuntimeException("Nombre de categoria no valido");
+		}/*else {
+			tempPc = Optional.of(productcategoryRepository.save(pc));
+		}*/
 		return productcategoryRepository.save(pc);
 	}
 
@@ -44,5 +50,14 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 		return productcategoryRepository.save(tempPc);
 
 	}
+	
+	/*@NotNull
+	public void validateConstrains(Optional<Productcategory> pc) {
+		if (pc.get().getName().length() <= 3 ) {
+			throw new RuntimeException("El nombre de la categoria no tiene al menos 3 carácteres");
+
+		}
+		//return null;
+	}*/
 
 }
