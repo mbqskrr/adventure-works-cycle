@@ -2,6 +2,8 @@ package com.example.BalantaTaller1.service.prod;
 
 import java.util.Optional;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,42 +24,41 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 	@Override
 	@Transactional
 	public Productcategory save(Productcategory pc) {
-		//Optional<Productcategory> tempPc = null;
+		Productcategory tempPc = null;
 		
-		//validateConstrains(pc);
+		constrains(pc);
+		
+		tempPc = productcategoryRepository.save(pc);
 
-		if (pc.getName().length() <= 3 || pc.getName().equals(null)) {
-
-			throw new RuntimeException("Nombre de categoria no valido");
-		}/*else {
-			tempPc = Optional.of(productcategoryRepository.save(pc));
-		}*/
-		return productcategoryRepository.save(pc);
+		
+		return tempPc;
 	}
 
 	@Override
 	@Transactional
 	public Productcategory edit(Productcategory pc) {
-		if (pc.getName().length() <= 3 || pc.getName().equals(null)) {
-			throw new RuntimeException();
-
+	
+		Productcategory temp = null;
+		
+		
+		Optional<Productcategory> optional = productcategoryRepository.findById(pc.getProductcategoryid());
+		
+		if (optional.isPresent()) {
+			constrains(pc);
+			
+			temp = save(pc);
 		}
-		Productcategory tempPc = productcategoryRepository.getById(pc.getProductcategoryid());
-		tempPc.setModifieddate(pc.getModifieddate());
-		tempPc.setName(pc.getName());
-		tempPc.setRowguid(pc.getRowguid());
-		tempPc.setProductsubcategories(pc.getProductsubcategories());
-		return productcategoryRepository.save(tempPc);
+		
+		return temp;
 
 	}
 	
-	/*@NotNull
-	public void validateConstrains(Optional<Productcategory> pc) {
-		if (pc.get().getName().length() <= 3 ) {
+	@NotNull
+	public void constrains(Productcategory pc) {
+		if (pc.getName().length() <= 3 || pc.getName()==null) {
 			throw new RuntimeException("El nombre de la categoria no tiene al menos 3 carácteres");
 
 		}
-		//return null;
-	}*/
+	}
 
 }

@@ -39,6 +39,7 @@ public class Productcategory implements Serializable {
 	private List<Productsubcategory> productsubcategories;
 
 	public Productcategory() {
+		
 	}
 
 	public Productsubcategory addProductsubcategory(Productsubcategory productsubcategory) {
