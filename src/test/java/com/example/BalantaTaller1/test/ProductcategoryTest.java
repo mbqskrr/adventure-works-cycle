@@ -147,9 +147,12 @@ class ProductcategoryTest {
 			pc.setProductsubcategories(null);
 			
 			when(productcategoryRepository.findById(77)).thenReturn(Optional.of(pc));
-			when(productcategoryRepository.save(pc)).thenReturn(pc);
+			//when(productcategoryRepository.save(pc)).thenReturn(pc);
 			
-			Productcategory test = productcategoryService.edit(pc);
+			productcategoryService.edit(pc);
+			//Productcategory test = productcategoryService.edit(pc);
+			
+			Productcategory test = productcategoryRepository.findById(77).get();
 			
 			assertNotNull(test);
 			assertFalse(test.getName().isEmpty());
@@ -157,7 +160,7 @@ class ProductcategoryTest {
 			assertNull(test.getProductsubcategories());
 			assertEquals(test.getName(), "Otra C");
 			assertEquals(test.getModifieddate(), time);
-			verify(productcategoryRepository).findById(77);
+			verify(productcategoryRepository, VerificationModeFactory.times(2)).findById(77);
 		}
 		
 		@Test
@@ -168,14 +171,14 @@ class ProductcategoryTest {
 			pc.setRowguid(13);
 			pc.setModifieddate(time);
 			pc.setProductsubcategories(null);
+			
 			when(productcategoryRepository.findById(42)).thenThrow(RuntimeException.class);
 			
+			assertThrows(RuntimeException.class, ()->{
+				productcategoryService.edit(pc);
+			});
 			try {
-				assertThrows(RuntimeException.class, ()->{
-					productcategoryService.edit(pc);
-				});
-				
-				Productcategory tempPc =productcategoryService.edit(pc);
+				Productcategory tempPc = productcategoryRepository.findById(42).get();
 				assertNull(tempPc);
 			}catch(RuntimeException rte) {
 				rte.printStackTrace();

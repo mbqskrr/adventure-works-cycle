@@ -1,6 +1,7 @@
 package com.example.BalantaTaller1.test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.sql.Timestamp;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -73,33 +75,34 @@ class ProductsubcategoryTest {
 	class ProductsubcategorySave {
 		
 		@Test
+		@Order(1)
 		void saveCorrectly() {
 			psc.setModifieddate(time);
 			psc.setName("Aluminio");
 			psc.setProducts(null);
 			psc.setProductsubcategoryid(985);
 			psc.setRowguid(666);
+			
 			pc.setProductcategoryid(13);
+			
 			when(productcategoryRepository.findById(13)).thenReturn(Optional.of(pc));
 			when(productsubcategoryRepository.save(psc)).thenReturn(psc);
-			//when(productcategoryRepository.save(pc)).thenReturn(pc);
-			//productcategoryRepository.save(pc);
-			//Productcategory pc2 = productcategoryRepository.findById(13).get();
-			
 			
 			psc.setProductcategory( productcategoryRepository.findById(13).get());
 		
-			//assertEquals(13, pc2.getProductcategoryid());
 			Productsubcategory temp = productsubcategoryService.save(psc);
+			
 			assertNotNull(temp);
 			assertNotSame(pc, temp, "No son el mismo objeto");
 			assertEquals(temp.getName(), "Aluminio");
 			assertEquals(psc.getProductsubcategoryid(), temp.getProductsubcategoryid());
 			assertNotNull(psc.getProductcategory());
+			verify(productsubcategoryRepository).save(psc);
 			
 		}
 		
 		@Test
+		@Order(2)
 		void saveNameLesserThanFiveChar() {
 			psc.setModifieddate(time);
 			psc.setName("Al");
@@ -107,14 +110,13 @@ class ProductsubcategoryTest {
 			psc.setProductsubcategoryid(985);
 			psc.setRowguid(666);
 			pc.setProductcategoryid(13);
+			
 			when(productcategoryRepository.findById(13)).thenReturn(Optional.of(pc));
-			//when(productsubcategoryRepository.save(psc)).thenReturn(psc);
 			when(productsubcategoryRepository.save(psc)).thenThrow(RuntimeException.class);
 			
 			assertThrows(RuntimeException.class, () -> {
 				productsubcategoryService.save(psc);
 			});
-			
 			try {
 				Productsubcategory temp = productsubcategoryService.save(psc);
 				assertNull(temp);
@@ -125,14 +127,14 @@ class ProductsubcategoryTest {
 		}
 		
 		@Test
+		@Order(3)
 		void saveNullProductcategoryid() {
 			psc.setModifieddate(time);
 			psc.setName("Aluminio");
 			psc.setProducts(null);
 			psc.setProductsubcategoryid(985);
 			psc.setRowguid(666);
-			//pc.setProductcategoryid(13);
-			//when(productcategoryRepository.findById(13)).thenReturn(Optional.of(pc));
+	
 			when(productsubcategoryRepository.save(psc)).thenThrow(RuntimeException.class);
 			
 			try {
@@ -145,9 +147,102 @@ class ProductsubcategoryTest {
 		}
 		
 		@Test
+		@Order(4)
 		public void saveNull() {
 			assertThrows(NullPointerException.class, () -> {
 				productsubcategoryService.save(null);
+			});
+		}
+	}
+	
+
+	@Nested
+	@DisplayName("Update methods")
+	class ProductsubcategoryUpdate {
+		
+		@Test
+		@Order(5)
+		void updateCorrectly() {
+			psc.setModifieddate(time);
+			psc.setName("Estano");
+			psc.setProducts(null);
+			psc.setProductsubcategoryid(985);
+			psc.setRowguid(666);
+			
+			pc.setProductcategoryid(13);
+			
+			when(productcategoryRepository.findById(13)).thenReturn(Optional.of(pc));
+			when(productsubcategoryRepository.findById(985)).thenReturn(Optional.of(psc));
+			
+			psc.setProductcategory( productcategoryRepository.findById(13).get());
+			
+			productsubcategoryService.edit(psc);
+		
+			//Productsubcategory temp = productsubcategoryService.edit(psc);
+			Productsubcategory temp = productsubcategoryRepository.findById(985).get();
+			//assertNotNull(temp);
+			assertFalse(temp.getName().isEmpty());
+			assertEquals("Estano", temp.getName());
+			assertNotNull(temp);
+			assertEquals(985, temp.getProductsubcategoryid());
+			
+			//verify(productsubcategoryRepository).save(psc);
+		}
+		
+		@Test
+		@Order(6)
+		void updateNameLesserThanFiveChar() {
+			psc.setModifieddate(time);
+			psc.setName("Sn");
+			psc.setProducts(null);
+			psc.setProductsubcategoryid(985);
+			psc.setRowguid(666);
+			pc.setProductcategoryid(13);
+			
+			when(productcategoryRepository.findById(13)).thenReturn(Optional.of(pc));
+			when(productsubcategoryRepository.findById(985)).thenThrow(RuntimeException.class);
+			
+			assertThrows(RuntimeException.class, () -> {
+				productsubcategoryService.edit(psc);
+			});
+			try {
+				Productsubcategory temp = productsubcategoryRepository.findById(985).get();
+				assertNull(temp);
+			} catch (RuntimeException rte) {
+				rte.printStackTrace();
+			}
+			
+		}
+		
+		@Test
+		@Order(7)
+		void updateNullProductcategoryid() {
+			psc.setModifieddate(time);
+			psc.setName("Estano");
+			psc.setProducts(null);
+			psc.setProductsubcategoryid(985);
+			psc.setRowguid(666);
+	
+			//when(productsubcategoryRepository.save(psc)).thenThrow(RuntimeException.class);
+			when(productsubcategoryService.edit(psc)).thenThrow(RuntimeException.class);
+			
+			assertThrows(RuntimeException.class, () -> {
+				productsubcategoryService.edit(psc);
+			});
+			try {
+				Productsubcategory temp = productsubcategoryRepository.findById(985).get();
+				assertNull(temp);
+			} catch (RuntimeException rte) {
+				rte.printStackTrace();
+			}
+			
+		}
+		
+		@Test
+		@Order(8)
+		public void saveNull() {
+			assertThrows(NullPointerException.class, () -> {
+				productsubcategoryService.edit(null);
 			});
 		}
 	}
