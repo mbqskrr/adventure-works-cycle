@@ -8,9 +8,9 @@ import static org.mockito.Mockito.when;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+//import java.util.List;
 import java.util.Optional;
 
 //import java.util.Optional;
@@ -29,7 +29,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import com.example.BalantaTaller1.main.BalantaTaller1Application;
 import com.example.BalantaTaller1.model.prod.Productcategory;
-import com.example.BalantaTaller1.model.prod.Productsubcategory;
+//import com.example.BalantaTaller1.model.prod.Productsubcategory;
 import com.example.BalantaTaller1.repository.prod.ProductcategoryRepository;
 import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImpl;
 
@@ -38,12 +38,12 @@ import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImpl;
 class ProductcategoryTest {
 
 	
-	Productcategory pc;
-	SimpleDateFormat df; 
-	Date date; 
-	long time1;
-	Timestamp time;
-	List<Productsubcategory> productsubcategories;
+	private Productcategory pc;
+	private SimpleDateFormat df; 
+	private Date date; 
+	private long time1;
+	private Timestamp time;
+	//private List<Productsubcategory> productsubcategories;
 	
 	@Mock
 	private ProductcategoryRepository productcategoryRepository;
@@ -57,7 +57,7 @@ class ProductcategoryTest {
 	
 	@BeforeEach
 	void setUp() throws ParseException {
-		productsubcategories = new ArrayList<Productsubcategory>();
+		//productsubcategories = new ArrayList<Productsubcategory>();
 		pc = new Productcategory();
 		df = new SimpleDateFormat("dd-MM-yyyy");
 		date  = df.parse("24-03-2022");
