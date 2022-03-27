@@ -26,7 +26,7 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 	public Productcategory save(Productcategory pc) {
 		Productcategory tempPc = null;
 		
-		constrains(pc);
+		constraints(pc);
 		
 		tempPc = productcategoryRepository.save(pc);
 
@@ -44,7 +44,7 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 		Optional<Productcategory> optional = productcategoryRepository.findById(pc.getProductcategoryid());
 		
 		if (optional.isPresent()) {
-			constrains(pc);
+			constraints(pc);
 			
 			temp = save(pc);
 		}
@@ -54,7 +54,7 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 	}
 	
 	@NotNull
-	public void constrains(Productcategory pc) {
+	private void constraints(Productcategory pc) {
 		if (pc.getName().length() <= 3 || pc.getName()==null) {
 			throw new RuntimeException("El nombre de la categoria no tiene al menos 3 carácteres");
 

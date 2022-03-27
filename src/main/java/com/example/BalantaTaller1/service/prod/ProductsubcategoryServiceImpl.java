@@ -1,9 +1,14 @@
 package com.example.BalantaTaller1.service.prod;
 
+import java.util.Optional;
+
+import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.model.prod.Productsubcategory;
 import com.example.BalantaTaller1.repository.prod.ProductcategoryRepository;
 import com.example.BalantaTaller1.repository.prod.ProductsubcategoryRepository;
@@ -23,27 +28,42 @@ public class ProductsubcategoryServiceImpl implements ProductsubcategoryService{
 	@Override
 	@Transactional
 	public Productsubcategory save(Productsubcategory psc) {
-		if(psc.getName().length()>=5 
-				|| productcategoryRepository.findById(psc.getProductcategory().getProductcategoryid()).isEmpty()) {
-			throw new RuntimeException();
+		
+		Productsubcategory temp = null;
+		
+		constraints(psc);
+		
+		Optional<Productcategory> optional = this.productcategoryRepository.findById(psc.getProductcategory().getProductcategoryid()); 
+		if(optional.isPresent()) {
+			psc.setProductcategory(optional.get());
+			temp = productsubcategoryRepository.save(psc);
 		}
-		psc.setProductcategory(productcategoryRepository.getById(psc.getProductcategory().getProductcategoryid()));
-		return productsubcategoryRepository.save(psc);
+		
+		return temp;
 	}
 
 	@Override
 	@Transactional
 	public Productsubcategory edit(Productsubcategory psc) {
-		if(psc.getName().length()>=5 
-				|| productcategoryRepository.findById(psc.getProductcategory().getProductcategoryid()).isEmpty()) {
-			throw new RuntimeException();
+		Productsubcategory temp = null;
+		
+		Optional<Productsubcategory> optional = this.productsubcategoryRepository.findById(psc.getProductsubcategoryid());
+		
+		if(optional.isPresent()) {
+			constraints(psc);
+			temp = save(psc);
 		}
-		Productsubcategory tempPsc = productsubcategoryRepository.getById(psc.getProductsubcategoryid());
-		tempPsc.setModifieddate(psc.getModifieddate());
-		tempPsc.setName(psc.getName());
-		tempPsc.setProducts(psc.getProducts());
-		tempPsc.setProductcategory(productcategoryRepository.getById(psc.getProductcategory().getProductcategoryid()));
-		return productsubcategoryRepository.save(tempPsc);
+		
+		return temp;
+	}
+	
+	@NotNull
+	private void constraints(Productsubcategory psc) {
+		if(psc.getName().length()<=5 
+				|| productcategoryRepository.findById(psc.getProductcategory().getProductcategoryid()).isEmpty()
+				|| psc.getName()==null) {
+			throw new RuntimeException("Nombre de subcategoria no valido");
+		}
 	}
 
 }
