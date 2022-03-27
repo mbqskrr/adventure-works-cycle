@@ -59,10 +59,11 @@ public class ProductsubcategoryServiceImpl implements ProductsubcategoryService{
 	
 	@NotNull
 	private void constraints(Productsubcategory psc) {
-		if(psc.getName().length()<=5 
-				|| productcategoryRepository.findById(psc.getProductcategory().getProductcategoryid()).isEmpty()
-				|| psc.getName()==null) {
+		if(psc.getName().length()<=5 || psc.getName()==null) {
 			throw new RuntimeException("Nombre de subcategoria no valido");
+		}
+		if (productcategoryRepository.findById(psc.getProductcategory().getProductcategoryid()).isEmpty()) {
+			throw new RuntimeException("Categoria asociada no existe");
 		}
 	}
 

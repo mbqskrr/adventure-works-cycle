@@ -1,8 +1,14 @@
 package com.example.BalantaTaller1.service.prod;
 
+import java.util.Optional;
+
+import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.BalantaTaller1.model.prod.Product;
+import com.example.BalantaTaller1.model.prod.Scrapreason;
 import com.example.BalantaTaller1.model.prod.Workorder;
 import com.example.BalantaTaller1.repository.prod.ProductRepository;
 import com.example.BalantaTaller1.repository.prod.ScrapreasonRepository;
@@ -24,30 +30,45 @@ public class WorkorderServiceImpl implements WorkorderSerivice{
 
 	@Override
 	public Workorder save(Workorder wo) {
-		if(wo.getOrderqty()<0 || wo.getScrappedqty()<0 || !wo.getEnddate().after(wo.getStartdate())) {
-			throw new RuntimeException();
+		
+		Workorder temp = null;
+		constraints(wo);
+		
+		Optional<Product> op = this.productRepository.findById(wo.getProduct().getProductid());
+		Optional<Scrapreason> op2 = this.scrapreasonRepository.findById(wo.getScrapreason().getScrapreasonid());
+		if(op.isPresent() && op2.isPresent()) {
+			wo.setProduct(op.get());
+			wo.setScrapreason(op2.get());
+			temp = workorderRepository.save(wo);
 		}
-		wo.setProduct(productRepository.getById(wo.getProduct().getProductid()));
-		wo.setScrapreason(scrapreasonRepository.getById(wo.getScrapreason().getScrapreasonid()));
-		return workorderRepository.save(wo);
+		
+		return temp;
 	}
 
 	@Override
 	public Workorder edit(Workorder wo) {
-		if(wo.getOrderqty()<0 || wo.getScrappedqty()<0 || !wo.getEnddate().after(wo.getStartdate())) {
-			throw new RuntimeException();
+		Workorder temp = null;
+		
+		Optional<Workorder> optional = this.workorderRepository.findById(wo.getWorkorderid());
+		if(optional.isPresent()) {
+			constraints(wo);
+			temp = save(wo);
 		}
-		Workorder tempWo = workorderRepository.getById(wo.getWorkorderid());
-		tempWo.setDuedate(wo.getDuedate());
-		tempWo.setEnddate(wo.getEnddate());
-		tempWo.setModifieddate(wo.getModifieddate());
-		tempWo.setOrderqty(wo.getOrderqty());
-		tempWo.setScrappedqty(wo.getScrappedqty());
-		tempWo.setStartdate(wo.getStartdate());
-		tempWo.setWorkorderroutings(wo.getWorkorderroutings());
-		tempWo.setProduct(productRepository.getById(wo.getProduct().getProductid()));
-		tempWo.setScrapreason(scrapreasonRepository.getById(wo.getScrapreason().getScrapreasonid()));
-		return workorderRepository.save(tempWo);
+		
+		return temp;
+	}
+	
+	@NotNull
+	private void constraints(Workorder wo) {
+		if(wo.getOrderqty()<0 || wo.getScrappedqty()<0) {
+			throw new RuntimeException("Cantidad de orden menor a 0");
+		}
+		if (wo.getScrappedqty()<0) {
+			throw new RuntimeException("Cantidad de rechazo menor a 0");
+		} 
+		if (!wo.getEnddate().after(wo.getStartdate())) {
+			throw new RuntimeException("Erro en fecha inicial y fecha final");
+		}
 	}
 
 }
