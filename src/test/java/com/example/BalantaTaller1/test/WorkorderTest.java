@@ -2,6 +2,7 @@ package com.example.BalantaTaller1.test;
 
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.sql.Timestamp;
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.internal.verification.VerificationModeFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -66,7 +68,7 @@ class WorkorderTest {
 	@Mock
 	private ProductRepository productRepository;
 	@InjectMocks
-	private WorkorderServiceImpl workroderService;
+	private WorkorderServiceImpl workorderService;
 
 	@BeforeAll
 	static void start() {
@@ -102,7 +104,7 @@ class WorkorderTest {
 
 	@Nested
 	@DisplayName("Save methods")
-	class Workordersave{
+	class WorkorderSave {
 		@Test
 		@Order(1)
 		void saveCorrectly() {
@@ -126,11 +128,12 @@ class WorkorderTest {
 			wo.setProduct(productRepository.findById(777).get());
 			wo.setScrapreason(scrapreasonRepository.findById(69).get());
 			
-			Workorder temp = workroderService.save(wo);
+			Workorder temp = workorderService.save(wo);
 			assertNotNull(temp);
 			assertEquals(123, temp.getWorkorderid());
 			assertFalse(temp.getStartdate().after(temp.getEnddate()));
 			assertTrue(temp.getOrderqty()>0 & temp.getScrappedqty()>0);
+			verify(workorderRepository).save(wo);
 		}
 		
 		@Test
@@ -157,10 +160,10 @@ class WorkorderTest {
 			wo.setScrapreason(scrapreasonRepository.findById(69).get());
 			
 			assertThrows(RuntimeException.class, () -> {
-				workroderService.save(wo);
+				workorderService.save(wo);
 			});
 			try {
-				Workorder temp = workroderService.save(wo);
+				Workorder temp = workorderService.save(wo);
 				assertNull(temp);
 			} catch (RuntimeException e) {
 				e.printStackTrace();
@@ -192,10 +195,10 @@ class WorkorderTest {
 			wo.setScrapreason(scrapreasonRepository.findById(69).get());
 			
 			assertThrows(RuntimeException.class, () -> {
-				workroderService.save(wo);
+				workorderService.save(wo);
 			});
 			try {
-				Workorder temp = workroderService.save(wo);
+				Workorder temp = workorderService.save(wo);
 				assertNull(temp);
 			} catch (RuntimeException e) {
 				e.printStackTrace();
@@ -226,10 +229,10 @@ class WorkorderTest {
 			wo.setScrapreason(scrapreasonRepository.findById(69).get());
 			
 			assertThrows(RuntimeException.class, () -> {
-				workroderService.save(wo);
+				workorderService.save(wo);
 			});
 			try {
-				Workorder temp = workroderService.save(wo);
+				Workorder temp = workorderService.save(wo);
 				assertNull(temp);
 			} catch (RuntimeException e) {
 				e.printStackTrace();
@@ -256,10 +259,10 @@ class WorkorderTest {
 			wo.setScrapreason(scrapreasonRepository.findById(69).get());
 			
 			assertThrows(RuntimeException.class, () -> {
-				workroderService.save(wo);
+				workorderService.save(wo);
 			});
 			try {
-				Workorder temp = workroderService.save(wo);
+				Workorder temp = workorderService.save(wo);
 				assertNull(temp);
 			} catch (RuntimeException e) {
 				e.printStackTrace();
@@ -286,14 +289,232 @@ class WorkorderTest {
 			wo.setProduct(productRepository.findById(777).get());
 			
 			assertThrows(RuntimeException.class, () -> {
-				workroderService.save(wo);
+				workorderService.save(wo);
 			});
 			try {
-				Workorder temp = workroderService.save(wo);
+				Workorder temp = workorderService.save(wo);
 				assertNull(temp);
 			} catch (RuntimeException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		@Test
+		@Order(7)
+		public void saveNull() {
+			assertThrows(NullPointerException.class, () -> {
+				workorderService.save(null);
+			});
+		}
+	}
+	
+	@Nested
+	@DisplayName("Update methods")
+	class WorkorderUpdate {
+		@Test
+		@Order(8)
+		void updateCorrectly() {
+			wo.setDuedate(duedate);
+			wo.setEnddate(enddate);
+			wo.setModifieddate(modifieddate);
+			wo.setStartdate(startdate);
+			wo.setOrderqty(5);
+			wo.setScrappedqty(10);
+			wo.setWorkorderroutings(null);
+			wo.setWorkorderid(123);
+			
+			sr.setScrapreasonid(69);
+			
+			p.setProductid(777);
+			
+			when(scrapreasonRepository.findById(69)).thenReturn(Optional.of(sr));
+			when(productRepository.findById(777)).thenReturn(Optional.of(p));
+			when(workorderRepository.findById(123)).thenReturn(Optional.of(wo));
+			
+			wo.setProduct(productRepository.findById(777).get());
+			wo.setScrapreason(scrapreasonRepository.findById(69).get());
+			
+			workorderService.edit(wo);
+			
+			Workorder temp = workorderRepository.findById(123).get();
+			assertNotNull(temp);
+			assertEquals(123, temp.getWorkorderid());
+			assertFalse(temp.getStartdate().after(temp.getEnddate()));
+			assertTrue(temp.getOrderqty()>0 & temp.getScrappedqty()>0);
+			assertEquals(69, temp.getScrapreason().getScrapreasonid());
+			verify(workorderRepository, VerificationModeFactory.times(2)).findById(123);
+		}
+		
+		@Test
+		@Order(9)
+		void updateNegativeOrderQty(){
+			wo.setDuedate(duedate);
+			wo.setEnddate(enddate);
+			wo.setModifieddate(modifieddate);
+			wo.setStartdate(startdate);
+			wo.setOrderqty(-4);
+			wo.setScrappedqty(8);
+			wo.setWorkorderroutings(null);
+			wo.setWorkorderid(123);
+			
+			sr.setScrapreasonid(69);
+			
+			p.setProductid(777);
+			
+			when(scrapreasonRepository.findById(69)).thenReturn(Optional.of(sr));
+			when(productRepository.findById(777)).thenReturn(Optional.of(p));
+			when(workorderRepository.findById(123)).thenThrow(RuntimeException.class);
+			
+			wo.setProduct(productRepository.findById(777).get());
+			wo.setScrapreason(scrapreasonRepository.findById(69).get());
+			
+			assertThrows(RuntimeException.class, () -> {
+				workorderService.edit(wo);
+			});
+			try {
+				Workorder temp = workorderRepository.findById(123).get();
+				assertNull(temp);
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		@Test
+		@Order(10)
+		void updateNegativeScrappedQty() {
+			wo.setDuedate(duedate);
+			wo.setEnddate(enddate);
+			wo.setModifieddate(modifieddate);
+			wo.setStartdate(startdate);
+			wo.setOrderqty(4);
+			wo.setScrappedqty(-8);
+			wo.setWorkorderroutings(null);
+			wo.setWorkorderid(123);
+			
+			sr.setScrapreasonid(69);
+			
+			p.setProductid(777);
+			
+			when(scrapreasonRepository.findById(69)).thenReturn(Optional.of(sr));
+			when(productRepository.findById(777)).thenReturn(Optional.of(p));
+			when(workorderRepository.findById(123)).thenThrow(RuntimeException.class);
+			
+			wo.setProduct(productRepository.findById(777).get());
+			wo.setScrapreason(scrapreasonRepository.findById(69).get());
+			
+			assertThrows(RuntimeException.class, () -> {
+				workorderService.edit(wo);
+			});
+			try {
+				Workorder temp = workorderRepository.findById(123).get();
+				assertNull(temp);
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(11)
+		void updateStartdateGreaterThanEnddate() {
+			wo.setDuedate(duedate);
+			wo.setEnddate(startdate);
+			wo.setModifieddate(modifieddate);
+			wo.setStartdate(enddate);
+			wo.setOrderqty(4);
+			wo.setScrappedqty(8);
+			wo.setWorkorderroutings(null);
+			wo.setWorkorderid(123);
+			
+			sr.setScrapreasonid(69);
+			
+			p.setProductid(777);
+			
+			when(scrapreasonRepository.findById(69)).thenReturn(Optional.of(sr));
+			when(productRepository.findById(777)).thenReturn(Optional.of(p));
+			when(workorderRepository.findById(123)).thenThrow(RuntimeException.class);
+			
+			wo.setProduct(productRepository.findById(777).get());
+			wo.setScrapreason(scrapreasonRepository.findById(69).get());
+			
+			assertThrows(RuntimeException.class, () -> {
+				workorderService.edit(wo);
+			});
+			try {
+				Workorder temp = workorderRepository.findById(123).get();
+				assertNull(temp);
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		@Test
+		@Order(12)
+		void updateNullScrapreasonid() {
+			wo.setDuedate(duedate);
+			wo.setEnddate(startdate);
+			wo.setModifieddate(modifieddate);
+			wo.setStartdate(enddate);
+			wo.setOrderqty(4);
+			wo.setScrappedqty(8);
+			wo.setWorkorderroutings(null);
+			wo.setWorkorderid(123);
+			
+			p.setProductid(777);
+			
+			when(productRepository.findById(777)).thenReturn(Optional.of(p));
+			when(workorderRepository.findById(123)).thenThrow(RuntimeException.class);
+			
+			wo.setProduct(productRepository.findById(777).get());
+			
+			assertThrows(RuntimeException.class, () -> {
+				workorderService.edit(wo);
+			});
+			try {
+				Workorder temp = workorderRepository.findById(123).get();
+				assertNull(temp);
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(13)
+		void saveNullProductid() {
+			wo.setDuedate(duedate);
+			wo.setEnddate(startdate);
+			wo.setModifieddate(modifieddate);
+			wo.setStartdate(enddate);
+			wo.setOrderqty(4);
+			wo.setScrappedqty(8);
+			wo.setWorkorderroutings(null);
+			wo.setWorkorderid(123);
+			
+			sr.setScrapreasonid(69);
+			
+			when(scrapreasonRepository.findById(69)).thenReturn(Optional.of(sr));
+			when(workorderRepository.findById(123)).thenThrow(RuntimeException.class);
+			
+			wo.setScrapreason(scrapreasonRepository.findById(69).get());
+			
+			assertThrows(RuntimeException.class, () -> {
+				workorderService.edit(wo);
+			});
+			try {
+				Workorder temp = workorderRepository.findById(123).get();
+				assertNull(temp);
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(14)
+		public void saveNull() {
+			assertThrows(NullPointerException.class, () -> {
+				workorderService.edit(null);
+			});
 		}
 	}
 	

@@ -223,7 +223,6 @@ class ProductsubcategoryTest {
 			psc.setProductsubcategoryid(985);
 			psc.setRowguid(666);
 	
-			//when(productsubcategoryRepository.save(psc)).thenThrow(RuntimeException.class);
 			when(productsubcategoryService.edit(psc)).thenThrow(RuntimeException.class);
 			
 			assertThrows(RuntimeException.class, () -> {
@@ -240,7 +239,7 @@ class ProductsubcategoryTest {
 		
 		@Test
 		@Order(8)
-		public void saveNull() {
+		public void udateNull() {
 			assertThrows(NullPointerException.class, () -> {
 				productsubcategoryService.edit(null);
 			});
