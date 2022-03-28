@@ -67,7 +67,7 @@ public class WorkorderServiceImpl implements WorkorderSerivice{
 			throw new RuntimeException("Cantidad de rechazo menor a 0");
 		} 
 		if (!wo.getEnddate().after(wo.getStartdate())) {
-			throw new RuntimeException("Erro en fecha inicial y fecha final");
+			throw new RuntimeException("Error en fecha inicial y fecha final");
 		}
 	}
 
