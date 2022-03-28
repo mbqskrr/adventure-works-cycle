@@ -123,10 +123,11 @@ class WorkorderTest {
 			
 			when(scrapreasonRepository.findById(69)).thenReturn(Optional.of(sr));
 			when(productRepository.findById(777)).thenReturn(Optional.of(p));
-			when(workorderRepository.save(wo)).thenReturn(wo);
 			
 			wo.setProduct(productRepository.findById(777).get());
 			wo.setScrapreason(scrapreasonRepository.findById(69).get());
+			
+			when(workorderRepository.save(wo)).thenReturn(wo);
 			
 			Workorder temp = workorderService.save(wo);
 			assertNotNull(temp);
@@ -154,10 +155,11 @@ class WorkorderTest {
 			
 			when(scrapreasonRepository.findById(69)).thenReturn(Optional.of(sr));
 			when(productRepository.findById(777)).thenReturn(Optional.of(p));
-			when(workorderRepository.save(wo)).thenThrow(RuntimeException.class);
 			
 			wo.setProduct(productRepository.findById(777).get());
 			wo.setScrapreason(scrapreasonRepository.findById(69).get());
+			
+			when(workorderRepository.save(wo)).thenThrow(RuntimeException.class);
 			
 			assertThrows(RuntimeException.class, () -> {
 				workorderService.save(wo);
@@ -189,10 +191,11 @@ class WorkorderTest {
 			
 			when(scrapreasonRepository.findById(69)).thenReturn(Optional.of(sr));
 			when(productRepository.findById(777)).thenReturn(Optional.of(p));
-			when(workorderRepository.save(wo)).thenThrow(RuntimeException.class);
 			
 			wo.setProduct(productRepository.findById(777).get());
 			wo.setScrapreason(scrapreasonRepository.findById(69).get());
+			
+			when(workorderRepository.save(wo)).thenThrow(RuntimeException.class);
 			
 			assertThrows(RuntimeException.class, () -> {
 				workorderService.save(wo);
@@ -223,10 +226,11 @@ class WorkorderTest {
 			
 			when(scrapreasonRepository.findById(69)).thenReturn(Optional.of(sr));
 			when(productRepository.findById(777)).thenReturn(Optional.of(p));
-			when(workorderRepository.save(wo)).thenThrow(RuntimeException.class);
 			
 			wo.setProduct(productRepository.findById(777).get());
 			wo.setScrapreason(scrapreasonRepository.findById(69).get());
+			
+			when(workorderRepository.save(wo)).thenThrow(RuntimeException.class);
 			
 			assertThrows(RuntimeException.class, () -> {
 				workorderService.save(wo);
@@ -254,9 +258,10 @@ class WorkorderTest {
 			sr.setScrapreasonid(69);
 			
 			when(scrapreasonRepository.findById(69)).thenReturn(Optional.of(sr));
-			when(workorderRepository.save(wo)).thenThrow(RuntimeException.class);
 			
 			wo.setScrapreason(scrapreasonRepository.findById(69).get());
+			
+			when(workorderRepository.save(wo)).thenThrow(RuntimeException.class);
 			
 			assertThrows(RuntimeException.class, () -> {
 				workorderService.save(wo);
@@ -284,9 +289,10 @@ class WorkorderTest {
 			p.setProductid(777);
 			
 			when(productRepository.findById(777)).thenReturn(Optional.of(p));
-			when(workorderRepository.save(wo)).thenThrow(RuntimeException.class);
 			
 			wo.setProduct(productRepository.findById(777).get());
+			
+			when(workorderRepository.save(wo)).thenThrow(RuntimeException.class);
 			
 			assertThrows(RuntimeException.class, () -> {
 				workorderService.save(wo);
@@ -329,10 +335,11 @@ class WorkorderTest {
 			
 			when(scrapreasonRepository.findById(69)).thenReturn(Optional.of(sr));
 			when(productRepository.findById(777)).thenReturn(Optional.of(p));
-			when(workorderRepository.findById(123)).thenReturn(Optional.of(wo));
 			
 			wo.setProduct(productRepository.findById(777).get());
 			wo.setScrapreason(scrapreasonRepository.findById(69).get());
+			
+			when(workorderRepository.findById(123)).thenReturn(Optional.of(wo));
 			
 			workorderService.edit(wo);
 			
@@ -363,10 +370,11 @@ class WorkorderTest {
 			
 			when(scrapreasonRepository.findById(69)).thenReturn(Optional.of(sr));
 			when(productRepository.findById(777)).thenReturn(Optional.of(p));
-			when(workorderRepository.findById(123)).thenThrow(RuntimeException.class);
 			
 			wo.setProduct(productRepository.findById(777).get());
 			wo.setScrapreason(scrapreasonRepository.findById(69).get());
+			
+			when(workorderRepository.findById(123)).thenThrow(RuntimeException.class);
 			
 			assertThrows(RuntimeException.class, () -> {
 				workorderService.edit(wo);
@@ -398,10 +406,11 @@ class WorkorderTest {
 			
 			when(scrapreasonRepository.findById(69)).thenReturn(Optional.of(sr));
 			when(productRepository.findById(777)).thenReturn(Optional.of(p));
-			when(workorderRepository.findById(123)).thenThrow(RuntimeException.class);
 			
 			wo.setProduct(productRepository.findById(777).get());
 			wo.setScrapreason(scrapreasonRepository.findById(69).get());
+			
+			when(workorderRepository.findById(123)).thenThrow(RuntimeException.class);
 			
 			assertThrows(RuntimeException.class, () -> {
 				workorderService.edit(wo);
@@ -432,10 +441,12 @@ class WorkorderTest {
 			
 			when(scrapreasonRepository.findById(69)).thenReturn(Optional.of(sr));
 			when(productRepository.findById(777)).thenReturn(Optional.of(p));
-			when(workorderRepository.findById(123)).thenThrow(RuntimeException.class);
 			
 			wo.setProduct(productRepository.findById(777).get());
 			wo.setScrapreason(scrapreasonRepository.findById(69).get());
+			
+			
+			when(workorderRepository.findById(123)).thenThrow(RuntimeException.class);
 			
 			assertThrows(RuntimeException.class, () -> {
 				workorderService.edit(wo);
@@ -464,9 +475,10 @@ class WorkorderTest {
 			p.setProductid(777);
 			
 			when(productRepository.findById(777)).thenReturn(Optional.of(p));
-			when(workorderRepository.findById(123)).thenThrow(RuntimeException.class);
 			
 			wo.setProduct(productRepository.findById(777).get());
+			
+			when(workorderRepository.findById(123)).thenThrow(RuntimeException.class);
 			
 			assertThrows(RuntimeException.class, () -> {
 				workorderService.edit(wo);
@@ -494,9 +506,10 @@ class WorkorderTest {
 			sr.setScrapreasonid(69);
 			
 			when(scrapreasonRepository.findById(69)).thenReturn(Optional.of(sr));
-			when(workorderRepository.findById(123)).thenThrow(RuntimeException.class);
 			
 			wo.setScrapreason(scrapreasonRepository.findById(69).get());
+			
+			when(workorderRepository.findById(123)).thenThrow(RuntimeException.class);
 			
 			assertThrows(RuntimeException.class, () -> {
 				workorderService.edit(wo);

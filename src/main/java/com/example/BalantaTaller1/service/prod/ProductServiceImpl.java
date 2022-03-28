@@ -1,11 +1,18 @@
 package com.example.BalantaTaller1.service.prod;
 
+import java.util.Optional;
+
+import javax.validation.constraints.NotNull;
+
 //import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.BalantaTaller1.model.prod.Product;
+import com.example.BalantaTaller1.model.prod.Productmodel;
+import com.example.BalantaTaller1.model.prod.Productsubcategory;
+import com.example.BalantaTaller1.model.prod.Unitmeasure;
 import com.example.BalantaTaller1.repository.prod.ProductRepository;
 import com.example.BalantaTaller1.repository.prod.ProductmodelRepository;
 import com.example.BalantaTaller1.repository.prod.ProductsubcategoryRepository;
@@ -29,60 +36,52 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public Product save(Product p) {
-		Integer size = Integer.parseInt(p.getSize());
-		Integer weight = p.getWeight().intValueExact();
-		if(p.getProductnumber().equals(null) || !p.getSellenddate().after(p.getSellstartdate()) || size < 0
-				|| weight < 0 || unitmeasureRepository.findById(p.getUnitmeasure1().getUnitmeasurecode()).isEmpty() 
-				|| unitmeasureRepository.findById(p.getUnitmeasure2().getUnitmeasurecode()).isEmpty()
-				|| productsubcategoryRepository.findById(p.getProductsubcategory().getProductsubcategoryid()).isEmpty()
-				|| productmodelRepository.findById(p.getProductmodel().getProductmodelid()).isEmpty()) {
-			throw new RuntimeException();
+		Product temp = null;
+		
+		constraints(p);
+		
+		Optional<Unitmeasure> opUm = this.unitmeasureRepository.findById(p.getUnitmeasure1().getUnitmeasurecode());
+		Optional<Unitmeasure> opUm1 = this.unitmeasureRepository.findById(p.getUnitmeasure2().getUnitmeasurecode());
+		Optional<Productsubcategory> opPsc = this.productsubcategoryRepository.findById(p.getProductsubcategory().getProductsubcategoryid());
+		Optional<Productmodel> opPm = this.productmodelRepository.findById(p.getProductmodel().getProductmodelid());
+		if(opPm.isPresent() && opUm.isPresent() && opUm1.isPresent() && opPsc.isPresent()) {
+			p.setUnitmeasure1(opUm.get());
+			p.setUnitmeasure2(opUm1.get());
+			p.setProductsubcategory(opPsc.get());
+			p.setProductmodel(opPm.get());
+			temp = productRepository.save(p);
 		}
-		p.setUnitmeasure1(unitmeasureRepository.getById(p.getUnitmeasure1().getUnitmeasurecode()));
-		p.setUnitmeasure2(unitmeasureRepository.getById(p.getUnitmeasure2().getUnitmeasurecode()));
-		p.setProductsubcategory(productsubcategoryRepository.getById(p.getProductsubcategory().getProductsubcategoryid()));
-		p.setProductmodel(productmodelRepository.getById(p.getProductmodel().getProductmodelid()));
-		return productRepository.save(p);
+		return temp;
 	}
 
 	@Override
 	public Product edit(Product p) {
-		Integer size = Integer.parseInt(p.getSize());
-		Integer weight = p.getWeight().intValueExact();
-		if(p.getProductnumber().equals(null) || !p.getSellenddate().after(p.getSellstartdate()) || size < 0
-				|| weight < 0 || unitmeasureRepository.findById(p.getUnitmeasure1().getUnitmeasurecode()).isEmpty() 
-				|| unitmeasureRepository.findById(p.getUnitmeasure2().getUnitmeasurecode()).isEmpty()
-				|| productsubcategoryRepository.findById(p.getProductsubcategory().getProductsubcategoryid()).isEmpty()
-				|| productmodelRepository.findById(p.getProductmodel().getProductmodelid()).isEmpty()) {
-			throw new RuntimeException();
+		Product temp = null;
+		Optional<Product> optional = this.productRepository.findById(p.getProductid());
+		if(optional.isPresent()) {
+			constraints(p);
+			temp = save(p);
 		}
-		Product tempP = new Product();
-		tempP.setBillofmaterials1(p.getBillofmaterials1());
-		tempP.setBillofmaterials2(p.getBillofmaterials2());
-		tempP.setColor(p.getColor());
-		tempP.setDaystomanufacture(p.getDaystomanufacture());
-		tempP.setDiscontinueddate(p.getDiscontinueddate());
-		tempP.setFinishedgoodsflag(p.getFinishedgoodsflag());
-		tempP.setListprice(p.getListprice());
-		tempP.setMakeflag(p.getMakeflag());
-		tempP.setModifieddate(p.getModifieddate());
-		tempP.setName(p.getName());
-		tempP.setProductcosthistories(p.getProductcosthistories());
-		tempP.setProductdocuments(p.getProductdocuments());
-		tempP.setProductinventories(p.getProductinventories());
-		tempP.setProductline(p.getProductline());
-		tempP.setProductnumber(p.getProductnumber());
-		tempP.setWeight(p.getWeight());
-		tempP.setStyle(p.getStyle());
-		tempP.setSize(p.getSize());
-		tempP.setSellstartdate(p.getSellstartdate());
-		tempP.setSellenddate(p.getSellenddate());
-		p.setUnitmeasure1(unitmeasureRepository.getById(p.getUnitmeasure1().getUnitmeasurecode()));
-		p.setUnitmeasure2(unitmeasureRepository.getById(p.getUnitmeasure2().getUnitmeasurecode()));
-		p.setProductsubcategory(productsubcategoryRepository.getById(p.getProductsubcategory().getProductsubcategoryid()));
-		p.setProductmodel(productmodelRepository.getById(p.getProductmodel().getProductmodelid()));
-		return productRepository.save(tempP);
+		
+		return productRepository.save(temp);
 	}
 
+	@NotNull
+	private void constraints(Product p) {
+		Integer size = Integer.parseInt(p.getSize());
+		Integer weight = p.getWeight().intValueExact();
+		if(p.getProductnumber().equals(null)) {
+			throw new RuntimeException("Numero de producto no valido");
+		}
+		if ( !p.getSellenddate().after(p.getSellstartdate())) {
+			throw new RuntimeException("Error en las fechas");
+		}
+		if (size < 0) {
+			throw new RuntimeException("Tamaño menor a 0");
+		}
+		if (weight < 0) {
+			throw new RuntimeException("Peso menor a 0");
+		}
+	}
 	
 }
