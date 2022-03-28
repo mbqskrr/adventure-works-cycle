@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.internal.verification.VerificationModeFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -438,7 +439,7 @@ class ProductTest {
 		}
 		
 		@Test
-		@Order(4)
+		@Order(8)
 		void saveNullProductsubcategory() {
 			p.setProductid(003);
 			p.setModifieddate(modifieddate);
@@ -482,7 +483,7 @@ class ProductTest {
 		}
 		
 		@Test
-		@Order(8)
+		@Order(9)
 		public void saveNull() {
 			assertThrows(NullPointerException.class, () -> {
 				productService.save(null);
@@ -494,8 +495,8 @@ class ProductTest {
 	@DisplayName("Update methods")
 	class ProductUpdate {
 		@Test
-		@Order(9)
-		void saveCorrectly() {
+		@Order(10)
+		void updateCorrectly() {
 			p.setProductid(003);
 			p.setModifieddate(modifieddate);
 			p.setSellstartdate(sellstartdate);
@@ -506,9 +507,9 @@ class ProductTest {
 			p.setSize("120");
 			p.setBillofmaterials1(null);
 			p.setBillofmaterials2(null);
-			p.setColor("Verde");
+			p.setColor("Azul");
 			p.setDaystomanufacture(8);
-			p.setName("Makinon");
+			p.setName("Bichota");
 			p.setWorkorders(null);
 			
 			um1.setUnitmeasurecode("A00");
@@ -528,14 +529,350 @@ class ProductTest {
 			p.setProductmodel(productmodelRepository.findById(9999).get());
 			p.setProductsubcategory(productsubcategoryRepository.findById(39).get());
 			
-			when(productRepository.save(p)).thenReturn(p);
+			when(productRepository.findById(003)).thenReturn(Optional.of(p));
 			
-			Product test = productService.save(p);
+			productService.edit(p);
+			
+			Product test = productRepository.findById(003).get();
 			assertNotNull(test);
-			assertEquals("Makinon", test.getName());
+			assertEquals("Bichota", test.getName());
 			assertEquals(003, test.getProductid());
-			verify(productRepository).save(p);
+			verify(productRepository, VerificationModeFactory.times(2)).findById(003);
 		}
+		
+		@Test
+		@Order(11)
+		void updateNegativeWeight() {
+			p.setProductid(003);
+			p.setModifieddate(modifieddate);
+			p.setSellstartdate(sellstartdate);
+			p.setSellenddate(sellenddate);
+			p.setDiscontinueddate(discontinueddate);
+			p.setProductnumber("Cantidad");
+			p.setWeight(new BigDecimal(-20));
+			p.setSize("120");
+			p.setBillofmaterials1(null);
+			p.setBillofmaterials2(null);
+			p.setColor("Azul");
+			p.setDaystomanufacture(8);
+			p.setName("Bichota");
+			p.setWorkorders(null);
+			
+			um1.setUnitmeasurecode("A00");
+			um2.setUnitmeasurecode("A35");
+			
+			pm.setProductmodelid(9999);
+			
+			psc.setProductsubcategoryid(39);
+			
+			when(unitmeasureRepository.findById("A00")).thenReturn(Optional.of(um1));
+			when(unitmeasureRepository.findById("A35")).thenReturn(Optional.of(um2));
+			when(productmodelRepository.findById(9999)).thenReturn(Optional.of(pm));
+			when(productsubcategoryRepository.findById(39)).thenReturn(Optional.of(psc));
+			
+			p.setUnitmeasure1(unitmeasureRepository.findById("A00").get());
+			p.setUnitmeasure2(unitmeasureRepository.findById("A35").get());
+			p.setProductmodel(productmodelRepository.findById(9999).get());
+			p.setProductsubcategory(productsubcategoryRepository.findById(39).get());
+			
+			when(productRepository.findById(003)).thenThrow(RuntimeException.class);
+			
+			assertThrows(RuntimeException.class, () -> {
+				productService.edit(p);
+			});
+			try {
+				Product test = productRepository.findById(003).get();
+				assertNull(test);
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(12)
+		void updateNegativeSize() {
+			p.setProductid(003);
+			p.setModifieddate(modifieddate);
+			p.setSellstartdate(sellstartdate);
+			p.setSellenddate(sellenddate);
+			p.setDiscontinueddate(discontinueddate);
+			p.setProductnumber("Cantidad");
+			p.setWeight(new BigDecimal(20));
+			p.setSize("-120");
+			p.setBillofmaterials1(null);
+			p.setBillofmaterials2(null);
+			p.setColor("Azul");
+			p.setDaystomanufacture(8);
+			p.setName("Bichota");
+			p.setWorkorders(null);
+			
+			um1.setUnitmeasurecode("A00");
+			um2.setUnitmeasurecode("A35");
+			
+			pm.setProductmodelid(9999);
+			
+			psc.setProductsubcategoryid(39);
+			
+			when(unitmeasureRepository.findById("A00")).thenReturn(Optional.of(um1));
+			when(unitmeasureRepository.findById("A35")).thenReturn(Optional.of(um2));
+			when(productmodelRepository.findById(9999)).thenReturn(Optional.of(pm));
+			when(productsubcategoryRepository.findById(39)).thenReturn(Optional.of(psc));
+			
+			p.setUnitmeasure1(unitmeasureRepository.findById("A00").get());
+			p.setUnitmeasure2(unitmeasureRepository.findById("A35").get());
+			p.setProductmodel(productmodelRepository.findById(9999).get());
+			p.setProductsubcategory(productsubcategoryRepository.findById(39).get());
+			
+			when(productRepository.findById(003)).thenThrow(RuntimeException.class);
+			
+			assertThrows(RuntimeException.class, () -> {
+				productService.edit(p);
+			});
+			try {
+				Product test = productRepository.findById(003).get();
+				assertNull(test);
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(13)
+		void updateNullNumber() {
+			p.setProductid(003);
+			p.setModifieddate(modifieddate);
+			p.setSellstartdate(sellstartdate);
+			p.setSellenddate(sellenddate);
+			p.setDiscontinueddate(discontinueddate);
+			p.setProductnumber(null);
+			p.setWeight(new BigDecimal(20));
+			p.setSize("120");
+			p.setBillofmaterials1(null);
+			p.setBillofmaterials2(null);
+			p.setColor("Azul");
+			p.setDaystomanufacture(8);
+			p.setName("Bichota");
+			p.setWorkorders(null);
+			
+			um1.setUnitmeasurecode("A00");
+			um2.setUnitmeasurecode("A35");
+			
+			pm.setProductmodelid(9999);
+			
+			psc.setProductsubcategoryid(39);
+			
+			when(unitmeasureRepository.findById("A00")).thenReturn(Optional.of(um1));
+			when(unitmeasureRepository.findById("A35")).thenReturn(Optional.of(um2));
+			when(productmodelRepository.findById(9999)).thenReturn(Optional.of(pm));
+			when(productsubcategoryRepository.findById(39)).thenReturn(Optional.of(psc));
+			
+			p.setUnitmeasure1(unitmeasureRepository.findById("A00").get());
+			p.setUnitmeasure2(unitmeasureRepository.findById("A35").get());
+			p.setProductmodel(productmodelRepository.findById(9999).get());
+			p.setProductsubcategory(productsubcategoryRepository.findById(39).get());
+			
+			when(productRepository.findById(003)).thenThrow(RuntimeException.class);
+			
+			assertThrows(RuntimeException.class, () -> {
+				productService.edit(p);
+			});
+			try {
+				Product test = productRepository.findById(003).get();
+				assertNull(test);
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(14)
+		void updateNullUnitMeasure() {
+			p.setProductid(003);
+			p.setModifieddate(modifieddate);
+			p.setSellstartdate(sellstartdate);
+			p.setSellenddate(sellenddate);
+			p.setDiscontinueddate(discontinueddate);
+			p.setProductnumber("Cantidad");
+			p.setWeight(new BigDecimal(20));
+			p.setSize("120");
+			p.setBillofmaterials1(null);
+			p.setBillofmaterials2(null);
+			p.setColor("Azul");
+			p.setDaystomanufacture(8);
+			p.setName("Bichota");
+			p.setWorkorders(null);
+			
+			um2.setUnitmeasurecode("A35");
+			
+			pm.setProductmodelid(9999);
+			
+			psc.setProductsubcategoryid(39);
+			
+			when(unitmeasureRepository.findById("A35")).thenReturn(Optional.of(um2));
+			when(productmodelRepository.findById(9999)).thenReturn(Optional.of(pm));
+			when(productsubcategoryRepository.findById(39)).thenReturn(Optional.of(psc));
+			
+			p.setUnitmeasure2(unitmeasureRepository.findById("A35").get());
+			p.setProductmodel(productmodelRepository.findById(9999).get());
+			p.setProductsubcategory(productsubcategoryRepository.findById(39).get());
+			
+			when(productRepository.findById(003)).thenThrow(RuntimeException.class);
+			
+			assertThrows(RuntimeException.class, () -> {
+				productService.edit(p);
+			});
+			try {
+				Product test = productRepository.findById(003).get();
+				assertNull(test);
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(15)
+		void updateSellstartdateGreaterThanSellenddate() {
+			p.setProductid(003);
+			p.setModifieddate(modifieddate);
+			p.setSellstartdate(sellenddate);
+			p.setSellenddate(sellstartdate);
+			p.setDiscontinueddate(discontinueddate);
+			p.setProductnumber("Cantidad");
+			p.setWeight(new BigDecimal(20));
+			p.setSize("120");
+			p.setBillofmaterials1(null);
+			p.setBillofmaterials2(null);
+			p.setColor("Azul");
+			p.setDaystomanufacture(8);
+			p.setName("Bichota");
+			p.setWorkorders(null);
+			
+			um1.setUnitmeasurecode("A00");
+			um2.setUnitmeasurecode("A35");
+			
+			pm.setProductmodelid(9999);
+			
+			psc.setProductsubcategoryid(39);
+			
+			when(unitmeasureRepository.findById("A00")).thenReturn(Optional.of(um1));
+			when(unitmeasureRepository.findById("A35")).thenReturn(Optional.of(um2));
+			when(productmodelRepository.findById(9999)).thenReturn(Optional.of(pm));
+			when(productsubcategoryRepository.findById(39)).thenReturn(Optional.of(psc));
+			
+			p.setUnitmeasure1(unitmeasureRepository.findById("A00").get());
+			p.setUnitmeasure2(unitmeasureRepository.findById("A35").get());
+			p.setProductmodel(productmodelRepository.findById(9999).get());
+			p.setProductsubcategory(productsubcategoryRepository.findById(39).get());
+			
+			when(productRepository.findById(003)).thenThrow(RuntimeException.class);
+			
+			assertThrows(RuntimeException.class, () -> {
+				productService.edit(p);
+			});
+			try {
+				Product test = productRepository.findById(003).get();
+				assertNull(test);
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(16)
+		void updateNullProductmodel() {
+			p.setProductid(003);
+			p.setModifieddate(modifieddate);
+			p.setSellstartdate(sellstartdate);
+			p.setSellenddate(sellenddate);
+			p.setDiscontinueddate(discontinueddate);
+			p.setProductnumber(null);
+			p.setWeight(new BigDecimal(20));
+			p.setSize("120");
+			p.setBillofmaterials1(null);
+			p.setBillofmaterials2(null);
+			p.setColor("Azul");
+			p.setDaystomanufacture(8);
+			p.setName("Bichota");
+			p.setWorkorders(null);
+			
+			um1.setUnitmeasurecode("A00");
+			um2.setUnitmeasurecode("A35");
+			
+			psc.setProductsubcategoryid(39);
+			
+			when(unitmeasureRepository.findById("A00")).thenReturn(Optional.of(um1));
+			when(unitmeasureRepository.findById("A35")).thenReturn(Optional.of(um2));
+			when(productsubcategoryRepository.findById(39)).thenReturn(Optional.of(psc));
+			
+			p.setUnitmeasure1(unitmeasureRepository.findById("A00").get());
+			p.setUnitmeasure2(unitmeasureRepository.findById("A35").get());
+			p.setProductsubcategory(productsubcategoryRepository.findById(39).get());
+			
+			when(productRepository.findById(003)).thenThrow(RuntimeException.class);
+			
+			assertThrows(RuntimeException.class, () -> {
+				productService.edit(p);
+			});
+			try {
+				Product test = productRepository.findById(003).get();
+				assertNull(test);
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(17)
+		void updateNullProductsubcategory() {
+			p.setProductid(003);
+			p.setModifieddate(modifieddate);
+			p.setSellstartdate(sellstartdate);
+			p.setSellenddate(sellenddate);
+			p.setDiscontinueddate(discontinueddate);
+			p.setProductnumber(null);
+			p.setWeight(new BigDecimal(20));
+			p.setSize("120");
+			p.setBillofmaterials1(null);
+			p.setBillofmaterials2(null);
+			p.setColor("Azul");
+			p.setDaystomanufacture(8);
+			p.setName("Bichota");
+			p.setWorkorders(null);
+			
+			um1.setUnitmeasurecode("A00");
+			um2.setUnitmeasurecode("A35");
+			
+			pm.setProductmodelid(9999);
+			
+			when(unitmeasureRepository.findById("A00")).thenReturn(Optional.of(um1));
+			when(unitmeasureRepository.findById("A35")).thenReturn(Optional.of(um2));
+			when(productmodelRepository.findById(9999)).thenReturn(Optional.of(pm));
+			
+			p.setUnitmeasure1(unitmeasureRepository.findById("A00").get());
+			p.setUnitmeasure2(unitmeasureRepository.findById("A35").get());
+			p.setProductmodel(productmodelRepository.findById(9999).get());
+		
+			when(productRepository.findById(003)).thenThrow(RuntimeException.class);
+			
+			assertThrows(RuntimeException.class, () -> {
+				productService.edit(p);
+			});
+			try {
+				Product test = productRepository.findById(003).get();
+				assertNull(test);
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(18)
+		public void updateNull() {
+			assertThrows(NullPointerException.class, () -> {
+				productService.edit(null);
+			});
+		}
+		
 	}
 	
 	@AfterEach
