@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,22 +16,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import com.example.BalantaTaller1.main.BalantaTaller1Application;
 import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.repository.prod.ProductcategoryRepository;
 
-
-@ExtendWith(SpringExtension.class)
-//@ContextConfiguration()
-@SpringBootTest(classes = BalantaTaller1Application.class)
+@ContextConfiguration(classes = BalantaTaller1Application.class)
+@SpringBootTest
 class ProdcutcategoryIntegrationTest {
 	
 	private Productcategory pc;
@@ -77,7 +71,15 @@ class ProdcutcategoryIntegrationTest {
 			
 			pc.setProductsubcategories(null);
 			
+			
+		    
+			
 			Productcategory temp = productcategoryRepository.save(pc);
+			
+			Iterable<Productcategory> productcategory = productcategoryRepository.findAll();
+			Assertions.assertThat(productcategory).first().hasFieldOrPropertyWithValue("name", "Hogar");
+
+			
 			assertNotNull(temp);
 			
 		}

@@ -8,6 +8,7 @@ class BalantaTaller1ApplicationTests {
 
 	@Test
 	void contextLoads() {
+		
 	}
 
 }
