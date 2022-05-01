@@ -12,6 +12,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import org.hibernate.annotations.GenericGenerator;
+
 /**
  * The persistent class for the unitmeasure database table.
  *
@@ -21,9 +23,11 @@ import javax.persistence.SequenceGenerator;
 public class Unitmeasure implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	/*@Id
 	@SequenceGenerator(name = "UNITMEASURE_UNITMEASURECODE_GENERATOR", allocationSize = 1, sequenceName = "UNITMEASURE_SEQ")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UNITMEASURE_UNITMEASURECODE_GENERATOR")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UNITMEASURE_UNITMEASURECODE_GENERATOR")*/
+	@Id @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String unitmeasurecode;
 
 	private Timestamp modifieddate;

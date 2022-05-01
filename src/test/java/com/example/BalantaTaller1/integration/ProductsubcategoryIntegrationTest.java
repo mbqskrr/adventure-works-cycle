@@ -192,10 +192,7 @@ public class ProductsubcategoryIntegrationTest {
 			psc1.setRowguid(666);
 			psc1.setProductcategory(pc);	
 			
-			//assertEquals(1, productsubcategoryRepository.findById(1).get().getProductsubcategoryid());
-			
 			productsubcategory = productsubcategoryService.edit(psc1);
-			//assertNull(productsubcategory);
 			Productsubcategory found = productsubcategoryRepository.findById(productsubcategory.getProductsubcategoryid()).get();
 			assertNotNull(found);
 			assertEquals(productsubcategory.getProductsubcategoryid(), found.getProductsubcategoryid());
@@ -299,7 +296,7 @@ public class ProductsubcategoryIntegrationTest {
 	
 	@AfterAll
 	static void end() {
-		System.out.println("... TEST STARTED ...");
+		System.out.println("... TEST FINISHED ...");
 	}
 
 	@AfterEach

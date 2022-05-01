@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.BalantaTaller1.model.prod.Product;
 import com.example.BalantaTaller1.model.prod.Productmodel;
@@ -35,6 +36,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
+	@Transactional
 	public Product save(Product p) {
 		Product temp = null;
 		
@@ -55,6 +57,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
+	@Transactional
 	public Product edit(Product p) {
 		Product temp = null;
 		Optional<Product> optional = this.productRepository.findById(p.getProductid());
