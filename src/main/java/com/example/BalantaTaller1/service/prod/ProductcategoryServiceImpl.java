@@ -59,6 +59,7 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 			throw new RuntimeException("El nombre de la categoria no tiene al menos 3 carácteres");
 
 		}
+		
 	}
 
 }
