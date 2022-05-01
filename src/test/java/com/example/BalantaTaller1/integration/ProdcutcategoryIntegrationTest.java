@@ -149,7 +149,7 @@ class ProdcutcategoryIntegrationTest {
 	}
 	
 	@Nested
-	@DisplayName("Update methods")
+	@DisplayName("Edit method test")
 	class IntegrationTestEdit{
 		
 		@BeforeEach
