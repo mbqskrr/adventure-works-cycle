@@ -149,15 +149,17 @@ class ProductIntegrationTest {
 		pm.setRowguid(69);
 		productmodelRepository.save(pm);
 		
-		/*
-		 * um1 = new Unitmeasure(); um1.setUnitmeasurecode("cm");
-		 * um1.setModifieddate(modifieddate); um1.setName("centimetros");
-		 * unitmeasureRepository.save(um1);
-		 * 
-		 * um2 = new Unitmeasure(); um2.setUnitmeasurecode("in");
-		 * um2.setModifieddate(modifieddate); um2.setName("Pulgadas");
-		 * unitmeasureRepository.save(um2);
-		 */
+		um1 = new Unitmeasure();
+		//um1.setUnitmeasurecode("cm");
+		um1.setModifieddate(modifieddate);
+		um1.setName("centimetros");
+		unitmeasureRepository.save(um1);
+		
+		um2 = new Unitmeasure();
+		//um2.setUnitmeasurecode("in");
+		um2.setModifieddate(modifieddate);
+		um2.setName("Pulgadas");
+		unitmeasureRepository.save(um2);
 		
 	}
 	
@@ -168,18 +170,6 @@ class ProductIntegrationTest {
 		@Test
 		@Order(1)
 		void saveCorrectly() {
-			
-			um1 = new Unitmeasure();
-			//um1.setUnitmeasurecode("cm");
-			um1.setModifieddate(modifieddate);
-			um1.setName("centimetros");
-			unitmeasureRepository.save(um1);
-			
-			um2 = new Unitmeasure();
-			//um2.setUnitmeasurecode("in");
-			um2.setModifieddate(modifieddate);
-			um2.setName("Pulgadas");
-			unitmeasureRepository.save(um2);
 			
 			p.setModifieddate(modifieddate);
 			p.setSellstartdate(sellstartdate);
@@ -208,6 +198,233 @@ class ProductIntegrationTest {
 			assertEquals(found.getName(), "Makinon");
 			assertEquals(1, found.getProductid());
 			
+		}
+		
+		@Test
+		@Order(2)
+		void saveNegativeWeight() {
+			
+			p.setModifieddate(modifieddate);
+			p.setSellstartdate(sellstartdate);
+			p.setSellenddate(sellenddate);
+			p.setDiscontinueddate(discontinueddate);
+			p.setProductnumber("Cantidad");
+			p.setWeight(new BigDecimal(-20));
+			p.setSize("12");
+			p.setColor("Verde");
+			p.setDaystomanufacture(8);
+			p.setName("Makinon");
+			p.setProductsubcategory(psc);
+			p.setProductmodel(pm);
+			p.setUnitmeasure1(um1);
+			p.setUnitmeasure2(um2);
+			p.setProductid(1);
+			p.setClass_("Producto");
+			
+			try {
+				product = productService.save(p);
+				
+				Product found = productRepository.findById(product.getProductid()).get();
+				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
+				assertNull(found);
+			} catch (RuntimeException rte) {
+				rte.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(3)
+		void saveNegativeSize() {
+			p.setModifieddate(modifieddate);
+			p.setSellstartdate(sellstartdate);
+			p.setSellenddate(sellenddate);
+			p.setDiscontinueddate(discontinueddate);
+			p.setProductnumber("Cantidad");
+			p.setWeight(new BigDecimal(20));
+			p.setSize("-12");
+			p.setColor("Verde");
+			p.setDaystomanufacture(8);
+			p.setName("Makinon");
+			p.setProductsubcategory(psc);
+			p.setProductmodel(pm);
+			p.setUnitmeasure1(um1);
+			p.setUnitmeasure2(um2);
+			p.setProductid(1);
+			p.setClass_("Producto");
+			
+			try {
+				product = productService.save(p);
+				
+				Product found = productRepository.findById(product.getProductid()).get();
+				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
+				assertNull(found);
+			} catch (RuntimeException rte) {
+				rte.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(4)
+		void saveNullNumber() {
+			p.setModifieddate(modifieddate);
+			p.setSellstartdate(sellstartdate);
+			p.setSellenddate(sellenddate);
+			p.setDiscontinueddate(discontinueddate);
+			p.setProductnumber(null);
+			p.setWeight(new BigDecimal(20));
+			p.setSize("12");
+			p.setColor("Verde");
+			p.setDaystomanufacture(8);
+			p.setName("Makinon");
+			p.setProductsubcategory(psc);
+			p.setProductmodel(pm);
+			p.setUnitmeasure1(um1);
+			p.setUnitmeasure2(um2);
+			p.setProductid(1);
+			p.setClass_("Producto");
+			
+			try {
+				product = productService.save(p);
+				
+				Product found = productRepository.findById(product.getProductid()).get();
+				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
+				assertNull(found);
+			} catch (RuntimeException rte) {
+				rte.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(5)
+		void saveNullUnitMeasure() {
+			p.setModifieddate(modifieddate);
+			p.setSellstartdate(sellstartdate);
+			p.setSellenddate(sellenddate);
+			p.setDiscontinueddate(discontinueddate);
+			p.setProductnumber("Cantidad");
+			p.setWeight(new BigDecimal(20));
+			p.setSize("-12");
+			p.setColor("Verde");
+			p.setDaystomanufacture(8);
+			p.setName("Makinon");
+			p.setProductsubcategory(psc);
+			p.setProductmodel(pm);
+			p.setUnitmeasure1(null);
+			p.setUnitmeasure2(um2);
+			p.setProductid(1);
+			p.setClass_("Producto");
+			
+			try {
+				product = productService.save(p);
+				
+				Product found = productRepository.findById(product.getProductid()).get();
+				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
+				assertNull(found);
+			} catch (RuntimeException rte) {
+				rte.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(6)
+		void saveSellstartdateGreaterThanSellenddate() {
+			
+			p.setModifieddate(modifieddate);
+			p.setSellstartdate(sellenddate);
+			p.setSellenddate(sellstartdate);
+			p.setDiscontinueddate(discontinueddate);
+			p.setProductnumber("Cantidad");
+			p.setWeight(new BigDecimal(20));
+			p.setSize("12");
+			p.setColor("Verde");
+			p.setDaystomanufacture(8);
+			p.setName("Makinon");
+			p.setProductsubcategory(psc);
+			p.setProductmodel(pm);
+			p.setUnitmeasure1(um1);
+			p.setUnitmeasure2(um2);
+			p.setProductid(1);
+			p.setClass_("Producto");
+			
+			try {
+				product = productService.save(p);
+				
+				Product found = productRepository.findById(product.getProductid()).get();
+				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
+				assertNull(found);
+			} catch (RuntimeException rte) {
+				rte.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(7)
+		void saveNullProductmodel() {
+			p.setModifieddate(modifieddate);
+			p.setSellstartdate(sellstartdate);
+			p.setSellenddate(sellenddate);
+			p.setDiscontinueddate(discontinueddate);
+			p.setProductnumber("Cantidad");
+			p.setWeight(new BigDecimal(20));
+			p.setSize("12");
+			p.setColor("Verde");
+			p.setDaystomanufacture(8);
+			p.setName("Makinon");
+			p.setProductsubcategory(psc);
+			p.setProductmodel(null);
+			p.setUnitmeasure1(um1);
+			p.setUnitmeasure2(um2);
+			p.setProductid(1);
+			p.setClass_("Producto");
+			
+			try {
+				product = productService.save(p);
+				
+				Product found = productRepository.findById(product.getProductid()).get();
+				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
+				assertNull(found);
+			} catch (RuntimeException rte) {
+				rte.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(8)
+		void saveNullProductsubcategory() {
+			p.setModifieddate(modifieddate);
+			p.setSellstartdate(sellstartdate);
+			p.setSellenddate(sellenddate);
+			p.setDiscontinueddate(discontinueddate);
+			p.setProductnumber("Cantidad");
+			p.setWeight(new BigDecimal(20));
+			p.setSize("12");
+			p.setColor("Verde");
+			p.setDaystomanufacture(8);
+			p.setName("Makinon");
+			p.setProductsubcategory(null);
+			p.setProductmodel(pm);
+			p.setUnitmeasure1(um1);
+			p.setUnitmeasure2(um2);
+			p.setProductid(1);
+			p.setClass_("Producto");
+			
+			try {
+				product = productService.save(p);
+				
+				Product found = productRepository.findById(product.getProductid()).get();
+				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
+				assertNull(found);
+			} catch (RuntimeException rte) {
+				rte.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(9)
+		public void saveNull() {
+			assertThrows(NullPointerException.class, () -> {
+				productService.save(null);
+			});
 		}
 		
 	}
@@ -252,7 +469,7 @@ class ProductIntegrationTest {
 		}
 		
 		@Test
-		@Order(2)
+		@Order(10)
 		void updateCorrectly() {
 			
 			Product p1 = new Product();
@@ -285,6 +502,255 @@ class ProductIntegrationTest {
 			Assertions.assertThat(found).hasNoNullFieldsOrProperties();
 			assertEquals("Bichota", found.getName());
 		}
+		
+		@Test
+		@Order(11)
+		void updateNegativeWeight() {
+			
+			Product p1 = new Product();
+			
+			p1.setModifieddate(modifieddate);
+			p1.setSellstartdate(sellstartdate);
+			p1.setSellenddate(sellenddate);
+			p1.setDiscontinueddate(discontinueddate);
+			p1.setProductnumber("Cantidad");
+			p1.setWeight(new BigDecimal(-20));
+			p1.setSize("12");
+			p1.setColor("Verde");
+			p1.setDaystomanufacture(8);
+			p1.setName("Makinon");
+			p1.setProductsubcategory(psc);
+			p1.setProductmodel(pm);
+			p1.setUnitmeasure1(um1);
+			p1.setUnitmeasure2(um2);
+			p1.setProductid(1);
+			p1.setClass_("Producto");
+			
+			try {
+				product = productService.edit(p1);
+				
+				Product found = productRepository.findById(product.getProductid()).get();
+				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
+				assertNull(found);
+			} catch (RuntimeException rte) {
+				rte.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(12)
+		void updateNegativeSize() {
+			
+			Product p1 = new Product();
+			
+			p1.setModifieddate(modifieddate);
+			p1.setSellstartdate(sellstartdate);
+			p1.setSellenddate(sellenddate);
+			p1.setDiscontinueddate(discontinueddate);
+			p1.setProductnumber("Cantidad");
+			p1.setWeight(new BigDecimal(20));
+			p1.setSize("-12");
+			p1.setColor("Verde");
+			p1.setDaystomanufacture(8);
+			p1.setName("Makinon");
+			p1.setProductsubcategory(psc);
+			p1.setProductmodel(pm);
+			p1.setUnitmeasure1(um1);
+			p1.setUnitmeasure2(um2);
+			p1.setProductid(1);
+			p1.setClass_("Producto");
+			
+			try {
+				product = productService.edit(p1);
+				
+				Product found = productRepository.findById(product.getProductid()).get();
+				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
+				assertNull(found);
+			} catch (RuntimeException rte) {
+				rte.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(13)
+		void updateNullNumber() {
+			
+			Product p1 = new Product();
+			
+			p1.setModifieddate(modifieddate);
+			p1.setSellstartdate(sellstartdate);
+			p1.setSellenddate(sellenddate);
+			p1.setDiscontinueddate(discontinueddate);
+			p1.setProductnumber(null);
+			p1.setWeight(new BigDecimal(20));
+			p1.setSize("12");
+			p1.setColor("Verde");
+			p1.setDaystomanufacture(8);
+			p1.setName("Makinon");
+			p1.setProductsubcategory(psc);
+			p1.setProductmodel(pm);
+			p1.setUnitmeasure1(um1);
+			p1.setUnitmeasure2(um2);
+			p1.setProductid(1);
+			p1.setClass_("Producto");
+			
+			try {
+				product = productService.edit(p1);
+				
+				Product found = productRepository.findById(product.getProductid()).get();
+				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
+				assertNull(found);
+			} catch (RuntimeException rte) {
+				rte.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(14)
+		void updateNullUnitMeasure() {
+			
+			Product p1 = new Product();
+			
+			p1.setModifieddate(modifieddate);
+			p1.setSellstartdate(sellstartdate);
+			p1.setSellenddate(sellenddate);
+			p1.setDiscontinueddate(discontinueddate);
+			p1.setProductnumber("Cantidad");
+			p1.setWeight(new BigDecimal(20));
+			p1.setSize("12");
+			p1.setColor("Verde");
+			p1.setDaystomanufacture(8);
+			p1.setName("Makinon");
+			p1.setProductsubcategory(psc);
+			p1.setProductmodel(pm);
+			p1.setUnitmeasure1(um1);
+			p1.setUnitmeasure2(null);
+			p1.setProductid(1);
+			p1.setClass_("Producto");
+			
+			try {
+				product = productService.edit(p1);
+				
+				Product found = productRepository.findById(product.getProductid()).get();
+				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
+				assertNull(found);
+			} catch (RuntimeException rte) {
+				rte.printStackTrace();
+			}
+
+		}
+		
+		@Test
+		@Order(15)
+		void updateSellstartdateGreaterThanSellenddate() {
+			
+			Product p1 = new Product();
+			
+			p1.setModifieddate(modifieddate);
+			p1.setSellstartdate(sellenddate);
+			p1.setSellenddate(sellstartdate);
+			p1.setDiscontinueddate(discontinueddate);
+			p1.setProductnumber("Cantidad");
+			p1.setWeight(new BigDecimal(20));
+			p1.setSize("12");
+			p1.setColor("Verde");
+			p1.setDaystomanufacture(8);
+			p1.setName("Makinon");
+			p1.setProductsubcategory(psc);
+			p1.setProductmodel(pm);
+			p1.setUnitmeasure1(um1);
+			p1.setUnitmeasure2(um2);
+			p1.setProductid(1);
+			p1.setClass_("Producto");
+			
+			try {
+				product = productService.edit(p1);
+				
+				Product found = productRepository.findById(product.getProductid()).get();
+				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
+				assertNull(found);
+			} catch (RuntimeException rte) {
+				rte.printStackTrace();
+			}
+
+		}
+		
+		@Test
+		@Order(16)
+		void updateNullProductmodel() {
+			
+			Product p1 = new Product();
+			
+			p1.setModifieddate(modifieddate);
+			p1.setSellstartdate(sellstartdate);
+			p1.setSellenddate(sellenddate);
+			p1.setDiscontinueddate(discontinueddate);
+			p1.setProductnumber("Cantidad");
+			p1.setWeight(new BigDecimal(20));
+			p1.setSize("12");
+			p1.setColor("Verde");
+			p1.setDaystomanufacture(8);
+			p1.setName("Makinon");
+			p1.setProductsubcategory(psc);
+			p1.setProductmodel(null);
+			p1.setUnitmeasure1(um1);
+			p1.setUnitmeasure2(um2);
+			p1.setProductid(1);
+			p1.setClass_("Producto");
+			
+			try {
+				product = productService.edit(p1);
+				
+				Product found = productRepository.findById(product.getProductid()).get();
+				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
+				assertNull(found);
+			} catch (RuntimeException rte) {
+				rte.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(17)
+		void updateNullProductsubcategory() {
+			
+			Product p1 = new Product();
+			
+			p1.setModifieddate(modifieddate);
+			p1.setSellstartdate(sellstartdate);
+			p1.setSellenddate(sellenddate);
+			p1.setDiscontinueddate(discontinueddate);
+			p1.setProductnumber("Cantidad");
+			p1.setWeight(new BigDecimal(20));
+			p1.setSize("12");
+			p1.setColor("Verde");
+			p1.setDaystomanufacture(8);
+			p1.setName("Makinon");
+			p1.setProductsubcategory(null);
+			p1.setProductmodel(pm);
+			p1.setUnitmeasure1(um1);
+			p1.setUnitmeasure2(um2);
+			p1.setProductid(1);
+			p1.setClass_("Producto");
+			
+			try {
+				product = productService.edit(p1);
+				
+				Product found = productRepository.findById(product.getProductid()).get();
+				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
+				assertNull(found);
+			} catch (RuntimeException rte) {
+				rte.printStackTrace();
+			}
+		}
+		
+		@Test
+		@Order(18)
+		public void updateNull() {
+			assertThrows(NullPointerException.class, () -> {
+				productService.edit(null);
+			});
+		}
+		
 	}
 
 	

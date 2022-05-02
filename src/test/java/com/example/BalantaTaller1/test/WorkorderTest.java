@@ -100,6 +100,7 @@ class WorkorderTest {
 		date3  = df3.parse("13-04-2022");
 		time4 = date3.getTime();
 		enddate = new Timestamp(time4);
+		
 	}
 
 	@Nested
@@ -493,7 +494,7 @@ class WorkorderTest {
 		
 		@Test
 		@Order(13)
-		void saveNullProductid() {
+		void updateNullProductid() {
 			wo.setDuedate(duedate);
 			wo.setEnddate(startdate);
 			wo.setModifieddate(modifieddate);
@@ -524,7 +525,7 @@ class WorkorderTest {
 		
 		@Test
 		@Order(14)
-		public void saveNull() {
+		public void updateNull() {
 			assertThrows(NullPointerException.class, () -> {
 				workorderService.edit(null);
 			});
