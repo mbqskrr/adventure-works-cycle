@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.BalantaTaller1.model.prod.Productcategory;
+import com.example.BalantaTaller1.model.prod.Productsubcategory;
 import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImpl;
 import com.example.BalantaTaller1.service.prod.ProductsubcategoryServiceImpl;
 
@@ -26,6 +27,12 @@ public class AdminController {
 	public String addProductcategory(Model model) {
 		model.addAttribute("productcategory", new Productcategory());
 		return "admin/addProductcategory";
+	}
+	
+	@GetMapping("/productsubcategory/add")
+	public String addProductsubcategory(Model model) {
+		model.addAttribute("productsubcategory", new Productsubcategory());
+		return "admin/addProductsubcategory";
 	}
 
 }
