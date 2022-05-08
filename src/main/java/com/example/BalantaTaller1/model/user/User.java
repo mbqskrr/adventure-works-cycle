@@ -1,27 +1,40 @@
 package com.example.BalantaTaller1.model.user;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.example.BalantaTaller1.model.validation.CompleteInfoValidation;
+import com.example.BalantaTaller1.model.validation.CredentialInfoValidation;
+import com.example.BalantaTaller1.model.validation.PersonalInfoValidation;
+
+import lombok.Data;
 
 @Entity
 @Table(name = "user_table")
-public class User implements UserDetails{
-private static final long serialVersionUID = 1L;
+@Data
+public class User{
 	
 	@Id
+	@GeneratedValue(strategy= GenerationType.AUTO)
 	private Integer id;
-
+	
+	@NotBlank(groups = CredentialInfoValidation.class)
+	@Size(min = 3, groups = { CredentialInfoValidation.class}, message="User must be at least 3 characters")
 	private String username;
-
+	
+	@NotNull(groups = CompleteInfoValidation.class, message = "Size must be 8 characters")
+	@Size(min = 8, groups = { CredentialInfoValidation.class })
 	private String password;
 	
-	private String role;
+	@Transient
+	@NotNull(groups = CompleteInfoValidation.class, message = "Passwords doesn't match")
+	private String repeatPassword;
+	
+	@Transient
+	@NotNull(groups= {PersonalInfoValidation.class, CompleteInfoValidation.class}, message= "Type can't be null")
+	private UserType type;
 
 	public Integer getId() {
 		return id;
@@ -47,49 +60,19 @@ private static final long serialVersionUID = 1L;
 		this.password = password;
 	}
 
-	public String getType() {
-		return role;
+	public String getRepeatPassword() {
+		return repeatPassword;
 	}
 
-	public void setType(String type) {
-		this.role = type;
+	public void setRepeatPassword(String repeatPassword) {
+		this.repeatPassword = repeatPassword;
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<SimpleGrantedAuthority> auth = new ArrayList<>();
-		
-		auth.add(new SimpleGrantedAuthority(role));
-		
-		return auth;
+	public UserType getType() {
+		return type;
 	}
 
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role + "]";
+	public void setType(UserType type) {
+		this.type = type;
 	}
 }
