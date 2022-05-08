@@ -13,9 +13,9 @@ import com.example.BalantaTaller1.model.user.UserType;
 import com.example.BalantaTaller1.service.user.UserServiceImpl;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.example.BalantaTaller1"})
-@EnableJpaRepositories(basePackages = "com.example.BalantaTaller1")
-@EntityScan(basePackages = "com.example.BalantaTaller1")
+@ComponentScan(basePackages = {"com.example.BalantaTaller1.controller", "com.example.BalantaTaller1.auth", "com.example.BalantaTaller1.repository.prod", "com.example.BalantaTaller1.repository.user", "com.example.BalantaTaller1.service.prod", "com.example.BalantaTaller1.service.user"})
+@EnableJpaRepositories(basePackages = {"com.example.BalantaTaller1.repository.prod" , "com.example.BalantaTaller1.repository.user"})
+@EntityScan(basePackages = {"com.example.BalantaTaller1.model.prod", "com.example.BalantaTaller1.model.user"})
 public class BalantaTaller1Application {
 
 	/*
@@ -25,14 +25,14 @@ public class BalantaTaller1Application {
 	 */
 	
 	public static void main(String[] args) {
-		ConfigurableApplicationContext context = SpringApplication.run(BalantaTaller1Application.class, args);
-		UserServiceImpl user= context.getBean(UserServiceImpl.class);
+		/*ConfigurableApplicationContext context =*/ SpringApplication.run(BalantaTaller1Application.class, args);
+		//UserServiceImpl user= context.getBean(UserServiceImpl.class);
 		
-		User u= new User();
+		/*User u= new User();
 		u.setUsername("El bicho");
 		u.setPassword("{noop}SIU7");
 		u.setType(UserType.administrator);
 		
-		user.save(u);
+		user.save(u);*/
 	}
 }
