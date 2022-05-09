@@ -48,8 +48,8 @@ public class AdminController {
 			return "redirect:/productcategory/";
 		}else {
 			if(bindingResult.hasErrors()) {
-				model.addAttribute("productcategory", new Productcategory());
-				return "admin/addProductcategory";
+				//model.addAttribute("productcategory", new Productcategory());
+				return "/admin/addProductcategory";
 			}
 			productcategoryService.save(productcategory);
 			return "redirect:/productcategory/";
@@ -58,26 +58,36 @@ public class AdminController {
 		
 	}
 	
+	@GetMapping("/productsubcategory")
+	public String productsubcategories(Model model) {
+		model.addAttribute("productsubcategories", productsubcategoryService.findAll());
+		return "admin/productsubcategory";
+	}
+	
 	@GetMapping("/productsubcategory/add")
 	public String addProductsubcategory(Model model) {
 		model.addAttribute("productsubcategory", new Productsubcategory());
+		model.addAttribute("productcategories", productcategoryService.findAll());
 		return "admin/addProductsubcategory";
+		
 	}
 	
-	
+	@PostMapping("/productsubcategory/add")
 	public String saveProductsubcategory(@Validated Productsubcategory productsubcategory, BindingResult bindingResult, 
 			Model model, @RequestParam(value = "action", required = true) String action) {
-		if(bindingResult.hasErrors()) {
-			model.addAttribute("productsubcategory", new Productsubcategory());
-			model.addAttribute("productcategories", productcategoryService.findAll());
-			return "admin/addProductsubcategory";
-		}
-		
 		if (action.equals("Cancel")) {
+			return "redirect:/productsubcategory";
+		}else {
+			if(bindingResult.hasErrors()) {
+				model.addAttribute("productsubcategory", new Productsubcategory());
+				model.addAttribute("productcategories", productcategoryService.findAll());
+				return "admin/addProductsubcategory";
+			}
+			
+			productsubcategoryService.save(productsubcategory);
 			return "redirect:/productsubcategory/add";
 		}
-		productsubcategoryService.save(productsubcategory);
-		return "redirect:/productsubcategory/add";
+		
 		
 	}
 

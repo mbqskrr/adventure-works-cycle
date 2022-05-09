@@ -67,4 +67,8 @@ public class ProductsubcategoryServiceImpl implements ProductsubcategoryService{
 		}
 	}
 
+	public Iterable<Productsubcategory> findAll() {
+		return productsubcategoryRepository.findAll();
+	}
+
 }

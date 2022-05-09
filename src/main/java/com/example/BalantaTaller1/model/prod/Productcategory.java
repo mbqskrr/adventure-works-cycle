@@ -33,8 +33,8 @@ public class Productcategory implements Serializable {
 
 	private Timestamp modifieddate;
 
-	@Size(min=3, groups = {ProductcategoryValidation.class})
 	@NotBlank(groups = ProductcategoryValidation.class)
+	@Size(min=3, groups = {ProductcategoryValidation.class})
 	private String name;
 
 	private Integer rowguid;
