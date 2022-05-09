@@ -25,7 +25,7 @@
 					<div class="row">
 					
 						<div class="form-group col-md-6">
-							<label for="name" class="col-form-label">name</label> <input
+							<label for="name" class="col-form-label">Name</label> <input
 								type="text" th:field="*{name}" class="form-control" id="name"
 								placeholder="Name"> 
 								<span
@@ -42,7 +42,9 @@
 							<input type="reset" class="btn btn-secondary" value="Clear">
 						</div>
 						
-						<p><a href="/admin/admin.html"><i class="fas fa-user-edit ml-2"></i> Volver </a></p>
+						<div class="col-md-3 mt-3">
+							<input type="submit" name="action" class="btn btn-secondary" value="Cancel">
+						</div>
 					</div>
 				</form>
 			</div>

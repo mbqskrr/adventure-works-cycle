@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import com.example.BalantaTaller1.model.validation.ProductcategoryValidation;
 
 
 /**
@@ -29,7 +33,8 @@ public class Productcategory implements Serializable {
 
 	private Timestamp modifieddate;
 
-	
+	@Size(min=3, groups = {ProductcategoryValidation.class})
+	@NotBlank(groups = ProductcategoryValidation.class)
 	private String name;
 
 	private Integer rowguid;
