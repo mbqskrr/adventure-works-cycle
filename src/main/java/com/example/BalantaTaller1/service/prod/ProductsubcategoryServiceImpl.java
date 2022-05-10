@@ -1,5 +1,6 @@
 package com.example.BalantaTaller1.service.prod;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
@@ -31,7 +32,7 @@ public class ProductsubcategoryServiceImpl implements ProductsubcategoryService{
 		
 		Productsubcategory temp = null;
 		
-		constraints(psc);
+		//constraints(psc);
 		
 		Optional<Productcategory> optional = this.productcategoryRepository.findById(psc.getProductcategory().getProductcategoryid()); 
 		if(optional.isPresent()) {
@@ -50,25 +51,32 @@ public class ProductsubcategoryServiceImpl implements ProductsubcategoryService{
 		Optional<Productsubcategory> optional = this.productsubcategoryRepository.findById(psc.getProductsubcategoryid());
 		
 		if(optional.isPresent()) {
-			constraints(psc);
+			//constraints(psc);
 			temp = save(psc);
 		}
 		
 		return temp;
 	}
 	
-	@NotNull
-	private void constraints(Productsubcategory psc) {
-		if(psc.getName().length()<=5 || psc.getName()==null) {
-			throw new RuntimeException("Nombre de subcategoria no valido");
-		}
-		if (productcategoryRepository.findById(psc.getProductcategory().getProductcategoryid()).isEmpty()) {
-			throw new RuntimeException("Categoria asociada no existe");
-		}
-	}
+	/*
+	 * @NotNull private void constraints(Productsubcategory psc) {
+	 * if(psc.getName().length()<=5 || psc.getName()==null) { throw new
+	 * RuntimeException("Nombre de subcategoria no valido"); } if
+	 * (productcategoryRepository.findById(psc.getProductcategory().
+	 * getProductcategoryid()).isEmpty()) { throw new
+	 * RuntimeException("Categoria asociada no existe"); } }
+	 */
 
 	public Iterable<Productsubcategory> findAll() {
 		return productsubcategoryRepository.findAll();
+	}
+
+	public Iterable<Productsubcategory> findByProductcategory(Integer id) {
+		Productcategory pc = productcategoryRepository.findById(id).get();
+		List<Productsubcategory> pcPscL = pc.getProductsubcategories();
+		
+		Iterable<Productsubcategory> pcPscI = pcPscL;
+		return pcPscI;
 	}
 
 }

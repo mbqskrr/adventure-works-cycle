@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Product category</title>
+<title>Product subcategory</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -29,19 +29,21 @@
 								<th>modifieddate</th>
 								<th>name</th>
 								<th>rowguid</th>
-								<th>product categories</th>
+								<th>product category</th>
+								<th>product</th>
 								<th>edit</th>
 								<th>remove</th>
 								
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="productcategory : ${productcategories}">
-								<td th:text="${productcategory.productcategoryid}"></td>
-								<td th:text="${productcategory.modifieddate}"></td>
-								<td th:text="${productcategory.name}"></td>
-								<td th:text="${productcategory.rowguid}"></td>	
-								<td><a th:href="@{/Productcategory/{id}(id=${productsubcategory.productsubcategoryid})}"
+							<tr th:each="productsubcategory : ${productsubcategories}">
+								<td th:text="${productsubcategory.productsubcategoryid}"></td>
+								<td th:text="${productsubcategory.modifieddate}"></td>
+								<td th:text="${productsubcategory.name}"></td>
+								<td th:text="${productsubcategory.rowguid}"></td>	
+								<td th:text="${productsubcategory.productcategory.name}"></td>
+								<td><a th:href="@{/Product/{id}(id=${productproductid})}"
                                     class="btn btn-primary"><i class="far fa-address-card"></i></a></td>
 								<td><a th:href="@{/productcategory/edit/{id}(id=${productsubcategory.productsubcategoryid})}"
                                     class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>

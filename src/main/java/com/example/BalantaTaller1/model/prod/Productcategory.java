@@ -1,7 +1,8 @@
 package com.example.BalantaTaller1.model.prod;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+//import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -13,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.example.BalantaTaller1.model.validation.ProductcategoryValidation;
 
@@ -31,7 +34,9 @@ public class Productcategory implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRODUCTCATEGORY_PRODUCTCATEGORYID_GENERATOR")
 	private Integer productcategoryid;
 
-	private Timestamp modifieddate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate modifieddate;
+	//private Timestamp modifieddate;
 
 	@NotBlank(groups = ProductcategoryValidation.class)
 	@Size(min=3, groups = {ProductcategoryValidation.class})
@@ -54,7 +59,11 @@ public class Productcategory implements Serializable {
 		return productsubcategory;
 	}
 
-	public Timestamp getModifieddate() {
+	/*public Timestamp getModifieddate() {
+		return this.modifieddate;
+	}*/
+	
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
@@ -81,7 +90,11 @@ public class Productcategory implements Serializable {
 		return productsubcategory;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	/*public void setModifieddate(Timestamp modifieddate) {
+		this.modifieddate = modifieddate;
+	}*/
+	
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 

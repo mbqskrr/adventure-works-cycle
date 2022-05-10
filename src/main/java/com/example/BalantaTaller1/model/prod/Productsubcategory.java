@@ -1,7 +1,8 @@
 package com.example.BalantaTaller1.model.prod;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+//import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -17,6 +18,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.example.BalantaTaller1.model.validation.ProductsubcategoryValidation;
+
 /**
  * The persistent class for the productsubcategory database table.
  *
@@ -31,10 +36,12 @@ public class Productsubcategory implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRODUCTSUBCATEGORY_PRODUCTSUBCATEGORYID_GENERATOR")
 	private Integer productsubcategoryid;
 
-	private Timestamp modifieddate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate modifieddate;
+	//private Timestamp modifieddate;
 
-	@NotBlank
-	@Size(min = 5)
+	@NotBlank(groups = ProductsubcategoryValidation.class)
+	@Size(min = 5, groups = ProductsubcategoryValidation.class)
 	private String name;
 
 	private Integer rowguid;
@@ -46,7 +53,7 @@ public class Productsubcategory implements Serializable {
 	// bi-directional many-to-one association to Productcategory
 	@ManyToOne
 	@JoinColumn(name = "productcategoryid")
-	@NotNull
+	@NotNull(groups = ProductsubcategoryValidation.class)
 	private Productcategory productcategory;
 
 	public Productsubcategory() {
@@ -59,7 +66,11 @@ public class Productsubcategory implements Serializable {
 		return product;
 	}
 
-	public Timestamp getModifieddate() {
+	/*public Timestamp getModifieddate() {
+		return this.modifieddate;
+	}*/
+	
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
@@ -90,7 +101,11 @@ public class Productsubcategory implements Serializable {
 		return product;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	/*public void setModifieddate(Timestamp modifieddate) {
+		this.modifieddate = modifieddate;
+	}*/
+	
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 

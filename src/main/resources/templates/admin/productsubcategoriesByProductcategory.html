@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Transaction history</title>
+<title>Product subcategories</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -29,20 +29,26 @@
 								<th>modifieddate</th>
 								<th>name</th>
 								<th>rowguid</th>
+								<th>product category name</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="psc : ${prodcutsubcategories}">
-								<td th:text="${psc.transactionid}"></td>
-								<td th:text="${psc.modifieddate.toString()}"></td>
+								<td th:text="${psc.productsubcategoryid}"></td>
+								<td th:text="${psc.modifieddate}"></td>
 								<td th:text="${psc.name}"></td>
 								<td th:text="${psc.rowguid}"></td>
-								<td th:text="${psc.productcategories.name}"></td>
+								<td th:text="${psc.productcategory.name}"></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
+				<br>
+				<p>
+					<a href="/productcategory"><i class="fas fa-home ml-2"></i> Go
+						back</a>
+				</p>
 			</div>
-	</div>
+		</div>
 </body>
 </html>

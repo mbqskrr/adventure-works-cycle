@@ -7,12 +7,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.model.prod.Productsubcategory;
 import com.example.BalantaTaller1.model.validation.ProductcategoryValidation;
+import com.example.BalantaTaller1.model.validation.ProductsubcategoryValidation;
 import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImpl;
 import com.example.BalantaTaller1.service.prod.ProductsubcategoryServiceImpl;
 
@@ -48,15 +50,23 @@ public class AdminController {
 			return "redirect:/productcategory/";
 		}else {
 			if(bindingResult.hasErrors()) {
-				//model.addAttribute("productcategory", new Productcategory());
+				model.addAttribute("productcategory", productcategory);
 				return "/admin/addProductcategory";
+			}else {
+				productcategoryService.save(productcategory);
+				return "redirect:/productcategory/";
 			}
-			productcategoryService.save(productcategory);
-			return "redirect:/productcategory/";
+			
 		}
 		
 		
 	}
+	
+	@GetMapping("/Productsubcategory/{id}")
+    public String queryProductsubcategoriesByProductcategory(@PathVariable("id") Integer id, Model model) {
+		model.addAttribute("prodcutsubcategories", productsubcategoryService.findByProductcategory(id));
+        return "admin/productsubcategoriesByProductcategory";
+    }
 	
 	@GetMapping("/productsubcategory")
 	public String productsubcategories(Model model) {
@@ -73,19 +83,21 @@ public class AdminController {
 	}
 	
 	@PostMapping("/productsubcategory/add")
-	public String saveProductsubcategory(@Validated Productsubcategory productsubcategory, BindingResult bindingResult, 
+	public String saveProductsubcategory(@Validated(ProductsubcategoryValidation.class) @ModelAttribute Productsubcategory productsubcategory, BindingResult bindingResult, 
 			Model model, @RequestParam(value = "action", required = true) String action) {
 		if (action.equals("Cancel")) {
-			return "redirect:/productsubcategory";
+			return "redirect:/productsubcategory/";
 		}else {
 			if(bindingResult.hasErrors()) {
-				model.addAttribute("productsubcategory", new Productsubcategory());
-				model.addAttribute("productcategories", productcategoryService.findAll());
-				return "admin/addProductsubcategory";
+				model.addAttribute("productsubcategory", productsubcategory);
+				model.addAttribute("productcategories", productsubcategoryService.findByProductcategory(null));
+				return "/admin/addProductsubcategory";
+			}else {
+				productsubcategoryService.save(productsubcategory);
+				return "redirect:/productsubcategory/";
 			}
 			
-			productsubcategoryService.save(productsubcategory);
-			return "redirect:/productsubcategory/add";
+			
 		}
 		
 		
