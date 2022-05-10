@@ -1,5 +1,6 @@
 package com.example.BalantaTaller1.service.prod;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.BalantaTaller1.model.prod.Product;
+import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.model.prod.Productmodel;
 import com.example.BalantaTaller1.model.prod.Productsubcategory;
 import com.example.BalantaTaller1.model.prod.Unitmeasure;
@@ -85,6 +87,18 @@ public class ProductServiceImpl implements ProductService{
 		if (weight < 0) {
 			throw new RuntimeException("Peso menor a 0");
 		}
+	}
+
+	public Iterable<Product> findAll() {
+		return productRepository.findAll();
+	}
+
+	public Iterable<Product> findByProductsubcategory(Integer id) {
+		Productsubcategory psc = productsubcategoryRepository.findById(id).get();
+		List<Product> pscPL = psc.getProducts();
+		
+		Iterable<Product> pscPI = pscPL;
+		return pscPI;
 	}
 	
 }

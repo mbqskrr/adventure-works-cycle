@@ -43,7 +43,7 @@
 								<td th:text="${productsubcategory.name}"></td>
 								<td th:text="${productsubcategory.rowguid}"></td>	
 								<td th:text="${productsubcategory.productcategory.name}"></td>
-								<td><a th:href="@{/Product/{id}(id=${productproductid})}"
+								<td><a th:href="@{/Product/{id}(id=${productsubcategory.productsubcategoryid})}"
                                     class="btn btn-primary"><i class="far fa-address-card"></i></a></td>
 								<td><a th:href="@{/productcategory/edit/{id}(id=${productsubcategory.productsubcategoryid})}"
                                     class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
