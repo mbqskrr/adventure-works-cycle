@@ -32,10 +32,18 @@ public class BalantaTaller1Application {
 		UserServiceImpl user= context.getBean(UserServiceImpl.class);
 		
 		User u= new User();
-		u.setUsername("Elbicho");
-		u.setPassword("{noop}SIU7");
+		u.setUsername("admin");
+		u.setPassword("{noop}admin");
 		u.setType(UserType.administrator);
 		
 		user.save(u);
+		
+		User u1= new User();
+		u1.setUsername("op");
+		u1.setPassword("{noop}op");
+		u1.setType(UserType.operator);
+		
+		user.save(u1);
+		
 	}
 }

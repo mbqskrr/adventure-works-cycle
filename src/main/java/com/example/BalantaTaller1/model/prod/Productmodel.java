@@ -1,7 +1,8 @@
 package com.example.BalantaTaller1.model.prod;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+//import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -30,7 +31,7 @@ public class Productmodel implements Serializable {
 
 	private String instructions;
 
-	private Timestamp modifieddate;
+	private LocalDate modifieddate;
 
 	private String name;
 
@@ -82,7 +83,7 @@ public class Productmodel implements Serializable {
 		return this.instructions;
 	}
 
-	public Timestamp getModifieddate() {
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
@@ -140,7 +141,7 @@ public class Productmodel implements Serializable {
 		this.instructions = instructions;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 

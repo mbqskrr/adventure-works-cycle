@@ -2,6 +2,7 @@ package com.example.BalantaTaller1.model.prod;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -30,7 +31,7 @@ public class Unitmeasure implements Serializable {
 	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String unitmeasurecode;
 
-	private Timestamp modifieddate;
+	private LocalDate modifieddate;
 
 	private String name;
 
@@ -74,7 +75,7 @@ public class Unitmeasure implements Serializable {
 		return this.billofmaterials;
 	}
 
-	public Timestamp getModifieddate() {
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
@@ -119,7 +120,7 @@ public class Unitmeasure implements Serializable {
 		this.billofmaterials = billofmaterials;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 

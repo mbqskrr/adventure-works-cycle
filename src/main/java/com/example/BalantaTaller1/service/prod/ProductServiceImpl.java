@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.BalantaTaller1.model.prod.Product;
-import com.example.BalantaTaller1.model.prod.Productcategory;
+//import com.example.BalantaTaller1.model.prod.Productcategory;
+//import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.model.prod.Productmodel;
 import com.example.BalantaTaller1.model.prod.Productsubcategory;
 import com.example.BalantaTaller1.model.prod.Unitmeasure;
@@ -100,5 +101,27 @@ public class ProductServiceImpl implements ProductService{
 		Iterable<Product> pscPI = pscPL;
 		return pscPI;
 	}
+	
+	public Iterable<Productmodel> findAllProductModel() {
+		return productmodelRepository.findAll();
+	}
+	
+	public Iterable<Unitmeasure> findAllUnitMeasure() {
+		return unitmeasureRepository.findAll();
+	}
+
+	public Productmodel saveProductmodel(Productmodel productmodel) {
+		return productmodelRepository.save(productmodel);
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Unitmeasure saveUnitmeasure(Unitmeasure unitmeasure) {
+		return unitmeasureRepository.save(unitmeasure);
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 	
 }
