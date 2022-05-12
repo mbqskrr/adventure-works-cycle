@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService{
 	public Product save(Product p) {
 		Product temp = null;
 		
-		constraints(p);
+		//constraints(p);
 		
 		Optional<Unitmeasure> opUm = this.unitmeasureRepository.findById(p.getUnitmeasure1().getUnitmeasurecode());
 		Optional<Unitmeasure> opUm1 = this.unitmeasureRepository.findById(p.getUnitmeasure2().getUnitmeasurecode());
@@ -65,14 +65,14 @@ public class ProductServiceImpl implements ProductService{
 		Product temp = null;
 		Optional<Product> optional = this.productRepository.findById(p.getProductid());
 		if(optional.isPresent()) {
-			constraints(p);
+			//constraints(p);
 			temp = save(p);
 		}
 		
 		return productRepository.save(temp);
 	}
 
-	@NotNull
+	/*@NotNull
 	private void constraints(Product p) {
 		Integer size = Integer.parseInt(p.getSize());
 		Integer weight = p.getWeight().intValueExact();
@@ -88,7 +88,7 @@ public class ProductServiceImpl implements ProductService{
 		if (weight < 0) {
 			throw new RuntimeException("Peso menor a 0");
 		}
-	}
+	}*/
 
 	public Iterable<Product> findAll() {
 		return productRepository.findAll();

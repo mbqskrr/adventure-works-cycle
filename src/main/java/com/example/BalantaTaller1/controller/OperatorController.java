@@ -10,11 +10,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.BalantaTaller1.model.prod.Product;
 import com.example.BalantaTaller1.model.prod.Productcategory;
 //import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.model.prod.Productmodel;
+import com.example.BalantaTaller1.model.prod.Productsubcategory;
 import com.example.BalantaTaller1.model.prod.Unitmeasure;
+import com.example.BalantaTaller1.model.validation.ProductValidation;
 import com.example.BalantaTaller1.model.validation.ProductcategoryValidation;
+import com.example.BalantaTaller1.model.validation.ProductsubcategoryValidation;
 import com.example.BalantaTaller1.service.prod.ProductServiceImpl;
 //import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImpl;
 import com.example.BalantaTaller1.service.prod.ProductsubcategoryServiceImpl;
@@ -77,6 +81,35 @@ public class OperatorController {
 	public String products(Model model) {
 		model.addAttribute("products", productService.findAll());
 		return "operator/product";
+	}
+	
+	@GetMapping("/product/add")
+	public String addProductsubcategory(Model model) {
+		model.addAttribute("product", new Product());
+		model.addAttribute("unitmeasures", productService.findAllUnitMeasure());
+		model.addAttribute("productmodels", productService.findAllProductModel());
+		model.addAttribute("productsubcategories", productsubcategoryService.findAll());
+		return "operator/addProduct";
+		
+	}
+	
+	@PostMapping("/product/add")
+	public String saveProduct(@Validated(ProductValidation.class) @ModelAttribute Product product, BindingResult bindingResult, 
+			Model model, @RequestParam(value = "action", required = true) String action) {
+		if (action.equals("Cancel")) {
+			return "redirect:/product/";
+		}else {
+			if(bindingResult.hasErrors()) {
+				model.addAttribute("product", product);
+				model.addAttribute("productsubcategories", productsubcategoryService.findAll());
+				model.addAttribute("unitmeasures", productService.findAllUnitMeasure());
+				model.addAttribute("productmodels", productService.findAllProductModel());
+				return "/operator/addProduct";
+			}else {
+				productService.save(product);
+				return "redirect:/product/";
+			}	
+		}
 	}
 	
 	

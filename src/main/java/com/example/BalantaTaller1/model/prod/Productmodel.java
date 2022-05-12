@@ -13,6 +13,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  * The persistent class for the productmodel database table.
  *
@@ -31,6 +33,7 @@ public class Productmodel implements Serializable {
 
 	private String instructions;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate modifieddate;
 
 	private String name;

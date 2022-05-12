@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * The persistent class for the unitmeasure database table.
@@ -31,6 +32,7 @@ public class Unitmeasure implements Serializable {
 	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String unitmeasurecode;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate modifieddate;
 
 	private String name;

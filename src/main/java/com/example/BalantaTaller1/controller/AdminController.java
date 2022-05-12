@@ -94,7 +94,7 @@ public class AdminController {
 		}else {
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("productsubcategory", productsubcategory);
-				model.addAttribute("productcategories", productsubcategoryService.findByProductcategory(null));
+				model.addAttribute("productcategories", productcategoryService.findAll());
 				return "/admin/addProductsubcategory";
 			}else {
 				productsubcategoryService.save(productsubcategory);

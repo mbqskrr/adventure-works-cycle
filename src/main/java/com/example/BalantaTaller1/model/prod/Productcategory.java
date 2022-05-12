@@ -13,6 +13,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -35,6 +36,7 @@ public class Productcategory implements Serializable {
 	private Integer productcategoryid;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@PastOrPresent(groups = ProductcategoryValidation.class)
 	private LocalDate modifieddate;
 	//private Timestamp modifieddate;
 
@@ -42,6 +44,7 @@ public class Productcategory implements Serializable {
 	@Size(min=3, groups = {ProductcategoryValidation.class})
 	private String name;
 
+	
 	private Integer rowguid;
 
 	// bi-directional many-to-one association to Productsubcategory

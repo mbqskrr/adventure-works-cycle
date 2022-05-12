@@ -16,7 +16,7 @@ import com.example.BalantaTaller1.service.user.UserServiceImpl;
 @ComponentScan(basePackages = {"com.example.BalantaTaller1.controller", "com.example.BalantaTaller1.auth", 
 		"com.example.BalantaTaller1.repository.prod", "com.example.BalantaTaller1.repository.user", 
 		"com.example.BalantaTaller1.service.prod", "com.example.BalantaTaller1.service.user", 
-		"com.example.BalantaTaller1.model.validation", "com.example.BalantaTaller1.model.prod"})
+		"com.example.BalantaTaller1.model.prod"})
 @EnableJpaRepositories(basePackages = {"com.example.BalantaTaller1.repository.prod" , "com.example.BalantaTaller1.repository.user"})
 @EntityScan(basePackages = {"com.example.BalantaTaller1.model.prod", "com.example.BalantaTaller1.model.user"})
 public class BalantaTaller1Application {
