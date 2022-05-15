@@ -2,12 +2,15 @@ package com.example.BalantaTaller1.service.prod;
 
 import java.util.Optional;
 
-import javax.validation.constraints.NotNull;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
+
 import com.example.BalantaTaller1.model.prod.Productcategory;
+import com.example.BalantaTaller1.model.validation.ProductcategoryValidation;
 import com.example.BalantaTaller1.repository.prod.ProductcategoryRepository;
 //import com.sun.istack.NotNull;
 
@@ -23,7 +26,7 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 
 	@Override
 	@Transactional
-	public Productcategory save(Productcategory pc) {
+	public Productcategory save(@Validated(ProductcategoryValidation.class) Productcategory pc) {
 		Productcategory tempPc = null;
 		
 		//constraints(pc);

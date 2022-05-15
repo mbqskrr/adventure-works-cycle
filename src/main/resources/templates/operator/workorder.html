@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Products</title>
+<title>Workorder</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -16,50 +16,38 @@
 <link rel="stylesheet" href="../css/shards.min.css">
 </head>
 <body>
-	<div th:switch="${products}" class="container my-5">
+	<div th:switch="${workorder}" class="container my-5">
 		<div class="row">
 			<div class="col-md-10">
-				<h2 th:case="null">No hay productos</h2>
+				<h2 th:case="null">No hay ordenes de trabajo</h2>
 				<div th:case="*">
-					<h2 class="my-5">Productos</h2>
+					<h2 class="my-5">Ordenes de trabajo</h2>
 					<table class="table table-striped table-responsive-md">
 						<thead>
 							<tr>
 
-								<th>productid</th>
-								<th>name</th>
-								<th>daystomanufacture</th>
-								<th>productnumber</th>
-								<th>size</th>
-								<th> </th>
-								<th>weight</th>
-								<th> </th>
-								<th>sellstartdate</th>
-								<th>sellenddate</th>
-								<th>productmodel</th>
-								<th>product subcategory name</th>
-								<th>workorders</th>
+								<th>workorderid</th>
+								<th>startdate</th>
+								<th>enddate</th>
+								<th>orderqty</th>
+								<th>scrappedqty</th>
+								<th>product</th>
+								<th>scrapreason</th>
 								<th>edit</th>
+								<!-- <th>delete</th> -->
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="p : ${products}">
-								<td th:text="${p.productid}"></td>
-								<td th:text="${p.name}"></td>
-								<td th:text="${p.daystomanufacture}"></td>
-								<td th:text="${p.productnumber}"></td>
-								<td th:text="${p.size}"></td>
-								<td th:text="${p.unitmeasure1.name}"></td>
-								<td th:text="${p.weight}"></td>
-								<td th:text="${p.unitmeasure2.name}"></td>
-								<td th:text="${p.sellstartdate}"></td>
-								<td th:text="${p.sellenddate}"></td>
-								<td th:text="${p.productmodel.name}"></td>
-								<td th:text="${p.productsubcategory.name}"></td>
-								<td><a th:href="@{/Workorder/{id}(id=${p.productid})}"
-									class="btn btn-primary"><i class="far fa-address-card"></i></a></td>
+							<tr th:each="wo : ${workorder}">
+								<td th:text="${wo.workorderid}"></td>
+								<td th:text="${wo.startdate}"></td>
+								<td th:text="${wo.enddate}"></td>
+								<td th:text="${wo.orderqty}"></td>
+								<td th:text="${wo.scrappedqty}"></td>
+								<td th:text="${wo.scrapreason.name}"></td>
+								<td th:text="${wo.product.name}"></td>
 								<td><a
-									th:href="@{/product/edit/{id}(id=${p.productid})}"
+									th:href="@{/workorder/edit/{id}(id=${wo.workorderid})}"
 									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
 								<!-- <td><a
 									th:href="@{/product/delete/{id}(id=${p.productid})}"
@@ -70,7 +58,7 @@
 				</div>
 				<br>
 				<p class="my-5">
-					<a href="/product/add" class="btn btn-primary"><i
+					<a href="/workorder/add" class="btn btn-primary"><i
 						class="fas fa-user-plus ml-2"></i></a>
 				</p>
 				<br>

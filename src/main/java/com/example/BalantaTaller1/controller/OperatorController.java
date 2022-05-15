@@ -11,28 +11,35 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.BalantaTaller1.model.prod.Product;
-import com.example.BalantaTaller1.model.prod.Productcategory;
+//import com.example.BalantaTaller1.model.prod.Productcategory;
 //import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.model.prod.Productmodel;
-import com.example.BalantaTaller1.model.prod.Productsubcategory;
+import com.example.BalantaTaller1.model.prod.Scrapreason;
+//import com.example.BalantaTaller1.model.prod.Productsubcategory;
 import com.example.BalantaTaller1.model.prod.Unitmeasure;
+import com.example.BalantaTaller1.model.prod.Workorder;
 import com.example.BalantaTaller1.model.validation.ProductValidation;
-import com.example.BalantaTaller1.model.validation.ProductcategoryValidation;
-import com.example.BalantaTaller1.model.validation.ProductsubcategoryValidation;
+import com.example.BalantaTaller1.model.validation.WorkorderValidation;
+//import com.example.BalantaTaller1.model.validation.ProductcategoryValidation;
+//import com.example.BalantaTaller1.model.validation.ProductsubcategoryValidation;
 import com.example.BalantaTaller1.service.prod.ProductServiceImpl;
 //import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImpl;
 import com.example.BalantaTaller1.service.prod.ProductsubcategoryServiceImpl;
+import com.example.BalantaTaller1.service.prod.WorkorderServiceImpl;
 
 @Controller
 public class OperatorController {
 
 	private ProductsubcategoryServiceImpl productsubcategoryService;
 	private ProductServiceImpl productService;
+	private WorkorderServiceImpl workorderService;
 	
 	@Autowired
-	public OperatorController(ProductsubcategoryServiceImpl productsubcategoryService,ProductServiceImpl productService) {
+	public OperatorController(ProductsubcategoryServiceImpl productsubcategoryService,ProductServiceImpl productService,
+			WorkorderServiceImpl workorderService) {
 		this.productsubcategoryService = productsubcategoryService;
 		this.productService = productService;
+		this.workorderService = workorderService;
 	}
 	
 	@GetMapping("/productmodel")
@@ -42,7 +49,7 @@ public class OperatorController {
 	}
 	
 	@PostMapping("/productmodel")
-	public String saveProductModel(@ModelAttribute  Productmodel productmodel, 
+	public String saveProductmodel(@ModelAttribute  Productmodel productmodel, 
 			BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
 		if (action.equals("Cancel")) {
 			return "redirect:/operator/operator.html";
@@ -63,7 +70,7 @@ public class OperatorController {
 	}
 	
 	@PostMapping("/unitmeasure")
-	public String saveProductcategory(@ModelAttribute  Unitmeasure unitmeasure, 
+	public String saveUnitmeasure(@ModelAttribute  Unitmeasure unitmeasure, 
 			BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
 		if (action.equals("Cancel")) {
 			return "redirect:/operator/operator.html";
@@ -72,6 +79,27 @@ public class OperatorController {
 			return "/operator/unitmeasure";
 		} else {
 			productService.saveUnitmeasure(unitmeasure);
+			return "redirect:/operator/operator.html";
+		}
+
+	}
+	
+	@GetMapping("/scrapreason")
+	public String scrapreason(Model model) {
+		model.addAttribute("scrapreason", new Scrapreason());
+		return "operator/scrapreason";
+	}
+	
+	@PostMapping("/scrapreason")
+	public String saveScrapreason(@ModelAttribute  Scrapreason scrapreason, 
+			BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
+		if (action.equals("Cancel")) {
+			return "redirect:/operator/operator.html";
+		}
+		if (bindingResult.hasErrors()) {
+			return "/operator/scrapreason";
+		} else {
+			workorderService.saveScrapreason(scrapreason);
 			return "redirect:/operator/operator.html";
 		}
 
@@ -90,7 +118,6 @@ public class OperatorController {
 		model.addAttribute("productmodels", productService.findAllProductModel());
 		model.addAttribute("productsubcategories", productsubcategoryService.findAll());
 		return "operator/addProduct";
-		
 	}
 	
 	@PostMapping("/product/add")
@@ -110,6 +137,38 @@ public class OperatorController {
 				return "redirect:/product/";
 			}	
 		}
+	}
+	
+	@GetMapping("/workorder")
+	public String workorder(Model model) {
+		model.addAttribute("workorder", workorderService.findAll());
+		return "operator/workorder";
+	}
+	
+	@GetMapping("/workorder/add")
+	public String addWorkorder(Model model) {
+		model.addAttribute("workorder", new Workorder());
+		model.addAttribute("products", productService.findAll());
+		model.addAttribute("scrapreasons", workorderService.findAllScrapreason());
+		return "operator/addWorkorder";
+	}
+	
+	@PostMapping("/workorder/add")
+	public String saveWorkorder(@Validated(WorkorderValidation.class) @ModelAttribute  Workorder workorder, 
+			BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
+		if (action.equals("Cancel")) {
+			return "redirect:/operator/operator.html";
+		}
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("workorder", workorder);
+			model.addAttribute("products", productService.findAll());
+			model.addAttribute("scrapreasons", workorderService.findAllScrapreason());
+			return "/operator/addWorkorder";
+		} else {
+			workorderService.save(workorder);
+			return "redirect:/workorder/";
+		}
+
 	}
 	
 	

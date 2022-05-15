@@ -46,6 +46,13 @@
 								class="text-danger"></span>
 						</div>
 						<div class="form-group col-md-6">
+							<label for="size" class="col-form-label">size</label> <input
+								type="number" th:field="*{size}" class="form-control" id="size"
+								placeholder="size"> <span
+								th:if="${#fields.hasErrors('size')}" th:errors="*{size}"
+								class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-6">
 							<label for="unitmeasure1" class="col-form-label">Unit measure 1</label> <select
 								th:field="*{unitmeasure1}">
 								<option th:each="um : ${unitmeasures}" th:value="${um.unitmeasurecode}"
@@ -53,6 +60,13 @@
 									th:selected="${product.unitmeasure1=um}"></option>
 							</select> <span th:if="${#fields.hasErrors('unitmeasure1')}"
 								th:errors="*{unitmeasure1}" class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="weight" class="col-form-label">weight</label> <input
+								type="number" th:field="*{weight}" class="form-control" id="weight"
+								placeholder="weight"> <span
+								th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"
+								class="text-danger"></span>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="unitmeasure2" class="col-form-label">Unit measure 2</label> <select

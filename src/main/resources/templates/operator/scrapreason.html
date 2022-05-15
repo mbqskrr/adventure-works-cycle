@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Add product model</title>
+<title>Add unit measure</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -17,10 +17,10 @@
 </head>
 <body>
 	<div class="container my-5">
-		<h2 class="mb-5">Crear modelo de producto</h2>
+		<h2 class="mb-5">Crear motivo de rechazo</h2>
 		<div class="row">
 			<div class="col-md-6">
-				<form action="#" th:action="@{/productmodel}" th:object="${productmodel}"
+				<form action="#" th:action="@{/scrapreason}" th:object="${scrapreason}"
 					method="post">
 					<div class="row">
 					
@@ -31,25 +31,13 @@
 								th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
 								class="text-danger"></span>
 						</div>
-						<!-- <div class="form-group col-md-6">
-							<label for="modifieddate" class="col-form-label">Modifieddate</label> <input
-								type="date" th:field="*{modifieddate}" class="form-control" id="modifieddate"
-								placeholder="modifieddate"> <span
-								th:if="${#fields.hasErrors('modifieddate')}" th:errors="*{modifieddate}"
-								class="text-danger"></span>
-						</div>
-						<div class="form-group col-md-6">
-							<label for="name" class="col-form-label">rowguid</label> <input
-								type="number" th:field="*{rowguid}" class="form-control" id="rowguid"
-								placeholder="rowguid"> <span
-								th:if="${#fields.hasErrors('rowguid')}" th:errors="*{rowguid}"
-								class="text-danger"></span>
-						</div> -->
+						
+						
 						
 					</div>
 					<div class="row">
 						<div class="col-md-4 mt-3">
-							<input type="submit" name="action" class="btn btn-primary" value="Add Product model">
+							<input type="submit" name="action" class="btn btn-primary" value="Add scrap reason">
 						</div>
 						<div class="col-md-3 mt-3">
 							<input type="reset" class="btn btn-secondary" value="Clear">
