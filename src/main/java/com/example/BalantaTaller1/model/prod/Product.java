@@ -16,16 +16,22 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.FutureOrPresent;
+/*import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.Positive;*/
 //import javax.validation.constraints.PositiveOrZero;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.example.BalantaTaller1.model.validation.ProductValidation;
+
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
 
 /**
  * The persistent class for the product database table.
@@ -46,6 +52,7 @@ public class Product implements Serializable {
 
 	private String color;
 
+	//@Positive(groups = ProductValidation.class)
 	@Positive(groups = ProductValidation.class)
 	private Integer daystomanufacture;
 
@@ -59,11 +66,13 @@ public class Product implements Serializable {
 
 	private Timestamp modifieddate;
 
+	//@NotBlank(groups = ProductValidation.class)
 	@NotBlank(groups = ProductValidation.class)
 	private String name;
 
 	private String productline;
 
+	//@NotBlank(groups = ProductValidation.class)
 	@NotBlank(groups = ProductValidation.class)
 	private String productnumber;
 
@@ -74,13 +83,16 @@ public class Product implements Serializable {
 	private Integer safetystocklevel;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	//@PastOrPresent(groups = ProductValidation.class)
 	@PastOrPresent(groups = ProductValidation.class)
 	private LocalDate sellenddate;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	//@FutureOrPresent(groups = ProductValidation.class)
 	@FutureOrPresent(groups = ProductValidation.class)
 	private LocalDate sellstartdate;
 
+	//@Positive(groups = ProductValidation.class)
 	@Positive(groups = ProductValidation.class)
 	private String size;
 
@@ -88,6 +100,7 @@ public class Product implements Serializable {
 
 	private String style;
 
+	//@Positive(groups = ProductValidation.class)
 	@Positive(groups = ProductValidation.class)
 	private BigDecimal weight;
 
@@ -102,24 +115,28 @@ public class Product implements Serializable {
 	// bi-directional many-to-one association to Productmodel
 	@ManyToOne
 	@JoinColumn(name = "productmodelid")
+	//@NotNull(groups = ProductValidation.class)
 	@NotNull(groups = ProductValidation.class)
 	private Productmodel productmodel;
 
 	// bi-directional many-to-one association to Productsubcategory
 	@ManyToOne
 	@JoinColumn(name = "productsubcategoryid")
+	//@NotNull(groups = ProductValidation.class)
 	@NotNull(groups = ProductValidation.class)
 	private Productsubcategory productsubcategory;
 
 	// bi-directional many-to-one association to Unitmeasure
 	@ManyToOne
 	@JoinColumn(name = "sizeunitmeasurecode")
+	//@NotNull(groups = ProductValidation.class)
 	@NotNull(groups = ProductValidation.class)
 	private Unitmeasure unitmeasure1;
 
 	// bi-directional many-to-one association to Unitmeasure
 	@ManyToOne
 	@JoinColumn(name = "weightunitmeasurecode")
+	//@NotNull(groups = ProductValidation.class)
 	@NotNull(groups = ProductValidation.class)
 	private Unitmeasure unitmeasure2;
 

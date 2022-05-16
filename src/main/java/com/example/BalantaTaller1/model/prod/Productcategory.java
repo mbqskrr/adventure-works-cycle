@@ -12,13 +12,19 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.NotBlank;
+/*import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Size;*/
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.example.BalantaTaller1.model.validation.ProductcategoryValidation;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 
 
 /**
@@ -40,11 +46,10 @@ public class Productcategory implements Serializable {
 	private LocalDate modifieddate;
 	//private Timestamp modifieddate;
 
-	@NotBlank(groups = ProductcategoryValidation.class)
-	@Size(min=3, groups = {ProductcategoryValidation.class})
+	@NotBlank(groups = ProductcategoryValidation.class, message = "No sea pendejo")
+	@Size(min=3, groups = {ProductcategoryValidation.class}, message = "No sea pendejo")
 	private String name;
 
-	
 	private Integer rowguid;
 
 	// bi-directional many-to-one association to Productsubcategory

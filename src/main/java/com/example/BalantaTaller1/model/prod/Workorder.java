@@ -2,13 +2,19 @@ package com.example.BalantaTaller1.model.prod;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import javax.validation.constraints.Future;
+/*import javax.validation.constraints.Future;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.Positive;*/
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.example.BalantaTaller1.model.validation.WorkorderValidation;
+
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -32,20 +38,20 @@ public class Workorder implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Timestamp duedate;
 
-	@FutureOrPresent
+	@FutureOrPresent(groups = WorkorderValidation.class)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate enddate;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate modifieddate;
 
-	@Positive
+	@Positive(groups = WorkorderValidation.class)
 	private Integer orderqty;
 
-	@Positive
+	@Positive(groups = WorkorderValidation.class)
 	private Integer scrappedqty;
 	
-	@PastOrPresent
+	@PastOrPresent(groups = WorkorderValidation.class)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate startdate;
 

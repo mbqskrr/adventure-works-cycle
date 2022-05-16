@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Product subcategories</title>
+<title>Workorders</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -16,39 +16,48 @@
 <link rel="stylesheet" href="../css/shards.min.css">
 </head>
 <body>
-	<div th:switch="${prodcutsubcategories}" class="container my-5">
+	<div th:switch="${workorders}" class="container my-5">
 		<div class="row">
 			<div class="col-md-10">
-				<h2 th:case="null">No hay subcategorias de producto</h2>
+				<h2 th:case="null">No hay ordenes de trabajo</h2>
 				<div th:case="*">
-					<h2 class="my-5">Subcategorias de producto</h2>
+					<h2 class="my-5">Ordenes de trabajo</h2>
 					<table class="table table-striped table-responsive-md">
 						<thead>
 							<tr>
-								<th>productsubcategoryid</th>
-								<th>modifieddate</th>
-								<th>name</th>
-								<th>rowguid</th>
-								<th>product category name</th>
+
+								<th>workorderid</th>
+								<th>startdate</th>
+								<th>enddate</th>
+								<th>orderqty</th>
+								<th>scrappedqty</th>
+								<th>scrapreason</th>
+								<th>product</th>
+								<!-- <th>delete</th> -->
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="psc : ${prodcutsubcategories}">
-								<td th:text="${psc.productsubcategoryid}"></td>
-								<td th:text="${psc.modifieddate}"></td>
-								<td th:text="${psc.name}"></td>
-								<td th:text="${psc.rowguid}"></td>
-								<td th:text="${psc.productcategory.name}"></td>
+							<tr th:each="wo : ${workorders}">
+								<td th:text="${wo.workorderid}"></td>
+								<td th:text="${wo.startdate}"></td>
+								<td th:text="${wo.enddate}"></td>
+								<td th:text="${wo.orderqty}"></td>
+								<td th:text="${wo.scrappedqty}"></td>
+								<td th:text="${wo.scrapreason.name}"></td>
+								<td th:text="${wo.product.name}"></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<br>
+				
+				<br>
 				<p>
-					<a href="/productcategory"><i class="fas fa-home ml-2"></i> Go
-						back</a>
+					<a href="/product"><i class="fas fa-home ml-2"></i>
+						Go back</a>
 				</p>
 			</div>
+
 		</div>
 </body>
 </html>
