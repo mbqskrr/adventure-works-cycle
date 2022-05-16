@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.example.BalantaTaller1.model.prod.Productsubcategory;
 
-public interface PorductsubcategoryDAO {
+public interface ProductsubcategoryDAO {
 	
 	public void save(Productsubcategory psc);
 
@@ -12,6 +12,10 @@ public interface PorductsubcategoryDAO {
 
 	public List<Productsubcategory> findAll();
 
-	public Productsubcategory findById(Integer id);
+	public Productsubcategory findById(Integer productsubcategoryid);
+	
+	public List<Productsubcategory> findByProductcategoryId(Integer productcategoryid);
+	
+	public List<Productsubcategory> findByProductcategoryName(String name);
 
 }

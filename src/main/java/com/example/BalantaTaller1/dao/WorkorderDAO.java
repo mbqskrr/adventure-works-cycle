@@ -6,12 +6,16 @@ import com.example.BalantaTaller1.model.prod.Workorder;
 
 public interface WorkorderDAO {
 	
-	public void save(Workorder product);
+	public void save(Workorder workorder);
 
-	public void update(Workorder product);
+	public void update(Workorder workorder);
 
 	public List<Workorder> findAll();
 
-	public Workorder findById(Integer id);
+	public Workorder findById(Integer workorderid);
+	
+	public List<Workorder> findByScrapreasonId(Integer scrapreasonid);
+	
+	public List<Workorder> findByOrderqty(Integer orderqtyorderqty);
 
 }

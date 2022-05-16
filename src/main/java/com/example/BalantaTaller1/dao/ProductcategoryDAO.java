@@ -12,6 +12,6 @@ public interface ProductcategoryDAO {
 
 	public List<Productcategory> findAll();
 
-	public Productcategory findById(Integer id);
+	public Productcategory findById(Integer productcategoryid);
 
 }
