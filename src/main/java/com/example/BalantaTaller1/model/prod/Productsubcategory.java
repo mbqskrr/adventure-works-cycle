@@ -14,20 +14,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
-/*import javax.validation.GroupSequence;
+import javax.validation.GroupSequence;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;*/
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.example.BalantaTaller1.model.validation.ProductsubcategoryValidation;
 
-import jakarta.validation.GroupSequence;
+/*import jakarta.validation.GroupSequence;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
+*/
 /**
  * The persistent class for the productsubcategory database table.
  *

@@ -16,23 +16,23 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
-/*import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Positive;*/
+import javax.validation.constraints.Positive;
 //import javax.validation.constraints.PositiveOrZero;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.example.BalantaTaller1.model.validation.ProductValidation;
 
-import jakarta.validation.constraints.FutureOrPresent;
+/*import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
-
+*/
 /**
  * The persistent class for the product database table.
  *

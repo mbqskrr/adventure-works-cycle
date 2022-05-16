@@ -12,19 +12,19 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
-/*import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
+/*import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;*/
 import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Size;*/
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.example.BalantaTaller1.model.validation.ProductcategoryValidation;
 
-import jakarta.validation.constraints.NotBlank;
+/*import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Size;*/
 
 
 /**

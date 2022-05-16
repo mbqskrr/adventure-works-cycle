@@ -22,7 +22,6 @@ import com.example.BalantaTaller1.service.prod.ProductServiceImpl;
 import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImpl;
 import com.example.BalantaTaller1.service.prod.ProductsubcategoryServiceImpl;
 
-import jakarta.validation.Valid;
 
 
 @Controller
@@ -54,7 +53,7 @@ public class AdminController {
 	
 	@PostMapping("/productcategory/add")
 	public String saveProductcategory(@RequestParam(value = "action", required = true) String action, 
-			@Validated(ProductcategoryValidation.class) @Valid @ModelAttribute  Productcategory productcategory, 
+			@Validated(ProductcategoryValidation.class) @ModelAttribute  Productcategory productcategory, 
 			BindingResult bindingResult, Model model) {
 		if (action.equals("Cancel")) {
 			return "redirect:/productcategory/";

@@ -1,17 +1,17 @@
 package com.example.BalantaTaller1.model.user;
 
 import javax.persistence.*;
-/*import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;*/
+import javax.validation.constraints.Size;
 
 import com.example.BalantaTaller1.model.validation.CompleteInfoValidation;
 import com.example.BalantaTaller1.model.validation.CredentialInfoValidation;
 import com.example.BalantaTaller1.model.validation.PersonalInfoValidation;
 
-import jakarta.validation.constraints.NotBlank;
+/*import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Size;*/
 import lombok.Data;
 
 @Entity
