@@ -121,6 +121,11 @@ public class ProductServiceImpl implements ProductService{
 		// TODO Auto-generated method stub
 		
 	}
+
+	public Optional<Product> findById(Integer id) {
+		// TODO Auto-generated method stub
+		return productRepository.findById(id);
+	}
 	
 	
 	

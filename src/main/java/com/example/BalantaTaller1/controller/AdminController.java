@@ -73,7 +73,7 @@ public class AdminController {
 	public String editProductcategory(@PathVariable("id") Integer id, Model model) {
 		Productcategory pc = productcategoryService.findById(id).get();
 		if (pc == null)
-			throw new IllegalArgumentException("Invalid product Id:" + id);
+			throw new IllegalArgumentException("Invalid productcategory Id:" + id);
 		
 		model.addAttribute("productcategory", pc);
 		return "admin/editProductcategory";
@@ -89,7 +89,7 @@ public class AdminController {
 		if(bindingResult.hasErrors()) {
 			Productcategory pc = productcategoryService.findById(id).get();
 			if (pc == null)
-				throw new IllegalArgumentException("Invalid product Id:" + id);
+				throw new IllegalArgumentException("Invalid productcategory Id:" + id);
 			
 			model.addAttribute("productcategory", pc);
 			return "admin/editProductcategory";
@@ -120,7 +120,8 @@ public class AdminController {
 	}
 	
 	@PostMapping("/productsubcategory/add")
-	public String saveProductsubcategory(@Validated(ProductsubcategoryValidation.class) @ModelAttribute Productsubcategory productsubcategory, BindingResult bindingResult, 
+	public String saveProductsubcategory(@Validated(ProductsubcategoryValidation.class) 
+	@ModelAttribute Productsubcategory productsubcategory, BindingResult bindingResult, 
 			Model model, @RequestParam(value = "action", required = true) String action) {
 		if (action.equals("Cancel")) {
 			return "redirect:/productsubcategory/";
@@ -140,7 +141,7 @@ public class AdminController {
 	public String updateProductsubcategory(@PathVariable("id") Integer id, Model model) {
 		Productsubcategory psc = productsubcategoryService.findById(id).get();
 		if (psc == null)
-			throw new IllegalArgumentException("Invalid product Id:" + id);
+			throw new IllegalArgumentException("Invalid productsubcategory Id:" + id);
 		
 		model.addAttribute("productsubcategory", psc);
 		model.addAttribute("productcategories", productcategoryService.findAll());
@@ -149,7 +150,7 @@ public class AdminController {
 	}
 	
 	@PostMapping("/productsubcategory/edit/{id}")
-	public String updateProductsubcategory(@PathVariable("id") Integer id, @Validated(ProductcategoryValidation.class) 
+	public String updateProductsubcategory(@PathVariable("id") Integer id, @Validated(ProductsubcategoryValidation.class) 
 	@ModelAttribute Productsubcategory productsubcategory, BindingResult bindingResult, 
 	Model model, @RequestParam(value = "action", required = true) String action) {
 		if (action.equals("Cancel")) {
@@ -158,7 +159,7 @@ public class AdminController {
 		if(bindingResult.hasErrors()) {
 			Productsubcategory psc = productsubcategoryService.findById(id).get();
 			if (psc == null)
-				throw new IllegalArgumentException("Invalid product Id:" + id);
+				throw new IllegalArgumentException("Invalid productsubcategory Id:" + id);
 			
 			model.addAttribute("productsubcategory", psc);
 			model.addAttribute("productcategories", productcategoryService.findAll());

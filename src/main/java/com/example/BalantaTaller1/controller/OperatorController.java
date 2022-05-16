@@ -15,11 +15,13 @@ import com.example.BalantaTaller1.model.prod.Product;
 //import com.example.BalantaTaller1.model.prod.Productcategory;
 //import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.model.prod.Productmodel;
+import com.example.BalantaTaller1.model.prod.Productsubcategory;
 import com.example.BalantaTaller1.model.prod.Scrapreason;
 //import com.example.BalantaTaller1.model.prod.Productsubcategory;
 import com.example.BalantaTaller1.model.prod.Unitmeasure;
 import com.example.BalantaTaller1.model.prod.Workorder;
 import com.example.BalantaTaller1.model.validation.ProductValidation;
+import com.example.BalantaTaller1.model.validation.ProductcategoryValidation;
 import com.example.BalantaTaller1.model.validation.WorkorderValidation;
 //import com.example.BalantaTaller1.model.validation.ProductcategoryValidation;
 //import com.example.BalantaTaller1.model.validation.ProductsubcategoryValidation;
@@ -140,6 +142,43 @@ public class OperatorController {
 		}
 	}
 	
+	@GetMapping("/product/edit/{id}")
+	public String updateProduct(@PathVariable("id") Integer id, Model model) {
+		Product p = productService.findById(id).get();
+		if (p == null)
+			throw new IllegalArgumentException("Invalid product Id:" + id);
+		
+		model.addAttribute("product", p);
+		model.addAttribute("productsubcategories", productsubcategoryService.findAll());
+		model.addAttribute("unitmeasures", productService.findAllUnitMeasure());
+		model.addAttribute("productmodels", productService.findAllProductModel());
+		
+		return "operator/editProduct";
+	}
+	
+	@PostMapping("/product/edit/{id}")
+	public String updateProduct(@PathVariable("id") Integer id, @Validated(ProductValidation.class) 
+	@ModelAttribute Product product, BindingResult bindingResult, 
+	Model model, @RequestParam(value = "action", required = true) String action) {
+		if (action.equals("Cancel")) {
+			return "redirect:/product";
+		}
+		if(bindingResult.hasErrors()) {
+			Product p = productService.findById(id).get();
+			if (p == null)
+				throw new IllegalArgumentException("Invalid product Id:" + id);
+			
+			model.addAttribute("product", p);
+			model.addAttribute("productsubcategories", productsubcategoryService.findAll());
+			model.addAttribute("unitmeasures", productService.findAllUnitMeasure());
+			model.addAttribute("productmodels", productService.findAllProductModel());
+			return "operator/editProduct";
+		}
+		product.setProductid(id);
+		productService.edit(product);
+		return "redirect:/product";
+	}
+	
 	@GetMapping("/Workorder/{id}")
     public String queryWorkordersByProduct(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("workorders", workorderService.findByProduct(id));
@@ -178,5 +217,39 @@ public class OperatorController {
 
 	}
 	
+	@GetMapping("/workorder/edit/{id}")
+	public String updateWorkorder(@PathVariable("id") Integer id, Model model) {
+		Workorder wo = workorderService.findById(id).get();
+		if (wo == null)
+			throw new IllegalArgumentException("Invalid workorder Id:" + id);
+		
+		model.addAttribute("workorder", wo);
+		model.addAttribute("products", productService.findAll());
+		model.addAttribute("scrapreasons", workorderService.findAllScrapreason());
+		
+		return "operator/editWorkorder";
+	}
+	
+	@PostMapping("/workorder/edit/{id}")
+	public String updateWorkorder(@PathVariable("id") Integer id, @Validated(WorkorderValidation.class) 
+	@ModelAttribute Workorder workorder, BindingResult bindingResult, 
+	Model model, @RequestParam(value = "action", required = true) String action) {
+		if (action.equals("Cancel")) {
+			return "redirect:/workorder";
+		}
+		if(bindingResult.hasErrors()) {
+			Workorder wo = workorderService.findById(id).get();
+			if (wo == null)
+				throw new IllegalArgumentException("Invalid workorder Id:" + id);
+			
+			model.addAttribute("workorder", wo);
+			model.addAttribute("products", productService.findAll());
+			model.addAttribute("scrapreasons", workorderService.findAllScrapreason());
+			return "operator/editWorkorder";
+		}
+		workorder.setWorkorderid(id);
+		workorderService.edit(workorder);
+		return "redirect:/workorder";
+	}
 	
 }

@@ -83,6 +83,11 @@ public class WorkorderServiceImpl implements WorkorderSerivice{
 		Iterable<Workorder> woPI = woPL;
 		return woPI;
 	}
+
+	public Optional<Workorder> findById(Integer id) {
+		// TODO Auto-generated method stub
+		return workorderRepository.findById(id);
+	}
 	
 	/*
 	 * @NotNull private void constraints(Workorder wo) { if(wo.getOrderqty()<0 ||
