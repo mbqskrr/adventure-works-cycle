@@ -59,6 +59,11 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 	public Iterable<Productcategory> findAll() {
 		return productcategoryRepository.findAll();
 	}
+
+	public  Optional<Productcategory> findById(Integer id) {
+		// TODO Auto-generated method stub
+		return productcategoryRepository.findById(id);
+	}
 	
 	/*
 	 * @NotNull private void constraints(Productcategory pc) { if

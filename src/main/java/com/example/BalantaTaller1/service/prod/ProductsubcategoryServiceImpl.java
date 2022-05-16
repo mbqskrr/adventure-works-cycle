@@ -79,4 +79,9 @@ public class ProductsubcategoryServiceImpl implements ProductsubcategoryService{
 		return pcPscI;
 	}
 
+	public Optional<Productsubcategory> findById(Integer id) {
+		// TODO Auto-generated method stub
+		return productsubcategoryRepository.findById(id);
+	}
+
 }

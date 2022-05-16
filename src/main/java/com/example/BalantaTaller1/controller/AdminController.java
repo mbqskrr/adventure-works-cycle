@@ -60,13 +60,43 @@ public class AdminController {
 			return "redirect:/productcategory/";
 		}
 		if (bindingResult.hasErrors()) {
-			//model.addAttribute("productcategory", productcategory);
+			model.addAttribute("productcategory", productcategory);
 			return "/admin/addProductcategory";
 		} else {
 			productcategoryService.save(productcategory);
 			return "redirect:/productcategory/";
 		}
 
+	}
+	
+	@GetMapping("/productcategory/edit/{id}")
+	public String editProductcategory(@PathVariable("id") Integer id, Model model) {
+		Productcategory pc = productcategoryService.findById(id).get();
+		if (pc == null)
+			throw new IllegalArgumentException("Invalid product Id:" + id);
+		
+		model.addAttribute("productcategory", pc);
+		return "admin/editProductcategory";
+	}
+	
+	@PostMapping("/productcategory/edit/{id}")
+	public String updateProductcategory(@PathVariable("id") Integer id, @Validated(ProductcategoryValidation.class) 
+	@ModelAttribute Productcategory productcategory, BindingResult bindingResult, 
+	Model model, @RequestParam(value = "action", required = true) String action) {
+		if (action.equals("Cancel")) {
+			return "redirect:/productcategory";
+		}
+		if(bindingResult.hasErrors()) {
+			Productcategory pc = productcategoryService.findById(id).get();
+			if (pc == null)
+				throw new IllegalArgumentException("Invalid product Id:" + id);
+			
+			model.addAttribute("productcategory", pc);
+			return "admin/editProductcategory";
+		}
+		productcategory.setProductcategoryid(id);
+		productcategoryService.edit(productcategory);
+		return "redirect:/productcategory";
 	}
 
 	@GetMapping("/Productsubcategory/{id}")
@@ -104,6 +134,39 @@ public class AdminController {
 				return "redirect:/productsubcategory/";
 			}	
 		}
+	}
+	
+	@GetMapping("/productsubcategory/edit/{id}")
+	public String updateProductsubcategory(@PathVariable("id") Integer id, Model model) {
+		Productsubcategory psc = productsubcategoryService.findById(id).get();
+		if (psc == null)
+			throw new IllegalArgumentException("Invalid product Id:" + id);
+		
+		model.addAttribute("productsubcategory", psc);
+		model.addAttribute("productcategories", productcategoryService.findAll());
+		
+		return "admin/editProductsubcategory";
+	}
+	
+	@PostMapping("/productsubcategory/edit/{id}")
+	public String updateProductsubcategory(@PathVariable("id") Integer id, @Validated(ProductcategoryValidation.class) 
+	@ModelAttribute Productsubcategory productsubcategory, BindingResult bindingResult, 
+	Model model, @RequestParam(value = "action", required = true) String action) {
+		if (action.equals("Cancel")) {
+			return "redirect:/productsubcategory";
+		}
+		if(bindingResult.hasErrors()) {
+			Productsubcategory psc = productsubcategoryService.findById(id).get();
+			if (psc == null)
+				throw new IllegalArgumentException("Invalid product Id:" + id);
+			
+			model.addAttribute("productsubcategory", psc);
+			model.addAttribute("productcategories", productcategoryService.findAll());
+			return "admin/editProductsubcategory";
+		}
+		productsubcategory.setProductsubcategoryid(id);
+		productsubcategoryService.edit(productsubcategory);
+		return "redirect:/productsubcategory";
 	}
 	
 	@GetMapping("/Product/{id}")
