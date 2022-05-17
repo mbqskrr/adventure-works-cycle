@@ -3,102 +3,113 @@ package com.example.BalantaTaller1.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
+//import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
+//import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.BalantaTaller1.model.prod.Product;
-import com.example.BalantaTaller1.model.prod.Productsubcategory;
+//import com.example.BalantaTaller1.model.prod.Productsubcategory;
 
 @Repository
-@Transactional
+//@Transactional
+@Scope("singleton")
 public class ProductDAOImpl implements ProductDAO{
 	
-	@PersistenceUnit
-	private EntityManagerFactory entityManagerFactory;
+	//@PersistenceUnit
+	@PersistenceContext
+	@Autowired
+	private EntityManager entityManager;
 
 	@Override
 	@Transactional
 	public void save(Product product) {
-		EntityManager em = entityManagerFactory.createEntityManager();
+		//EntityManager em = entityManager.createEntityManager();
 
-		em.getTransaction().begin();
+		//em.getTransaction().begin();
 
-		em.persist(product);
-		em.getTransaction().commit();
+		entityManager.persist(product);
+		//em.getTransaction().commit();
 
-		em.close();
+		//em.close();
 	}
 
 	@Override
 	@Transactional
 	public void update(Product product) {
-		EntityManager em = entityManagerFactory.createEntityManager();
+		//EntityManager em = entityManager.createEntityManager();
 
-		em.getTransaction().begin();
+		//em.getTransaction().begin();
 
-		em.merge(product);
-		em.getTransaction().commit();
+		entityManager.merge(product);
+		//em.getTransaction().commit();
 
-		em.close();
+		//em.close();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<Product> findAll() {
-		EntityManager em = entityManagerFactory.createEntityManager();
-		Query q = em.createQuery("SELECT p FROM Product p");
+		//EntityManager em = entityManager.createEntityManager();
+		Query q = entityManager.createQuery("SELECT p FROM Product p");
         return q.getResultList();
 	}
 
 	@Override
 	@Transactional
 	public Product findById(Integer id) {
-		EntityManager em = entityManagerFactory.createEntityManager();
-		return em.find(Product.class, id);
+		//EntityManager em = entityManager.createEntityManager();
+		return entityManager.find(Product.class, id);
 	}
 
-	@SuppressWarnings("unchecked")
+	//@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<Productsubcategory> findByProductsubcategoryId(Integer productsubcategoryid) {
-		EntityManager em = entityManagerFactory.createEntityManager();
+	public List<Product> findByProductsubcategoryId(Integer productsubcategoryid) {
+		String jpql = "SELECT p FROM Product p WHERE p.productsubcategory.productsubcategoryid = '"+productsubcategoryid+"'";
+		/*EntityManager em = entityManagerFactory.createEntityManager();
 		Query q = em.createQuery("SELECT p FROM Product p WHERE p.productsubcategory.productsubcategoryid = "+productsubcategoryid);
 		q.setParameter("productsubcategoryid", productsubcategoryid);
-        return q.getResultList();
+        return q.getResultList();*/
+		return entityManager.createQuery(jpql, Product.class).getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
+	//@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<Productsubcategory> findByProductmodel(Integer productmodelid) {
-		EntityManager em = entityManagerFactory.createEntityManager();
-		Query q = em.createQuery("SELECT p FROM Product p WHERE p.productmodel.productmodelid = "+productmodelid);
-		q.setParameter("productmodelid", productmodelid);
-        return q.getResultList();
+	public List<Product> findByProductmodel(Integer productmodelid) {
+		//EntityManager em = entityManager.createEntityManager();
+		//Query q = em.createQuery("SELECT p FROM Product p WHERE p.productmodel.productmodelid = "+productmodelid);
+		//q.setParameter("productmodelid", productmodelid);
+		String jpql = "SELECT p FROM Product p WHERE p.productmodel.productmodelid = '"+productmodelid+"'";
+        return entityManager.createQuery(jpql, Product.class).getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
+	//@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<Productsubcategory> findByUnitmeasureSizeCode(String unitmeasurecode) {
-		EntityManager em = entityManagerFactory.createEntityManager();
-		Query q = em.createQuery("SELECT p FROM Product p WHERE p.unitmeasure.unitmeasure1 = "+unitmeasurecode);
-		q.setParameter("unitmeasurecode", unitmeasurecode);
-        return q.getResultList();
+	public List<Product> findByUnitmeasureSizeCode(String unitmeasurecode) {
+		//EntityManager em = entityManager.createEntityManager();
+		//Query q = em.createQuery("SELECT p FROM Product p WHERE p.unitmeasure.unitmeasure1 = "+unitmeasurecode);
+		//q.setParameter("unitmeasurecode", unitmeasurecode);
+		String jpql = "SELECT p FROM Product p WHERE p.unitmeasure1.unitmeasurecode = '"+unitmeasurecode+"'";
+        return entityManager.createQuery(jpql, Product.class).getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
+	//@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<Product> findAllByAtLeastTwoWorkorders() {
-		EntityManager em = entityManagerFactory.createEntityManager();
-		Query q = em.createQuery("SELECT p FROM Product p WHERE SIZE(p.workorders) > 1");
-        return q.getResultList();
+	public List<Product> findByAtLeastTwoWorkorders() {
+		//EntityManager em = entityManager.createEntityManager();
+		//Query q = em.createQuery("SELECT p FROM Product p WHERE SIZE(p.workorders) > 1");
+		String jpql = "SELECT p FROM Product p WHERE SIZE(p.workorders) > 1";
+        return entityManager.createQuery(jpql, Product.class).getResultList();
 	}
 
 }

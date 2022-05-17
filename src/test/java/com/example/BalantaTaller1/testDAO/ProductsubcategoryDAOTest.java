@@ -63,6 +63,7 @@ class ProductsubcategoryDAOTest {
 		productsubcategory.setModifieddate(modifieddate1);
 		productsubcategory.setRowguid(4466);
 		productsubcategory.setProductcategory(productcategory);
+		
 	}
 	
 	@Nested
@@ -90,9 +91,9 @@ class ProductsubcategoryDAOTest {
 			Productsubcategory changed = productsubcategoryDAO.findById(productsubcategory.getProductsubcategoryid());
 			
 			assertAll(                
-					() -> assertEquals(changed.getName(), "Subcategoria Nueva :v"),
-					() -> assertEquals(changed.getModifieddate(), modifieddate),                 
-					() -> assertEquals(changed.getRowguid(),7)
+					() -> assertEquals("Subcategoria Nueva :v", changed.getName()),
+					() -> assertEquals(modifieddate, changed.getModifieddate()),                 
+					() -> assertEquals(7, changed.getRowguid())
 					);
 		}
 		

@@ -3,7 +3,7 @@ package com.example.BalantaTaller1.dao;
 import java.util.List;
 
 import com.example.BalantaTaller1.model.prod.Product;
-import com.example.BalantaTaller1.model.prod.Productsubcategory;
+//import com.example.BalantaTaller1.model.prod.Productsubcategory;
 
 public interface ProductDAO {
 	
@@ -15,12 +15,12 @@ public interface ProductDAO {
 
 	public Product findById(Integer id);
 	
-	public List<Productsubcategory> findByProductsubcategoryId(Integer productsubcategoryid);
+	public List<Product> findByProductsubcategoryId(Integer productsubcategoryid);
 	
-	public List<Productsubcategory> findByProductmodel(Integer productmodelid);
+	public List<Product> findByProductmodel(Integer productmodelid);
 	
-	public List<Productsubcategory> findByUnitmeasureSizeCode(String unitmeasurecode);
+	public List<Product> findByUnitmeasureSizeCode(String unitmeasurecode);
 	
-	public List<Product> findAllByAtLeastTwoWorkorders();
+	public List<Product> findByAtLeastTwoWorkorders();
 
 }
