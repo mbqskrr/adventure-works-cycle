@@ -16,6 +16,7 @@ import javax.validation.constraints.NotBlank;
 /*import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;*/
 import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -50,6 +51,7 @@ public class Productcategory implements Serializable {
 	@Size(min=3, groups = {ProductcategoryValidation.class}, message = "No sea pendejo")
 	private String name;
 
+	@Positive(groups = ProductcategoryValidation.class, message = "Piensa positivo")
 	private Integer rowguid;
 
 	// bi-directional many-to-one association to Productsubcategory

@@ -12,8 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.example.BalantaTaller1.model.validation.ProductmodelValidation;
 
 /**
  * The persistent class for the productmodel database table.
@@ -36,6 +39,7 @@ public class Productmodel implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate modifieddate;
 
+	@NotBlank(groups = ProductmodelValidation.class)
 	private String name;
 
 	private Integer rowguid;

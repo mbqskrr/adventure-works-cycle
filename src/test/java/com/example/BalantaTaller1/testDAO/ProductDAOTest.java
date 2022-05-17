@@ -299,6 +299,11 @@ class ProductDAOTest {
 		productsubcategory = null;
 		productDAO = null;
 		product = null;
+		unitmeasure1 = null;
+		unitmeasure2 = null;
+		unitmeasureDAO = null;
+		productmodel = null;
+		productmodelDAO = null;
 		System.gc();
 	}
 

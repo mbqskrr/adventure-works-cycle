@@ -21,6 +21,9 @@ import com.example.BalantaTaller1.model.prod.Scrapreason;
 import com.example.BalantaTaller1.model.prod.Unitmeasure;
 import com.example.BalantaTaller1.model.prod.Workorder;
 import com.example.BalantaTaller1.model.validation.ProductValidation;
+import com.example.BalantaTaller1.model.validation.ProductmodelValidation;
+import com.example.BalantaTaller1.model.validation.ScrapreasonValidation;
+import com.example.BalantaTaller1.model.validation.UnitmeasureValidation;
 //import com.example.BalantaTaller1.model.validation.ProductcategoryValidation;
 import com.example.BalantaTaller1.model.validation.WorkorderValidation;
 //import com.example.BalantaTaller1.model.validation.ProductcategoryValidation;
@@ -52,7 +55,7 @@ public class OperatorController {
 	}
 	
 	@PostMapping("/productmodel")
-	public String saveProductmodel(@ModelAttribute  Productmodel productmodel, 
+	public String saveProductmodel(@Validated(ProductmodelValidation.class) @ModelAttribute  Productmodel productmodel, 
 			BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
 		if (action.equals("Cancel")) {
 			return "redirect:/operator/operator.html";
@@ -73,7 +76,7 @@ public class OperatorController {
 	}
 	
 	@PostMapping("/unitmeasure")
-	public String saveUnitmeasure(@ModelAttribute  Unitmeasure unitmeasure, 
+	public String saveUnitmeasure(@Validated(UnitmeasureValidation.class) @ModelAttribute  Unitmeasure unitmeasure, 
 			BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
 		if (action.equals("Cancel")) {
 			return "redirect:/operator/operator.html";
@@ -94,7 +97,7 @@ public class OperatorController {
 	}
 	
 	@PostMapping("/scrapreason")
-	public String saveScrapreason(@ModelAttribute  Scrapreason scrapreason, 
+	public String saveScrapreason(@Validated(ScrapreasonValidation.class) @ModelAttribute  Scrapreason scrapreason, 
 			BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action) {
 		if (action.equals("Cancel")) {
 			return "redirect:/operator/operator.html";

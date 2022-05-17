@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
+
+import com.example.BalantaTaller1.model.validation.ScrapreasonValidation;
 
 /**
  * The persistent class for the scrapreason database table.
@@ -28,6 +31,7 @@ public class Scrapreason implements Serializable {
 
 	private Timestamp modifieddate;
 
+	@NotBlank(groups = ScrapreasonValidation.class)
 	private String name;
 
 	// bi-directional many-to-one association to Workorder

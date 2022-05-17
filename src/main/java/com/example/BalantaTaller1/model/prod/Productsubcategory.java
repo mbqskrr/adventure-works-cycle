@@ -17,6 +17,7 @@ import javax.persistence.SequenceGenerator;
 //import javax.validation.GroupSequence;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -51,6 +52,7 @@ public class Productsubcategory implements Serializable {
 	@Size(min = 5, groups = ProductsubcategoryValidation.class)
 	private String name;
 
+	@Positive(groups = ProductsubcategoryValidation.class)
 	private Integer rowguid;
 
 	// bi-directional many-to-one association to Product

@@ -252,6 +252,13 @@ class WorkorderDAOTest {
 
 	@AfterEach
 	void tearDown() throws Exception {
+		productcategoryDAO = null;
+		productcategory = null;
+		productsubcategoryDAO = null;
+		productsubcategory = null;
+		productDAO = null;
+		product = null;
+		System.gc();
 	}
 	
 	@AfterAll

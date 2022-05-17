@@ -4,9 +4,11 @@ import java.io.Serializable;
 import javax.persistence.*;
 //import javax.validation.constraints.Future;
 import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
 //import javax.validation.constraints.Past;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -48,7 +50,7 @@ public class Workorder implements Serializable {
 	@Positive(groups = WorkorderValidation.class)
 	private Integer orderqty;
 
-	@Positive(groups = WorkorderValidation.class)
+	@PositiveOrZero(groups = WorkorderValidation.class)
 	private Integer scrappedqty;
 	
 	@PastOrPresent(groups = WorkorderValidation.class)
@@ -58,11 +60,13 @@ public class Workorder implements Serializable {
 	//bi-directional many-to-one association to Product
 	@ManyToOne
 	@JoinColumn(name="productid")
+	@NotNull(groups = WorkorderValidation.class)
 	private Product product;
 
 	//bi-directional many-to-one association to Scrapreason
 	@ManyToOne
 	@JoinColumn(name="scrapreasonid")
+	@NotNull(groups = WorkorderValidation.class)
 	private Scrapreason scrapreason;
 
 	//bi-directional many-to-one association to Workorderrouting

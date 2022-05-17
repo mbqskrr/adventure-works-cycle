@@ -12,9 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 //import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.example.BalantaTaller1.model.validation.UnitmeasureValidation;
 
 /**
  * The persistent class for the unitmeasure database table.
@@ -35,6 +38,7 @@ public class Unitmeasure implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate modifieddate;
 
+	@NotBlank(groups = UnitmeasureValidation.class)
 	private String name;
 
 	// bi-directional many-to-one association to Billofmaterial
