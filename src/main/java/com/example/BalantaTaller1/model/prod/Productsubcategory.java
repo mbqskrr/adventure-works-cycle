@@ -17,6 +17,7 @@ import javax.persistence.SequenceGenerator;
 //import javax.validation.GroupSequence;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
@@ -45,6 +46,7 @@ public class Productsubcategory implements Serializable {
 	private Integer productsubcategoryid;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@PastOrPresent(groups = ProductsubcategoryValidation.class)
 	private LocalDate modifieddate;
 	//private Timestamp modifieddate;
 
