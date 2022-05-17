@@ -126,7 +126,7 @@ class ProductDAOTest {
 			productDAO.save(product);
 
 			product.setName("Productazo Nuevo :v");
-			LocalDate sellstartdate = LocalDate.parse("2022-02-01");
+			LocalDate sellstartdate = LocalDate.parse("2022-02-02");
 			product.setSellstartdate(sellstartdate);
 			product.setDaystomanufacture(10);
 
