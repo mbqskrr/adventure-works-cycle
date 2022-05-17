@@ -3,7 +3,7 @@ package com.example.BalantaTaller1.testDAO;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+//import java.time.format.DateTimeFormatter;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -18,7 +18,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.example.BalantaTaller1.dao.ProductcategoryDAO;
+//import com.example.BalantaTaller1.dao.ProductcategoryDAO;
 import com.example.BalantaTaller1.dao.ProductcategoryDAOImpl;
 import com.example.BalantaTaller1.main.BalantaTaller1Application;
 import com.example.BalantaTaller1.model.prod.Productcategory;
@@ -51,7 +51,7 @@ class ProductcategoryDAOTest {
 	}
 
 	@Nested
-	class ItsDaoTest{
+	class DAOTest{
 		
 		@Test
 		@Order(1)

@@ -3,9 +3,9 @@ package com.example.BalantaTaller1.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+//import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
+//import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
-import javax.validation.GroupSequence;
+//import javax.validation.GroupSequence;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -34,7 +34,7 @@ import jakarta.validation.constraints.Size;
  */
 @Entity
 @NamedQuery(name = "Productsubcategory.findAll", query = "SELECT p FROM Productsubcategory p")
-@GroupSequence(ProductsubcategoryValidation.class)
+//@GroupSequence(ProductsubcategoryValidation.class)
 public class Productsubcategory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
