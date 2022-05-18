@@ -57,8 +57,8 @@ public class BalantaTaller1Application {
 			
 			
 			User u= new User();
-			u.setUsername("admin");
-			u.setPassword("{noop}admin");
+			u.setUsername("admin1");
+			u.setPassword("{noop}admin1");
 			u.setType(UserType.administrator);
 			
 			user.save(u);
