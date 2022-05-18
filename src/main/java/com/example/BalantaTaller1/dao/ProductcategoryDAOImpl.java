@@ -74,5 +74,7 @@ public class ProductcategoryDAOImpl implements ProductcategoryDAO {
 		return em.find(Productcategory.class, productcategoryid);*/
 		return entityManager.find(Productcategory.class, productcategoryid);
 	}
+	
+	
 
 }

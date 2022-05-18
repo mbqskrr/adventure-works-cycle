@@ -13,6 +13,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 /*import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;*/
 import javax.validation.constraints.PastOrPresent;
@@ -44,6 +45,7 @@ public class Productcategory implements Serializable {
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@PastOrPresent(groups = ProductcategoryValidation.class)
+	@NotNull(groups = ProductcategoryValidation.class)
 	private LocalDate modifieddate;
 	//private Timestamp modifieddate;
 

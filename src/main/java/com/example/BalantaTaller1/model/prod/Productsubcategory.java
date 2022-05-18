@@ -47,6 +47,7 @@ public class Productsubcategory implements Serializable {
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@PastOrPresent(groups = ProductsubcategoryValidation.class)
+	@NotNull(groups = ProductsubcategoryValidation.class)
 	private LocalDate modifieddate;
 	//private Timestamp modifieddate;
 

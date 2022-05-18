@@ -85,11 +85,13 @@ public class Product implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	//@PastOrPresent(groups = ProductValidation.class)
 	@FutureOrPresent(groups = ProductValidation.class)
+	@NotNull(groups = ProductValidation.class)
 	private LocalDate sellenddate;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	//@FutureOrPresent(groups = ProductValidation.class)
 	@PastOrPresent(groups = ProductValidation.class)
+	@NotNull(groups = ProductValidation.class)
 	private LocalDate sellstartdate;
 
 	//@Positive(groups = ProductValidation.class)
