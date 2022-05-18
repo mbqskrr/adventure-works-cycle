@@ -42,6 +42,7 @@ public class Workorder implements Serializable {
 
 	@FutureOrPresent(groups = WorkorderValidation.class)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@NotNull(groups = WorkorderValidation.class)
 	private LocalDate enddate;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -55,6 +56,7 @@ public class Workorder implements Serializable {
 	
 	@PastOrPresent(groups = WorkorderValidation.class)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@NotNull(groups = WorkorderValidation.class)
 	private LocalDate startdate;
 
 	//bi-directional many-to-one association to Product
