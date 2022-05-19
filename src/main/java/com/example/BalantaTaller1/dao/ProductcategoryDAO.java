@@ -1,8 +1,10 @@
 package com.example.BalantaTaller1.dao;
 
+
 import java.util.List;
 
 import com.example.BalantaTaller1.model.prod.Productcategory;
+
 
 public interface ProductcategoryDAO {
 
@@ -13,5 +15,7 @@ public interface ProductcategoryDAO {
 	public List<Productcategory> findAll();
 
 	public Productcategory findById(Integer productcategoryid);
+	
+	
 
 }

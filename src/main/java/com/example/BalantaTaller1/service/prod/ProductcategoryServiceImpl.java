@@ -2,8 +2,6 @@ package com.example.BalantaTaller1.service.prod;
 
 import java.util.Optional;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,51 +26,50 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 	@Transactional
 	public Productcategory save(@Validated(ProductcategoryValidation.class) Productcategory pc) {
 		Productcategory tempPc = null;
-		
-		//constraints(pc);
-		
+
+		constraints(pc);
+
 		tempPc = productcategoryRepository.save(pc);
 
-		
 		return tempPc;
 	}
 
 	@Override
 	@Transactional
 	public Productcategory edit(Productcategory pc) {
-	
+
 		Productcategory temp = null;
-		
-		
+
 		Optional<Productcategory> optional = productcategoryRepository.findById(pc.getProductcategoryid());
-		
+
 		if (optional.isPresent()) {
-			//constraints(pc);
-			
+			constraints(pc);
+
 			temp = save(pc);
 		}
-		
+
 		return temp;
 
 	}
 
+	@Override
 	public Iterable<Productcategory> findAll() {
 		return productcategoryRepository.findAll();
 	}
 
-	public  Optional<Productcategory> findById(Integer id) {
+	@Override
+	public Optional<Productcategory> findById(Integer id) {
 		// TODO Auto-generated method stub
 		return productcategoryRepository.findById(id);
 	}
-	
-	/*
-	 * @NotNull private void constraints(Productcategory pc) { if
-	 * (pc.getName().length() <= 3 || pc.getName()==null) { throw new
-	 * RuntimeException("El nombre de la categoria no tiene al menos 3 carácteres");
-	 * 
-	 * }
-	 * 
-	 * }
-	 */
+
+	//@NotNull
+	private void constraints(Productcategory pc) {
+		if (pc.getName().length() <= 3 || pc.getName() == null) {
+			throw new RuntimeException("El nombre de la categoria no tiene al menos 3 carácteres");
+
+		}
+
+	}
 
 }

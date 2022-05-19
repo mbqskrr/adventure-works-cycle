@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService{
 	public Product save(Product p) {
 		Product temp = null;
 		
-		//constraints(p);
+		constraints(p);
 		
 		Optional<Unitmeasure> opUm = this.unitmeasureRepository.findById(p.getUnitmeasure1().getUnitmeasurecode());
 		Optional<Unitmeasure> opUm1 = this.unitmeasureRepository.findById(p.getUnitmeasure2().getUnitmeasurecode());
@@ -65,21 +65,21 @@ public class ProductServiceImpl implements ProductService{
 		Product temp = null;
 		Optional<Product> optional = this.productRepository.findById(p.getProductid());
 		if(optional.isPresent()) {
-			//constraints(p);
+			constraints(p);
 			temp = save(p);
 		}
 		
 		return productRepository.save(temp);
 	}
 
-	/*@NotNull
+	
 	private void constraints(Product p) {
 		Integer size = Integer.parseInt(p.getSize());
 		Integer weight = p.getWeight().intValueExact();
 		if(p.getProductnumber().equals(null)) {
 			throw new RuntimeException("Numero de producto no valido");
 		}
-		if ( !p.getSellenddate().after(p.getSellstartdate())) {
+		if ( !p.getSellenddate().isAfter(p.getSellstartdate())) {
 			throw new RuntimeException("Error en las fechas");
 		}
 		if (size < 0) {
@@ -88,12 +88,14 @@ public class ProductServiceImpl implements ProductService{
 		if (weight < 0) {
 			throw new RuntimeException("Peso menor a 0");
 		}
-	}*/
+	}
 
+	@Override
 	public Iterable<Product> findAll() {
 		return productRepository.findAll();
 	}
 
+	@Override
 	public Iterable<Product> findByProductsubcategory(Integer id) {
 		Productsubcategory psc = productsubcategoryRepository.findById(id).get();
 		List<Product> pscPL = psc.getProducts();
@@ -102,28 +104,30 @@ public class ProductServiceImpl implements ProductService{
 		return pscPI;
 	}
 	
+	@Override
 	public Iterable<Productmodel> findAllProductModel() {
 		return productmodelRepository.findAll();
 	}
 	
+	@Override
 	public Iterable<Unitmeasure> findAllUnitMeasure() {
 		return unitmeasureRepository.findAll();
 	}
 
+	@Override
+	@Transactional
 	public Productmodel saveProductmodel(Productmodel productmodel) {
 		return productmodelRepository.save(productmodel);
-		// TODO Auto-generated method stub
-		
 	}
 
+	@Override
+	@Transactional
 	public Unitmeasure saveUnitmeasure(Unitmeasure unitmeasure) {
 		return unitmeasureRepository.save(unitmeasure);
-		// TODO Auto-generated method stub
-		
 	}
 
+	@Override
 	public Optional<Product> findById(Integer id) {
-		// TODO Auto-generated method stub
 		return productRepository.findById(id);
 	}
 	

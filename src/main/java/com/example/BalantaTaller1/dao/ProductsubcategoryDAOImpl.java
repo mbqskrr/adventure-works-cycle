@@ -1,5 +1,6 @@
 package com.example.BalantaTaller1.dao;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.model.prod.Productsubcategory;
 
 @Repository
@@ -97,6 +99,13 @@ public class ProductsubcategoryDAOImpl implements ProductsubcategoryDAO {
 		 */
 		String jpql = "SELECT p FROM Productsubcategory p WHERE p.productcategory.name = '" + name + "'";
 		return entityManager.createQuery(jpql, Productsubcategory.class).getResultList();
+	}
+
+	@Override
+	@Transactional
+	public List<Productsubcategory> findByProductsubcategoryBetweenDatesOrderedByProductName(LocalDate date1,
+			LocalDate date2, Productcategory pc) {
+		return null;
 	}
 
 }

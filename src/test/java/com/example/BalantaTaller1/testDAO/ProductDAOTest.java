@@ -23,13 +23,18 @@ import com.example.BalantaTaller1.dao.ProductDAOImpl;
 import com.example.BalantaTaller1.dao.ProductcategoryDAOImpl;
 import com.example.BalantaTaller1.dao.ProductmodelDAOImpl;
 import com.example.BalantaTaller1.dao.ProductsubcategoryDAOImpl;
+//import com.example.BalantaTaller1.dao.ScrapreasonDAO;
+import com.example.BalantaTaller1.dao.ScrapreasonDAOImpl;
 import com.example.BalantaTaller1.dao.UnitmeasureDAOImpl;
+import com.example.BalantaTaller1.dao.WorkorderDAOImpl;
 import com.example.BalantaTaller1.main.BalantaTaller1Application;
 import com.example.BalantaTaller1.model.prod.Product;
 import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.model.prod.Productmodel;
 import com.example.BalantaTaller1.model.prod.Productsubcategory;
+import com.example.BalantaTaller1.model.prod.Scrapreason;
 import com.example.BalantaTaller1.model.prod.Unitmeasure;
+import com.example.BalantaTaller1.model.prod.Workorder;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -41,6 +46,8 @@ class ProductDAOTest {
 	private ProductDAOImpl productDAO;
 	private ProductmodelDAOImpl productmodelDAO;
 	private UnitmeasureDAOImpl unitmeasureDAO;
+	private ScrapreasonDAOImpl scrapreasonDAO;
+	private WorkorderDAOImpl workorderDAO;
 
 	private Productcategory productcategory;
 	private Productsubcategory productsubcategory;
@@ -51,12 +58,15 @@ class ProductDAOTest {
 
 	@Autowired
 	public ProductDAOTest(ProductcategoryDAOImpl productcategoryDAO, ProductsubcategoryDAOImpl productsubcategoryDAO,
-			ProductDAOImpl productDAO, ProductmodelDAOImpl productmodelDAO, UnitmeasureDAOImpl unitmeasureDAO) {
+			ProductDAOImpl productDAO, ProductmodelDAOImpl productmodelDAO, UnitmeasureDAOImpl unitmeasureDAO,
+			ScrapreasonDAOImpl scrapreasonDAO, WorkorderDAOImpl workorderDAO) {
 		this.productcategoryDAO = productcategoryDAO;
 		this.productsubcategoryDAO = productsubcategoryDAO;
 		this.productDAO = productDAO;
 		this.productmodelDAO = productmodelDAO;
 		this.unitmeasureDAO = unitmeasureDAO;
+		this.scrapreasonDAO = scrapreasonDAO;
+		this.workorderDAO = workorderDAO;
 	}
 
 	@BeforeAll
@@ -288,6 +298,61 @@ class ProductDAOTest {
 
 			assertEquals(2, listP.size());
 
+		}
+		
+		@Test
+		@Order(6)
+		void findByAtLeastTwoWorkorders() {
+			assertNotNull(productDAO);
+			productDAO.save(product);
+			
+			Scrapreason scrapreason = new Scrapreason();
+			scrapreason.setName("Esta malo");
+			scrapreasonDAO.save(scrapreason);
+			
+			Workorder workorder = new Workorder();
+			workorder.setOrderqty(5);
+			LocalDate startdate = LocalDate.parse("2022-02-01");
+			workorder.setStartdate(startdate);
+			LocalDate enddate = LocalDate.parse("2022-08-25");
+			workorder.setEnddate(enddate);
+			workorder.setScrappedqty(0);
+			workorder.setProduct(product);
+			workorder.setScrapreason(scrapreason);
+			workorderDAO.save(workorder);
+			
+			Workorder workorder1 = new Workorder();
+			workorder1.setOrderqty(5);
+			LocalDate startdate1 = LocalDate.parse("2022-05-17");
+			workorder1.setStartdate(startdate1);
+			LocalDate enddate1 = LocalDate.parse("2023-03-07");
+			workorder1.setEnddate(enddate1);
+			workorder1.setScrappedqty(0);
+			workorder1.setProduct(product);
+			workorder1.setScrapreason(scrapreason);
+			workorderDAO.save(workorder1);
+			
+			Product product1 = new Product();
+			product1.setName("ULTRA SOLO");
+			product1.setDaystomanufacture(9);
+			product1.setSize("2");
+			product1.setUnitmeasure1(unitmeasure1);
+			product1.setWeight(new BigDecimal(2));
+			product1.setUnitmeasure2(unitmeasure2);
+			LocalDate sellstartdate = LocalDate.parse("2021-02-01");
+			product1.setSellstartdate(sellstartdate);
+			LocalDate sellenddate = LocalDate.parse("2022-06-25");
+			product1.setSellenddate(sellenddate);
+			product1.setProductmodel(productmodel);
+			product1.setProductsubcategory(productsubcategory);
+			productDAO.save(product1);
+			
+			List<Product> listP = productDAO
+					.findByAtLeastTwoWorkorders();
+			
+			assertEquals(1, listP.size());
+			assertEquals(product.getName(), listP.get(0).getName());
+			
 		}
 	}
 

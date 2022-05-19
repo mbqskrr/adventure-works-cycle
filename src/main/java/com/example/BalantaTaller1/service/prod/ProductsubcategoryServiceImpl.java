@@ -15,13 +15,14 @@ import com.example.BalantaTaller1.repository.prod.ProductcategoryRepository;
 import com.example.BalantaTaller1.repository.prod.ProductsubcategoryRepository;
 
 @Service
-public class ProductsubcategoryServiceImpl implements ProductsubcategoryService{
-	
+public class ProductsubcategoryServiceImpl implements ProductsubcategoryService {
+
 	private ProductsubcategoryRepository productsubcategoryRepository;
 	private ProductcategoryRepository productcategoryRepository;
-	
+
 	@Autowired
-	public ProductsubcategoryServiceImpl(ProductsubcategoryRepository productsubcategoryRepository, ProductcategoryRepository productcategoryRepository) {
+	public ProductsubcategoryServiceImpl(ProductsubcategoryRepository productsubcategoryRepository,
+			ProductcategoryRepository productcategoryRepository) {
 		this.productcategoryRepository = productcategoryRepository;
 		this.productsubcategoryRepository = productsubcategoryRepository;
 	}
@@ -29,17 +30,18 @@ public class ProductsubcategoryServiceImpl implements ProductsubcategoryService{
 	@Override
 	@Transactional
 	public Productsubcategory save(Productsubcategory psc) {
-		
+
 		Productsubcategory temp = null;
-		
-		//constraints(psc);
-		
-		Optional<Productcategory> optional = this.productcategoryRepository.findById(psc.getProductcategory().getProductcategoryid()); 
-		if(optional.isPresent()) {
+
+		constraints(psc);
+
+		Optional<Productcategory> optional = this.productcategoryRepository
+				.findById(psc.getProductcategory().getProductcategoryid());
+		if (optional.isPresent()) {
 			psc.setProductcategory(optional.get());
 			temp = productsubcategoryRepository.save(psc);
 		}
-		
+
 		return temp;
 	}
 
@@ -47,40 +49,43 @@ public class ProductsubcategoryServiceImpl implements ProductsubcategoryService{
 	@Transactional
 	public Productsubcategory edit(Productsubcategory psc) {
 		Productsubcategory temp = null;
-		
-		Optional<Productsubcategory> optional = this.productsubcategoryRepository.findById(psc.getProductsubcategoryid());
-		
-		if(optional.isPresent()) {
-			//constraints(psc);
+
+		Optional<Productsubcategory> optional = this.productsubcategoryRepository
+				.findById(psc.getProductsubcategoryid());
+
+		if (optional.isPresent()) {
+			constraints(psc);
 			temp = save(psc);
 		}
-		
+
 		return temp;
 	}
-	
-	/*
-	 * @NotNull private void constraints(Productsubcategory psc) {
-	 * if(psc.getName().length()<=5 || psc.getName()==null) { throw new
-	 * RuntimeException("Nombre de subcategoria no valido"); } if
-	 * (productcategoryRepository.findById(psc.getProductcategory().
-	 * getProductcategoryid()).isEmpty()) { throw new
-	 * RuntimeException("Categoria asociada no existe"); } }
-	 */
 
+	private void constraints(Productsubcategory psc) {
+		if (psc.getName().length() <= 5 || psc.getName() == null) {
+			throw new RuntimeException("Nombre de subcategoria no valido");
+		}
+		if (productcategoryRepository.findById(psc.getProductcategory().getProductcategoryid()).isEmpty()) {
+			throw new RuntimeException("Categoria asociada no existe");
+		}
+	}
+
+	@Override
 	public Iterable<Productsubcategory> findAll() {
 		return productsubcategoryRepository.findAll();
 	}
 
+	@Override
 	public Iterable<Productsubcategory> findByProductcategory(Integer id) {
 		Productcategory pc = productcategoryRepository.findById(id).get();
 		List<Productsubcategory> pcPscL = pc.getProductsubcategories();
-		
+
 		Iterable<Productsubcategory> pcPscI = pcPscL;
 		return pcPscI;
 	}
 
+	@Override
 	public Optional<Productsubcategory> findById(Integer id) {
-		// TODO Auto-generated method stub
 		return productsubcategoryRepository.findById(id);
 	}
 
