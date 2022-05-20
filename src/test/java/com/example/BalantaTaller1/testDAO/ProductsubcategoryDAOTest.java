@@ -2,6 +2,7 @@ package com.example.BalantaTaller1.testDAO;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,11 +21,17 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.BalantaTaller1.dao.ProductDAOImpl;
 import com.example.BalantaTaller1.dao.ProductcategoryDAOImpl;
+import com.example.BalantaTaller1.dao.ProductmodelDAOImpl;
 import com.example.BalantaTaller1.dao.ProductsubcategoryDAOImpl;
+import com.example.BalantaTaller1.dao.UnitmeasureDAOImpl;
 import com.example.BalantaTaller1.main.BalantaTaller1Application;
+import com.example.BalantaTaller1.model.prod.Product;
 import com.example.BalantaTaller1.model.prod.Productcategory;
+import com.example.BalantaTaller1.model.prod.Productmodel;
 import com.example.BalantaTaller1.model.prod.Productsubcategory;
+import com.example.BalantaTaller1.model.prod.Unitmeasure;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -34,14 +41,21 @@ class ProductsubcategoryDAOTest {
 	
 	private ProductcategoryDAOImpl productcategoryDAO;
 	private ProductsubcategoryDAOImpl productsubcategoryDAO;
+	private ProductDAOImpl productDAO;
+	private ProductmodelDAOImpl productmodelDAO;
+	private UnitmeasureDAOImpl unitmeasureDAO;
 	
 	private Productcategory productcategory;
 	private Productsubcategory productsubcategory;
 	
 	@Autowired
-	public ProductsubcategoryDAOTest(ProductcategoryDAOImpl productcategoryDAO, ProductsubcategoryDAOImpl productsubcategoryDAO) {
+	public ProductsubcategoryDAOTest(ProductcategoryDAOImpl productcategoryDAO, ProductsubcategoryDAOImpl productsubcategoryDAO,
+			ProductDAOImpl productDAO, ProductmodelDAOImpl productmodelDAO, UnitmeasureDAOImpl unitmeasureDAO) {
 		this.productcategoryDAO = productcategoryDAO;
 		this.productsubcategoryDAO = productsubcategoryDAO;
+		this.productDAO = productDAO;
+		this.unitmeasureDAO = unitmeasureDAO;
+		this.productmodelDAO = productmodelDAO;
 	}
 
 
@@ -181,6 +195,46 @@ class ProductsubcategoryDAOTest {
 			
 			assertEquals(1, listPsc.size());
 			
+		}
+		
+		@Test
+		@Order(6)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+		void findByProductsubcategoryBetweenDatesOrderedByProductName() {
+			Productmodel productmodel = new Productmodel();
+			productmodel.setName("Nuevecito");
+			productmodelDAO.save(productmodel);
+
+			Unitmeasure unitmeasure1 = new Unitmeasure();
+			unitmeasure1.setName("Centimetros");
+			unitmeasureDAO.save(unitmeasure1);
+
+			Unitmeasure unitmeasure2 = new Unitmeasure();
+			unitmeasure2.setName("Libras");
+			unitmeasureDAO.save(unitmeasure2);
+
+			Product product = new Product();
+			product.setName("Productazo");
+			product.setDaystomanufacture(9);
+			product.setSize("40");
+			product.setUnitmeasure1(unitmeasure1);
+			product.setWeight(new BigDecimal(2));
+			product.setUnitmeasure2(unitmeasure2);
+			LocalDate sellstartdate = LocalDate.parse("2020-02-01");
+			product.setSellstartdate(sellstartdate);
+			LocalDate sellenddate = LocalDate.parse("2022-08-25");
+			product.setSellenddate(sellenddate);
+			product.setProductmodel(productmodel);
+			product.setProductsubcategory(productsubcategory);
+			productDAO.save(product);
+			
+			LocalDate date1 = LocalDate.parse("2020-01-01");
+			LocalDate date2 = LocalDate.parse("2020-02-03");
+			
+			List<Object[]> listP = productsubcategoryDAO.findByProductsubcategoryBetweenDatesOrderedByProductName(date1, date2, 
+					productcategory);
+			
+			 assertEquals(1, listP.size());
 		}
 		
 	}

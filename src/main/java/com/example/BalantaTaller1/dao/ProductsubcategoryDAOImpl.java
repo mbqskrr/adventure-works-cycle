@@ -105,13 +105,13 @@ public class ProductsubcategoryDAOImpl implements ProductsubcategoryDAO {
 	@Transactional
 	public List<Object[]> findByProductsubcategoryBetweenDatesOrderedByProductName(LocalDate date1,
 			LocalDate date2, Productcategory pc) {
-		String jpql = "SELECT psc, COUNT(p.name) "
-				+ "FROM Productsubcategory psc, Product p"
-				+ "WHERE psc.productsubcategoryid = p.productsubcategory.productsubcategoryid"
-				+ "AND psc.productcategory.productcategoryid = "+pc.getProductcategoryid()
-				+ "AND EXISTS(SELECT p.sellstartdate FROM Product p WHERE p.sellstartdate BETWEEN :date1 AND :date2)"
+		String jpql = "SELECT psc, p.name "
+				+ "FROM Productsubcategory psc, Product p "
+				+ "WHERE psc.productsubcategoryid = p.productsubcategory.productsubcategoryid "
+				+ "AND psc.productcategory.productcategoryid = "+pc. getProductcategoryid()
+				+ " AND EXISTS (SELECT p.sellstartdate FROM Product p WHERE p.sellstartdate BETWEEN '"+ date1+"' "+ "AND '" +date2+"' "
 				+ "GROUP BY psc.productsubcategoryid"
-				+ "ORDER BY p.name ASC";
+				+ " ORDER BY p.name";
 		return entityManager.createQuery(jpql, Object[].class).getResultList();
 	}
 
