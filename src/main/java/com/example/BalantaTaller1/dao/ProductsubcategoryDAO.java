@@ -20,6 +20,6 @@ public interface ProductsubcategoryDAO {
 	
 	public List<Productsubcategory> findByProductcategoryName(String name);
 
-	public List<Productsubcategory> findByProductsubcategoryBetweenDatesOrderedByProductName(LocalDate date1, LocalDate date2,
+	public List<Object[]> findByProductsubcategoryBetweenDatesOrderedByProductName(LocalDate date1, LocalDate date2,
 			Productcategory pc);
 }

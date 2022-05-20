@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.BalantaTaller1.dao.ProductDAOImpl;
 import com.example.BalantaTaller1.dao.ProductcategoryDAOImpl;
@@ -123,6 +125,7 @@ class ProductDAOTest {
 	class DAOTest {
 		@Test
 		@Order(1)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void save() {
 			assertNotNull(productDAO);
 			productDAO.save(product);
@@ -131,6 +134,7 @@ class ProductDAOTest {
 
 		@Test
 		@Order(2)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void update() {
 			assertNotNull(productDAO);
 			productDAO.save(product);
@@ -149,6 +153,7 @@ class ProductDAOTest {
 
 		@Test
 		@Order(3)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void findAll() {
 			assertNotNull(productDAO);
 			productDAO.save(product);
@@ -158,6 +163,7 @@ class ProductDAOTest {
 
 		@Test
 		@Order(4)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void findByProductsubcategoryId() {
 			assertNotNull(productDAO);
 			productDAO.save(product);
@@ -208,6 +214,7 @@ class ProductDAOTest {
 		
 		@Test
 		@Order(5)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void findByProductmodel() {
 			assertNotNull(productDAO);
 			productDAO.save(product);
@@ -255,6 +262,7 @@ class ProductDAOTest {
 		
 		@Test
 		@Order(6)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void findByUnitmeasureSizeCode() {
 			assertNotNull(productDAO);
 			productDAO.save(product);
@@ -301,7 +309,8 @@ class ProductDAOTest {
 		}
 		
 		@Test
-		@Order(6)
+		@Order(7)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void findByAtLeastTwoWorkorders() {
 			assertNotNull(productDAO);
 			productDAO.save(product);

@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 //import com.example.BalantaTaller1.dao.ProductcategoryDAO;
 import com.example.BalantaTaller1.dao.ProductcategoryDAOImpl;
@@ -55,6 +57,7 @@ class ProductcategoryDAOTest {
 		
 		@Test
 		@Order(1)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void save() {
 			assertNotNull(productcategoryDAO);
 			productcategoryDAO.save(productcategory);
@@ -63,6 +66,7 @@ class ProductcategoryDAOTest {
 		
 		@Test
 		@Order(2)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void update() {
 			assertNotNull(productcategoryDAO);
 			productcategoryDAO.save(productcategory);
@@ -84,6 +88,7 @@ class ProductcategoryDAOTest {
 		
 		@Test
 		@Order(3)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void findAll() {
 			assertNotNull(productcategoryDAO);
 			productcategoryDAO.save(productcategory);

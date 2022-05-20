@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.BalantaTaller1.dao.ProductcategoryDAOImpl;
 import com.example.BalantaTaller1.dao.ProductsubcategoryDAOImpl;
@@ -71,6 +73,7 @@ class ProductsubcategoryDAOTest {
 		
 		@Test
 		@Order(1)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void save() {
 			assertNotNull(productsubcategoryDAO);
 			productsubcategoryDAO.save(productsubcategory);
@@ -79,6 +82,7 @@ class ProductsubcategoryDAOTest {
 		
 		@Test
 		@Order(2)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void update() {
 			assertNotNull(productsubcategoryDAO);
 			productsubcategoryDAO.save(productsubcategory);
@@ -99,6 +103,7 @@ class ProductsubcategoryDAOTest {
 		
 		@Test
 		@Order(3)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void findAll() {
 			assertNotNull(productsubcategoryDAO);
 			productsubcategoryDAO.save(productsubcategory);
@@ -108,6 +113,7 @@ class ProductsubcategoryDAOTest {
 		
 		@Test
 		@Order(4)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void findByProductcategoryId() {
 			assertNotNull(productsubcategoryDAO);
 			productsubcategoryDAO.save(productsubcategory);
@@ -143,6 +149,7 @@ class ProductsubcategoryDAOTest {
 		
 		@Test
 		@Order(5)
+		@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 		void findByProductcategoryName() {
 			assertNotNull(productsubcategoryDAO);
 			productsubcategoryDAO.save(productsubcategory);
