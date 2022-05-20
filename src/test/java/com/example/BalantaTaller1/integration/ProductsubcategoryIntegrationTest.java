@@ -28,7 +28,7 @@ import org.springframework.test.context.ContextConfiguration;
 import com.example.BalantaTaller1.main.BalantaTaller1Application;
 import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.model.prod.Productsubcategory;
-import com.example.BalantaTaller1.repository.prod.ProductcategoryRepository;
+//import com.example.BalantaTaller1.repository.prod.ProductcategoryRepository;
 import com.example.BalantaTaller1.repository.prod.ProductsubcategoryRepository;
 import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImpl;
 import com.example.BalantaTaller1.service.prod.ProductsubcategoryServiceImpl;
@@ -46,7 +46,7 @@ public class ProductsubcategoryIntegrationTest {
 
 	private ProductsubcategoryRepository productsubcategoryRepository;
 
-	private ProductcategoryRepository productcategoryRepository;
+	//private ProductcategoryRepository productcategoryRepository;
 
 	private ProductsubcategoryServiceImpl productsubcategoryService;
 	private ProductcategoryServiceImpl productcategoryService;
@@ -55,10 +55,10 @@ public class ProductsubcategoryIntegrationTest {
 
 	@Autowired
 	public ProductsubcategoryIntegrationTest(ProductsubcategoryRepository productsubcategoryRepository,
-			ProductcategoryRepository productcategoryRepository,
+			//ProductcategoryRepository productcategoryRepository,
 			ProductsubcategoryServiceImpl productsubcategoryService, ProductcategoryServiceImpl productcategoryService) {
 		this.productsubcategoryRepository = productsubcategoryRepository;
-		this.productcategoryRepository = productcategoryRepository;
+		//this.productcategoryRepository = productcategoryRepository;
 		this.productsubcategoryService = productsubcategoryService;
 		this.productcategoryService = productcategoryService;
 	}
@@ -226,7 +226,7 @@ public class ProductsubcategoryIntegrationTest {
 
 			try {
 				productsubcategory = productsubcategoryService.edit(psc1);
-				Productcategory found = productcategoryRepository.findById(productsubcategory.getProductsubcategoryid())
+				Productsubcategory found = productsubcategoryRepository.findById(productsubcategory.getProductsubcategoryid())
 						.get();
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
@@ -252,7 +252,7 @@ public class ProductsubcategoryIntegrationTest {
 
 			try {
 				productsubcategory = productsubcategoryService.edit(psc1);
-				Productcategory found = productcategoryRepository.findById(productsubcategory.getProductsubcategoryid())
+				Productsubcategory found = productsubcategoryRepository.findById(productsubcategory.getProductsubcategoryid())
 						.get();
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
@@ -315,7 +315,7 @@ public class ProductsubcategoryIntegrationTest {
 	@AfterEach
 	void tearDown() {
 		pc = null;
-		productcategoryRepository = null;
+		//productcategoryRepository = null;
 		psc = null;
 		productsubcategoryRepository = null;
 		productsubcategory = null;

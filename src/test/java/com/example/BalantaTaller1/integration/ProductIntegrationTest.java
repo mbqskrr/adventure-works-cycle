@@ -108,7 +108,7 @@ class ProductIntegrationTest {
 		pc.setRowguid(14);
 		pc.setModifieddate(modifieddate);
 		pc.setProductsubcategories(null);
-		productcategoryService.save(pc);
+		pc = productcategoryService.save(pc);
 
 		psc = new Productsubcategory();
 		psc.setModifieddate(modifieddate);
@@ -116,7 +116,7 @@ class ProductIntegrationTest {
 		psc.setProducts(null);
 		psc.setRowguid(666);
 		psc.setProductcategory(pc);
-		productsubcategoryService.save(psc);
+		psc = productsubcategoryService.save(psc);
 
 		pm = new Productmodel();
 		pm.setCatalogdescription("Productos nuevos");
@@ -124,17 +124,17 @@ class ProductIntegrationTest {
 		pm.setModifieddate(modifieddate);
 		pm.setName("Todo terreno");
 		pm.setRowguid(69);
-		productService.saveProductmodel(pm);
+		pm = productService.saveProductmodel(pm);
 
 		um1 = new Unitmeasure(); // um1.setUnitmeasurecode("cm");
 		um1.setModifieddate(modifieddate);
 		um1.setName("centimetros");
-		productService.saveUnitmeasure(um1);
+		um1 = productService.saveUnitmeasure(um1); 
 
 		um2 = new Unitmeasure(); // um2.setUnitmeasurecode("in");
 		um2.setModifieddate(modifieddate);
 		um2.setName("Pulgadas");
-		productService.saveUnitmeasure(um2);
+		um2 = productService.saveUnitmeasure(um2);
 
 	}
 
@@ -161,7 +161,7 @@ class ProductIntegrationTest {
 			p.setProductmodel(pm);
 			p.setUnitmeasure1(um1);
 			p.setUnitmeasure2(um2);
-			p.setProductid(1);
+			//p.setProductid(1);
 			p.setClass_("Producto");
 			product = productService.save(p);
 
