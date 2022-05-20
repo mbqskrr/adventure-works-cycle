@@ -2,7 +2,7 @@ package com.example.BalantaTaller1.model.prod;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+//import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -56,7 +56,7 @@ public class Product implements Serializable {
 	@Positive(groups = ProductValidation.class)
 	private Integer daystomanufacture;
 
-	private Timestamp discontinueddate;
+	private LocalDate discontinueddate;
 
 	private String finishedgoodsflag;
 
@@ -64,7 +64,7 @@ public class Product implements Serializable {
 
 	private String makeflag;
 
-	private Timestamp modifieddate;
+	private LocalDate modifieddate;
 
 	//@NotBlank(groups = ProductValidation.class)
 	@NotBlank(groups = ProductValidation.class)
@@ -267,7 +267,7 @@ public class Product implements Serializable {
 		return this.daystomanufacture;
 	}
 
-	public Timestamp getDiscontinueddate() {
+	public LocalDate getDiscontinueddate() {
 		return this.discontinueddate;
 	}
 
@@ -283,7 +283,7 @@ public class Product implements Serializable {
 		return this.makeflag;
 	}
 
-	public Timestamp getModifieddate() {
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
@@ -477,7 +477,7 @@ public class Product implements Serializable {
 		this.daystomanufacture = daystomanufacture;
 	}
 
-	public void setDiscontinueddate(Timestamp discontinueddate) {
+	public void setDiscontinueddate(LocalDate discontinueddate) {
 		this.discontinueddate = discontinueddate;
 	}
 
@@ -493,7 +493,7 @@ public class Product implements Serializable {
 		this.makeflag = makeflag;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 
