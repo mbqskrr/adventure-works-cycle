@@ -48,6 +48,12 @@ public class OperatorController {
 		this.workorderService = workorderService;
 	}
 	
+	@GetMapping("/operator")
+	public String admin(Model model) {
+		return "operator/operator";
+	}
+
+	
 	@GetMapping("/productmodel")
 	public String productmodel(Model model) {
 		model.addAttribute("productmodel", new Productmodel());

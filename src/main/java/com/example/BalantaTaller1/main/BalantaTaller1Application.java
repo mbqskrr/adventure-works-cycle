@@ -53,7 +53,7 @@ public class BalantaTaller1Application {
 			user.save(u1);
 			
 			Productmodel pm = new Productmodel();
-			pm.setName("Modelo de producto");
+			pm.setName("Modelo");
 			productService.saveProductmodel(pm);
 			
 			

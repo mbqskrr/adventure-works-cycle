@@ -39,6 +39,12 @@ public class AdminController {
 		this.productService = productService;
 	}
 	
+	@GetMapping("/admin")
+	public String admin(Model model) {
+		return "admin/admin";
+	}
+
+	
 	@GetMapping("/productcategory")
 	public String productcategories(Model model) {
 		model.addAttribute("productcategories", productcategoryService.findAll());

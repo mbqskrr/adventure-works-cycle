@@ -31,26 +31,21 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UrlAuthenticationSuccessHandler implements AccessDeniedHandler {
-	
-	 private static Logger log = LoggerFactory.getLogger(UrlAuthenticationSuccessHandler.class);
 
+	private static Logger log = LoggerFactory.getLogger(UrlAuthenticationSuccessHandler.class);
 
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
-		  Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-	        if (auth != null) {
-	            log.info(auth.getName()
-	                    + " was trying to access protected resource: "
-	                    + request.getRequestURI());
-	        }
-
-	        response.sendRedirect(request.getContextPath() + "/access-denied");
-
 		
-	}
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-	
+		if (auth != null) {
+			log.info(auth.getName() + " was trying to access protected resource: " + request.getRequestURI());
+		}
+
+		response.sendRedirect(request.getContextPath() + "/access-denied");
+
+	}
 
 }
