@@ -17,7 +17,7 @@ import lombok.Data;
 @Entity
 @Table(name = "user_table")
 @Data
-public class User{
+public class UserAWC{
 	
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
@@ -35,47 +35,6 @@ public class User{
 	@NotNull(groups = CompleteInfoValidation.class, message = "Passwords doesn't match")
 	private String repeatPassword;
 	
-	@Transient
 	@NotNull(groups= {PersonalInfoValidation.class, CompleteInfoValidation.class}, message= "Type can't be null")
 	private UserType type;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getRepeatPassword() {
-		return repeatPassword;
-	}
-
-	public void setRepeatPassword(String repeatPassword) {
-		this.repeatPassword = repeatPassword;
-	}
-
-	public UserType getType() {
-		return type;
-	}
-
-	public void setType(UserType type) {
-		this.type = type;
-	}
 }

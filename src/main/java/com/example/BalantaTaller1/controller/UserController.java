@@ -3,6 +3,7 @@ package com.example.BalantaTaller1.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.BalantaTaller1.model.user.User;
+import com.example.BalantaTaller1.model.user.UserAWC;
 import com.example.BalantaTaller1.service.user.UserServiceImpl;
 
+@Controller
 public class UserController {
 	
 	@Autowired
@@ -37,13 +39,13 @@ public class UserController {
 	
 	@GetMapping("/users/add")
 	public String addUser(Model model) {
-		model.addAttribute("user", new User());
+		model.addAttribute("user", new UserAWC());
 		model.addAttribute("types", userService.getTypes());
 		return "users/add-user";
 	}
 	
 	@PostMapping("/users/add")
-	public String saveUser(@ModelAttribute("user") User user, BindingResult bindingResult, Model model, 
+	public String saveUser(@ModelAttribute("user") UserAWC user, BindingResult bindingResult, Model model, 
 			@RequestParam(value = "action", required = true) String action) {
 		if (!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
@@ -58,7 +60,7 @@ public class UserController {
 	@PostMapping("/users/edit/{id}")
 	public String updateUser(@PathVariable("id") Integer id,
 			@RequestParam(value = "action", required = true) String action,
-			@ModelAttribute("user") User user,
+			@ModelAttribute("user") UserAWC user,
 			BindingResult bindingResult, Model model) {
 
 		if (action.equals("Cancel")) {
@@ -83,7 +85,7 @@ public class UserController {
 	
 	@GetMapping("/users/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") int id, Model model) {
-		Optional<User> user = userService.findById(id);
+		Optional<UserAWC> user = userService.findById(id);
 		if (user.isEmpty())
 			throw new IllegalArgumentException("Invalid id:" + id);
 		model.addAttribute("user", user.get());
