@@ -169,6 +169,7 @@ public class OperatorController {
 	public String updateProduct(@PathVariable("id") Integer id, @Validated(ProductValidation.class) 
 	@ModelAttribute Product product, BindingResult bindingResult, 
 	Model model, @RequestParam(value = "action", required = true) String action) {
+		
 		if (action.equals("Cancel")) {
 			return "redirect:/product";
 		}
@@ -182,6 +183,8 @@ public class OperatorController {
 			model.addAttribute("unitmeasures", productService.findAllUnitMeasure());
 			model.addAttribute("productmodels", productService.findAllProductModel());
 			return "operator/editProduct";
+
+			
 		}
 		product.setProductid(id);
 		productService.edit(product);
@@ -192,6 +195,12 @@ public class OperatorController {
     public String queryWorkordersByProduct(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("workorders", workorderService.findByProduct(id));
         return "operator/workordersByProducts";
+    }
+	
+	@GetMapping("/InfoPSC/{id}")
+    public String infoPsc(@PathVariable("id") Integer id, Model model) {
+		model.addAttribute("infopsc", productsubcategoryService.findById(id).get());
+        return "operator/InfoPSC";
     }
 	
 	@GetMapping("/workorder")
@@ -260,5 +269,29 @@ public class OperatorController {
 		workorderService.edit(workorder);
 		return "redirect:/workorder";
 	}
+	
+	@GetMapping("/InfoP/{id}")
+    public String infoP(@PathVariable("id") Integer id, Model model) {
+		model.addAttribute("infop", productService.findById(id).get());
+        return "operator/InfoP";
+    }
+	
+	@GetMapping("/InfoPM/{id}")
+    public String infoPm(@PathVariable("id") Integer id, Model model) {
+		model.addAttribute("infopm", productService.findByProductModelId(id).get());
+        return "operator/InfoPM";
+    }
+	
+	@GetMapping("/InfoUM/{id}")
+    public String infoUm(@PathVariable("id") Integer id, Model model) {
+		model.addAttribute("infoum", productService.findByUnitMeasureCode(id).get());
+        return "operator/InfoUM";
+    }
+	
+	@GetMapping("/InfoSR/{id}")
+    public String infoSr(@PathVariable("id") Integer id, Model model) {
+		model.addAttribute("infosr", workorderService.findByScrapreasonId(id).get());
+        return "operator/InfoSR";
+    }
 	
 }

@@ -31,8 +31,8 @@
 								<th>enddate</th>
 								<th>orderqty</th>
 								<th>scrappedqty</th>
-								<th>product</th>
 								<th>scrapreason</th>
+								<th>product</th>
 								<th>edit</th>
 								<!-- <th>delete</th> -->
 							</tr>
@@ -44,8 +44,10 @@
 								<td th:text="${wo.enddate}"></td>
 								<td th:text="${wo.orderqty}"></td>
 								<td th:text="${wo.scrappedqty}"></td>
-								<td th:text="${wo.scrapreason.name}"></td>
-								<td th:text="${wo.product.name}"></td>
+								<td><a th:text="${wo.scrapreason.name}"
+									th:href="@{/InfoSR/{id}(id=${wo.scrapreason.scrapreasonid})}"></a></td>
+								<td><a th:text="${wo.product.name}"
+									th:href="@{/InfoP/{id}(id=${wo.product.productid})}"></a></td>
 								<td><a
 									th:href="@{/workorder/edit/{id}(id=${wo.workorderid})}"
 									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>

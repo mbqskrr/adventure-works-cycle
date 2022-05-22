@@ -2,8 +2,9 @@ package com.example.BalantaTaller1.model.prod;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.Future;
 //import javax.validation.constraints.Future;
-import javax.validation.constraints.FutureOrPresent;
+//import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 //import javax.validation.constraints.Past;
 import javax.validation.constraints.PastOrPresent;
@@ -40,7 +41,7 @@ public class Workorder implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Timestamp duedate;
 
-	@FutureOrPresent(groups = WorkorderValidation.class)
+	@Future(groups = WorkorderValidation.class)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull(groups = WorkorderValidation.class)
 	private LocalDate enddate;

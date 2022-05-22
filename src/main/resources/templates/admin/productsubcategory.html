@@ -29,11 +29,11 @@
 								<th>modifieddate</th>
 								<th>name</th>
 								<th>rowguid</th>
-								<th>product category</th>
+								<th>category</th>
 								<th>product</th>
 								<th>edit</th>
 								<!-- <th>remove</th> -->
-								
+
 							</tr>
 						</thead>
 						<tbody>
@@ -41,26 +41,30 @@
 								<td th:text="${productsubcategory.productsubcategoryid}"></td>
 								<td th:text="${productsubcategory.modifieddate}"></td>
 								<td th:text="${productsubcategory.name}"></td>
-								<td th:text="${productsubcategory.rowguid}"></td>	
-								<td th:text="${productsubcategory.productcategory.name}"></td>
-								<td><a th:href="@{/Product/{id}(id=${productsubcategory.productsubcategoryid})}"
-                                    class="btn btn-primary"><i class="far fa-address-card"></i></a></td>
-								<td><a th:href="@{/productsubcategory/edit/{id}(id=${productsubcategory.productsubcategoryid})}"
-                                    class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
-                                <!-- <td><a th:href="@{/productsubtcategory/delete/{id}(id=${productsubcategory.productsubcategoryid})}"
+								<td th:text="${productsubcategory.rowguid}"></td>
+								<td><a th:text="${productsubcategory.productcategory.name}"
+									th:href="@{/InfoPC/{id}(id=${productsubcategory.productcategory.productcategoryid})}"></a></td>
+								<td><a
+									th:href="@{/Product/{id}(id=${productsubcategory.productsubcategoryid})}"
+									class="btn btn-primary"><i class="far fa-address-card"></i></a></td>
+								<td><a
+									th:href="@{/productsubcategory/edit/{id}(id=${productsubcategory.productsubcategoryid})}"
+									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
+								<!-- <td><a th:href="@{/productsubtcategory/delete/{id}(id=${productsubcategory.productsubcategoryid})}"
                                     class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td> -->
 							</tr>
 						</tbody>
 					</table>
 				</div>
-					<p class="my-5">
+				<p class="my-5">
 					<a href="/productsubcategory/add" class="btn btn-primary"><i
 						class="fas fa-user-plus ml-2"></i></a>
 				</p>
 			</div>
 		</div>
 		<p>
-			<a href="/admin/admin.html"><i class="fas fa-home ml-2"></i> Go back to main</a>
+			<a href="/admin/admin.html"><i class="fas fa-home ml-2"></i> Go
+				back to main</a>
 		</p>
 	</div>
 </body>

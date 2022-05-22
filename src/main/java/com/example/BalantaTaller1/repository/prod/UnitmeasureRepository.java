@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.BalantaTaller1.model.prod.Unitmeasure;
 
 //@Repository
-public interface UnitmeasureRepository extends JpaRepository<Unitmeasure, String>{
+public interface UnitmeasureRepository extends JpaRepository<Unitmeasure, Integer>{
 
 }
