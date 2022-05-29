@@ -174,7 +174,7 @@ class WorkorderDAOTest {
 			assertNotNull(workorderDAO);
 			workorderDAO.save(workorder);
 
-			assertEquals(workorderDAO.findAll().size(), 1);
+			assertEquals(workorderDAO.findAll().size(), 2);
 		}
 		
 		@Test
