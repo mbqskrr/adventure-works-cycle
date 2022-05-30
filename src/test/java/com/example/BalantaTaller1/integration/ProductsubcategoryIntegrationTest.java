@@ -20,21 +20,29 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 //import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.example.BalantaTaller1.dao.ProductsubcategoryDAOImpl;
 import com.example.BalantaTaller1.main.BalantaTaller1Application;
 import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.model.prod.Productsubcategory;
 //import com.example.BalantaTaller1.repository.prod.ProductcategoryRepository;
 import com.example.BalantaTaller1.repository.prod.ProductsubcategoryRepository;
 import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImpl;
+import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImplDAO;
 import com.example.BalantaTaller1.service.prod.ProductsubcategoryServiceImpl;
+import com.example.BalantaTaller1.service.prod.ProductsubcategoryServiceImplDAO;
 
 @ContextConfiguration(classes = BalantaTaller1Application.class)
-@SpringBootTest
+//@SpringBootTest
+@ExtendWith(SpringExtension.class)
+@DataJpaTest
 public class ProductsubcategoryIntegrationTest {
 
 	private Productsubcategory psc;
@@ -44,21 +52,20 @@ public class ProductsubcategoryIntegrationTest {
 
 	private LocalDate time;
 
-	private ProductsubcategoryRepository productsubcategoryRepository;
+	private ProductsubcategoryDAOImpl productsubcategoryDAO;
 
 	//private ProductcategoryRepository productcategoryRepository;
 
-	private ProductsubcategoryServiceImpl productsubcategoryService;
-	private ProductcategoryServiceImpl productcategoryService;
+	private ProductsubcategoryServiceImplDAO productsubcategoryService;
+	private ProductcategoryServiceImplDAO productcategoryService;
 
 	// private TestEntityManager testEntityManager;
 
 	@Autowired
-	public ProductsubcategoryIntegrationTest(ProductsubcategoryRepository productsubcategoryRepository,
+	public ProductsubcategoryIntegrationTest(ProductsubcategoryDAOImpl productsubcategoryDAO,
 			//ProductcategoryRepository productcategoryRepository,
-			ProductsubcategoryServiceImpl productsubcategoryService, ProductcategoryServiceImpl productcategoryService) {
-		this.productsubcategoryRepository = productsubcategoryRepository;
-		//this.productcategoryRepository = productcategoryRepository;
+			ProductsubcategoryServiceImplDAO productsubcategoryService, ProductcategoryServiceImplDAO productcategoryService) {
+		this.productsubcategoryDAO = productsubcategoryDAO;
 		this.productsubcategoryService = productsubcategoryService;
 		this.productcategoryService = productcategoryService;
 	}
@@ -104,8 +111,7 @@ public class ProductsubcategoryIntegrationTest {
 
 			productsubcategory = productsubcategoryService.save(psc);
 
-			Productsubcategory found = productsubcategoryRepository
-					.findById(productsubcategory.getProductsubcategoryid()).get();
+			Productsubcategory found = productsubcategoryDAO.findById(productsubcategory.getProductsubcategoryid());
 			assertNotNull(found);
 			assertEquals(productsubcategory.getProductsubcategoryid(), found.getProductsubcategoryid());
 			Assertions.assertThat(found).isInstanceOfAny(Productsubcategory.class);
@@ -129,8 +135,8 @@ public class ProductsubcategoryIntegrationTest {
 			try {
 				productsubcategory = productsubcategoryService.save(psc);
 
-				Productsubcategory found = productsubcategoryRepository
-						.findById(productsubcategory.getProductsubcategoryid()).get();
+				Productsubcategory found = productsubcategoryDAO
+						.findById(productsubcategory.getProductsubcategoryid());
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
 			} catch (RuntimeException rte) {
@@ -151,8 +157,8 @@ public class ProductsubcategoryIntegrationTest {
 
 			try {
 				productsubcategory = productsubcategoryService.save(psc);
-				Productsubcategory found = productsubcategoryRepository
-						.findById(productsubcategory.getProductsubcategoryid()).get();
+				Productsubcategory found = productsubcategoryDAO
+						.findById(productsubcategory.getProductsubcategoryid());
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
 			} catch (Exception e) {
@@ -200,8 +206,8 @@ public class ProductsubcategoryIntegrationTest {
 			psc1.setProductcategory(pc);
 
 			productsubcategory = productsubcategoryService.edit(psc1);
-			Productsubcategory found = productsubcategoryRepository
-					.findById(productsubcategory.getProductsubcategoryid()).get();
+			Productsubcategory found = productsubcategoryDAO
+					.findById(productsubcategory.getProductsubcategoryid());
 			assertNotNull(found);
 			assertEquals(productsubcategory.getProductsubcategoryid(), found.getProductsubcategoryid());
 			Assertions.assertThat(found).isInstanceOfAny(Productsubcategory.class);
@@ -226,8 +232,7 @@ public class ProductsubcategoryIntegrationTest {
 
 			try {
 				productsubcategory = productsubcategoryService.edit(psc1);
-				Productsubcategory found = productsubcategoryRepository.findById(productsubcategory.getProductsubcategoryid())
-						.get();
+				Productsubcategory found = productsubcategoryDAO.findById(productsubcategory.getProductsubcategoryid());
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
 			} catch (RuntimeException rte) {
@@ -252,8 +257,7 @@ public class ProductsubcategoryIntegrationTest {
 
 			try {
 				productsubcategory = productsubcategoryService.edit(psc1);
-				Productsubcategory found = productsubcategoryRepository.findById(productsubcategory.getProductsubcategoryid())
-						.get();
+				Productsubcategory found = productsubcategoryDAO.findById(productsubcategory.getProductsubcategoryid());
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
 			} catch (RuntimeException rte) {
@@ -276,7 +280,7 @@ public class ProductsubcategoryIntegrationTest {
 			psc1.setProductcategory(pc);
 			productsubcategory = productsubcategoryService.edit(psc1);
 			assertThrows(NullPointerException.class, () -> {
-				productsubcategoryRepository.findById(productsubcategory.getProductsubcategoryid()).get();
+				productsubcategoryDAO.findById(productsubcategory.getProductsubcategoryid());
 			});
 		}
 
@@ -294,7 +298,7 @@ public class ProductsubcategoryIntegrationTest {
 			psc1.setProductcategory(null);
 			productsubcategory = productsubcategoryService.edit(psc1);
 			assertThrows(NullPointerException.class, () -> {
-				productsubcategoryRepository.findById(productsubcategory.getProductsubcategoryid()).get();
+				productsubcategoryDAO.findById(productsubcategory.getProductsubcategoryid());
 			});
 		}
 
@@ -317,7 +321,7 @@ public class ProductsubcategoryIntegrationTest {
 		pc = null;
 		//productcategoryRepository = null;
 		psc = null;
-		productsubcategoryRepository = null;
+		productsubcategoryDAO = null;
 		productsubcategory = null;
 		System.gc();
 	}

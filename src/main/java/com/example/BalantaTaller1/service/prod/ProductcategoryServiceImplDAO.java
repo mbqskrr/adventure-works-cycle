@@ -28,7 +28,7 @@ public class ProductcategoryServiceImplDAO implements ProductcategoryService{
 
 	@Override
 	public Productcategory edit(Productcategory pc) {
-		Productcategory temp = null;
+		//Productcategory temp = null;
 
 		Productcategory pcid = productcategoryDAO.findById(pc.getProductcategoryid());
 
