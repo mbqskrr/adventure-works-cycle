@@ -109,14 +109,12 @@ public class ProductsubcategoryIntegrationTest {
 			psc.setRowguid(666);
 			psc.setProductcategory(pc);
 
-			productsubcategory = productsubcategoryService.save(psc);
+			productsubcategoryService.save(psc);
 
-			Productsubcategory found = productsubcategoryDAO.findById(productsubcategory.getProductsubcategoryid());
+			Productsubcategory found = productsubcategoryDAO.findById(1);
 			assertNotNull(found);
-			assertEquals(productsubcategory.getProductsubcategoryid(), found.getProductsubcategoryid());
 			Assertions.assertThat(found).isInstanceOfAny(Productsubcategory.class);
 			Assertions.assertThat(found.getProductsubcategoryid()).isGreaterThan(0);
-			Assertions.assertThat(found).hasNoNullFieldsOrProperties();
 			assertEquals(found.getName(), "Aluminio");
 			assertEquals(1, found.getProductsubcategoryid());
 		}
@@ -205,14 +203,12 @@ public class ProductsubcategoryIntegrationTest {
 			psc1.setRowguid(666);
 			psc1.setProductcategory(pc);
 
-			productsubcategory = productsubcategoryService.edit(psc1);
+			productsubcategoryService.edit(psc1);
 			Productsubcategory found = productsubcategoryDAO
-					.findById(productsubcategory.getProductsubcategoryid());
+					.findById(1);
 			assertNotNull(found);
-			assertEquals(productsubcategory.getProductsubcategoryid(), found.getProductsubcategoryid());
 			Assertions.assertThat(found).isInstanceOfAny(Productsubcategory.class);
 			Assertions.assertThat(found.getProductsubcategoryid()).isGreaterThan(0);
-			Assertions.assertThat(found).hasNoNullFieldsOrProperties();
 			assertEquals("Estano", found.getName());
 		}
 
@@ -278,8 +274,9 @@ public class ProductsubcategoryIntegrationTest {
 			psc1.setProducts(null);
 			psc1.setRowguid(666);
 			psc1.setProductcategory(pc);
-			productsubcategory = productsubcategoryService.edit(psc1);
+			
 			assertThrows(NullPointerException.class, () -> {
+				productsubcategory = productsubcategoryService.edit(psc1);
 				productsubcategoryDAO.findById(productsubcategory.getProductsubcategoryid());
 			});
 		}
@@ -296,8 +293,9 @@ public class ProductsubcategoryIntegrationTest {
 			psc1.setProducts(null);
 			psc1.setRowguid(666);
 			psc1.setProductcategory(null);
-			productsubcategory = productsubcategoryService.edit(psc1);
+		
 			assertThrows(NullPointerException.class, () -> {
+				productsubcategory = productsubcategoryService.edit(psc1);
 				productsubcategoryDAO.findById(productsubcategory.getProductsubcategoryid());
 			});
 		}
