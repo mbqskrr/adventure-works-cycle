@@ -28,12 +28,12 @@
 
 								<th>id</th>
 								<th>name</th>
-								<th>daystomanufacture</th>
+								<th>manufactureddays</th>
 								<th>number</th>
 								<th>size</th>
-								<th> </th>
+								<th></th>
 								<th>weight</th>
-								<th> </th>
+								<th></th>
 								<th>sellstartdate</th>
 								<th>sellenddate</th>
 								<th>model</th>
@@ -49,17 +49,21 @@
 								<td th:text="${p.daystomanufacture}"></td>
 								<td th:text="${p.productnumber}"></td>
 								<td th:text="${p.size}"></td>
-								<td th:text="${p.unitmeasure1.name}"></td>
+								<td><a th:text="${p.unitmeasure1.name}"
+									th:href="@{/InfoUM/{id}(id=${p.unitmeasure1.unitmeasurecode})}"></a></td>
 								<td th:text="${p.weight}"></td>
-								<td th:text="${p.unitmeasure2.name}"></td>
+								<td><a th:text="${p.unitmeasure2.name}"
+									th:href="@{/InfoUM/{id}(id=${p.unitmeasure2.unitmeasurecode})}"></a></td>
 								<td th:text="${p.sellstartdate}"></td>
 								<td th:text="${p.sellenddate}"></td>
-								<td th:text="${p.productmodel.name}"></td>
-								<td th:text="${p.productsubcategory.name}"></td>
+								<td><a th:text="${p.productmodel.name}"
+									th:href="@{/InfoPM/{id}(id=${p.productmodel.productmodelid})}"></a>
+								</td>
+								<td><a th:text="${p.productsubcategory.name}"
+									th:href="@{/InfoPSC/{id}(id=${p.productsubcategory.productsubcategoryid})}"></a></td>
 								<td><a th:href="@{/Workorder/{id}(id=${p.productid})}"
 									class="btn btn-primary"><i class="far fa-address-card"></i></a></td>
-								<td><a
-									th:href="@{/product/edit/{id}(id=${p.productid})}"
+								<td><a th:href="@{/product/edit/{id}(id=${p.productid})}"
 									class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
 								<!-- <td><a
 									th:href="@{/product/delete/{id}(id=${p.productid})}"

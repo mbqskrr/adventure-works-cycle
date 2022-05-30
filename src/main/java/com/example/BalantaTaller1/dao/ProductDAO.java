@@ -23,4 +23,6 @@ public interface ProductDAO {
 	
 	public List<Product> findByAtLeastTwoWorkorders();
 
+	List<Product> findByUnitmeasureSizeCode(Integer integer);
+
 }

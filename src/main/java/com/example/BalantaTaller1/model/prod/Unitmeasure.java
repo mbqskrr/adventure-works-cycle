@@ -7,14 +7,16 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 //import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 //import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 
-import org.hibernate.annotations.GenericGenerator;
+//import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.example.BalantaTaller1.model.validation.UnitmeasureValidation;
@@ -31,9 +33,14 @@ public class Unitmeasure implements Serializable {
 	/*@Id
 	@SequenceGenerator(name = "UNITMEASURE_UNITMEASURECODE_GENERATOR", allocationSize = 1, sequenceName = "UNITMEASURE_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UNITMEASURE_UNITMEASURECODE_GENERATOR")*/
-	@Id @GeneratedValue(generator="system-uuid")
+	/*@Id @GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name="system-uuid", strategy = "uuid")
-	private String unitmeasurecode;
+	private String unitmeasurecode;*/
+	@Id
+	@SequenceGenerator(name="\"UNITMEASURE_UNITMEASURECODE_GENERATOR",allocationSize = 1, sequenceName="UNITMEASURE_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UNITMEASURE_UNITMEASURECODE_GENERATOR")
+	private Integer unitmeasurecode;
+
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate modifieddate;
@@ -97,7 +104,7 @@ public class Unitmeasure implements Serializable {
 		return this.products2;
 	}
 
-	public String getUnitmeasurecode() {
+	public Integer getUnitmeasurecode() {
 		return this.unitmeasurecode;
 	}
 
@@ -142,7 +149,7 @@ public class Unitmeasure implements Serializable {
 		this.products2 = products2;
 	}
 
-	public void setUnitmeasurecode(String unitmeasurecode) {
+	public void setUnitmeasurecode(Integer unitmeasurecode) {
 		this.unitmeasurecode = unitmeasurecode;
 	}
 

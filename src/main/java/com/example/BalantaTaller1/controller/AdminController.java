@@ -39,6 +39,12 @@ public class AdminController {
 		this.productService = productService;
 	}
 	
+	@GetMapping("/admin")
+	public String admin(Model model) {
+		return "admin/admin";
+	}
+
+	
 	@GetMapping("/productcategory")
 	public String productcategories(Model model) {
 		model.addAttribute("productcategories", productcategoryService.findAll());
@@ -82,14 +88,13 @@ public class AdminController {
 	public String updateProductcategory(@PathVariable("id") Integer id, @Validated(ProductcategoryValidation.class) 
 	@ModelAttribute Productcategory productcategory, BindingResult bindingResult, 
 	Model model, @RequestParam(value = "action", required = true) String action) {
+		Productcategory pc = productcategoryService.findById(id).get();
+		if (pc == null)
+			throw new IllegalArgumentException("Invalid productcategory Id:" + id);
 		if (action.equals("Cancel")) {
 			return "redirect:/productcategory";
 		}
 		if(bindingResult.hasErrors()) {
-			Productcategory pc = productcategoryService.findById(id).get();
-			if (pc == null)
-				throw new IllegalArgumentException("Invalid productcategory Id:" + id);
-			
 			model.addAttribute("productcategory", pc);
 			return "admin/editProductcategory";
 		}
@@ -173,6 +178,12 @@ public class AdminController {
     public String queryProductsByProductsubcategory(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("products", productService.findByProductsubcategory(id));
         return "admin/productsByProductsubcategory";
+    }
+	
+	@GetMapping("/InfoPC/{id}")
+    public String infoPc(@PathVariable("id") Integer id, Model model) {
+		model.addAttribute("infopc", productcategoryService.findById(id).get());
+        return "admin/InfoPC";
     }
 
 }

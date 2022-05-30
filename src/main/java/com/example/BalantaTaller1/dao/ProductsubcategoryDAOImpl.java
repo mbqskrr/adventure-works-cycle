@@ -105,7 +105,7 @@ public class ProductsubcategoryDAOImpl implements ProductsubcategoryDAO {
 	@Transactional
 	public List<Object[]> findByProductsubcategoryBetweenDatesOrderedByProductName(LocalDate date1,
 			LocalDate date2, Productcategory pc) {
-		String jpql = "SELECT psc, p.name "
+		String jpql = "SELECT psc, p "
 				+ "FROM Productsubcategory psc, Product p "
 				+ "WHERE psc.productsubcategoryid = p.productsubcategory.productsubcategoryid "
 				+ "AND psc.productcategory.productcategoryid = "+pc. getProductcategoryid()

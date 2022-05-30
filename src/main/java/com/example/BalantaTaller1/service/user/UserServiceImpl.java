@@ -4,8 +4,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.example.BalantaTaller1.model.user.User;
+import com.example.BalantaTaller1.model.user.UserAWC;
 import com.example.BalantaTaller1.model.user.UserType;
 import com.example.BalantaTaller1.repository.user.UserRepository;
 
@@ -16,15 +17,17 @@ public class UserServiceImpl implements UserService{
 	private UserRepository userRepository;
 
 	@Override
-	public void save(User user) {
+	@Transactional
+	public void save(UserAWC user) {
 		userRepository.save(user);
 	}
 
 	@Override
-	public void update(User user) {
-		Optional<User> aux = userRepository.findById(user.getId());
+	@Transactional
+	public void update(UserAWC user) {
+		Optional<UserAWC> aux = userRepository.findById(user.getId());
 		if(aux.isPresent()) {
-			User u = aux.get();
+			UserAWC u = aux.get();
 			u.setUsername(user.getUsername());
 			u.setPassword(user.getPassword());
 			u.setType(user.getType());
@@ -32,7 +35,7 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 
-	public Iterable<User> findAll() {
+	public Iterable<UserAWC> findAll() {
 		return userRepository.findAll();
 	}
 	
@@ -40,7 +43,7 @@ public class UserServiceImpl implements UserService{
 		return UserType.values();
 	}
 	
-	public Optional<User> findById(Integer id) {
+	public Optional<UserAWC> findById(Integer id) {
 		return userRepository.findById(id);
 		
 	}

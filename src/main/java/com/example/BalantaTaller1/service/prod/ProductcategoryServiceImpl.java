@@ -59,13 +59,12 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 
 	@Override
 	public Optional<Productcategory> findById(Integer id) {
-		// TODO Auto-generated method stub
 		return productcategoryRepository.findById(id);
 	}
 
 	//@NotNull
 	private void constraints(Productcategory pc) {
-		if (pc.getName().length() <= 3 || pc.getName() == null) {
+		if (pc.getName().length() < 3 || pc.getName() == null) {
 			throw new RuntimeException("El nombre de la categoria no tiene al menos 3 carácteres");
 
 		}

@@ -94,11 +94,11 @@ public class ProductDAOImpl implements ProductDAO{
 	//@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<Product> findByUnitmeasureSizeCode(String unitmeasurecode) {
+	public List<Product> findByUnitmeasureSizeCode(Integer integer) {
 		//EntityManager em = entityManager.createEntityManager();
 		//Query q = em.createQuery("SELECT p FROM Product p WHERE p.unitmeasure.unitmeasure1 = "+unitmeasurecode);
 		//q.setParameter("unitmeasurecode", unitmeasurecode);
-		String jpql = "SELECT p FROM Product p WHERE p.unitmeasure1.unitmeasurecode = '"+unitmeasurecode+"'";
+		String jpql = "SELECT p FROM Product p WHERE p.unitmeasure1.unitmeasurecode = '"+integer+"'";
         return entityManager.createQuery(jpql, Product.class).getResultList();
 	}
 
@@ -110,6 +110,12 @@ public class ProductDAOImpl implements ProductDAO{
 		//Query q = em.createQuery("SELECT p FROM Product p WHERE SIZE(p.workorders) > 1");
 		String jpql = "SELECT p FROM Product p WHERE SIZE(p.workorders) > 1";
         return entityManager.createQuery(jpql, Product.class).getResultList();
+	}
+
+	@Override
+	public List<Product> findByUnitmeasureSizeCode(String unitmeasurecode) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

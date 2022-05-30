@@ -95,7 +95,7 @@ public class WorkorderServiceImpl implements WorkorderSerivice {
 	}
 
 	private void constraints(Workorder wo) {
-		if (wo.getOrderqty() < 0 || wo.getScrappedqty() < 0) {
+		if (wo.getOrderqty() < 0) {
 			throw new RuntimeException("Cantidad de orden menor a 0");
 		}
 		if (wo.getScrappedqty() < 0) {
@@ -104,6 +104,10 @@ public class WorkorderServiceImpl implements WorkorderSerivice {
 		if (!wo.getEnddate().isAfter(wo.getStartdate())) {
 			throw new RuntimeException("Error en fecha inicial y fecha final");
 		}
+	}
+
+	public Optional<Scrapreason> findByScrapreasonId(Integer id) {
+		return scrapreasonRepository.findById(id);
 	}
 
 }

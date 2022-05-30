@@ -16,7 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Future;
+//import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
@@ -84,7 +85,7 @@ public class Product implements Serializable {
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	//@PastOrPresent(groups = ProductValidation.class)
-	@FutureOrPresent(groups = ProductValidation.class)
+	@Future(groups = ProductValidation.class)
 	@NotNull(groups = ProductValidation.class)
 	private LocalDate sellenddate;
 

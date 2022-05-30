@@ -1,11 +1,11 @@
 package com.example.BalantaTaller1.service.user;
 
-import com.example.BalantaTaller1.model.user.User;
+import com.example.BalantaTaller1.model.user.UserAWC;
 
 public interface UserService {
 	
-	public void save(User user);
+	public void save(UserAWC user);
 	
-	public void update(User user);
+	public void update(UserAWC user);
 
 }

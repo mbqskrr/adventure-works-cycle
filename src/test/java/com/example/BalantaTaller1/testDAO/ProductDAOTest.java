@@ -158,7 +158,7 @@ class ProductDAOTest {
 			assertNotNull(productDAO);
 			productDAO.save(product);
 
-			assertEquals(productDAO.findAll().size(), 1);
+			assertEquals(productDAO.findAll().size(), 2);
 		}
 
 		@Test

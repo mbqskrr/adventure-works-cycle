@@ -130,6 +130,14 @@ public class ProductServiceImpl implements ProductService{
 	public Optional<Product> findById(Integer id) {
 		return productRepository.findById(id);
 	}
+
+	public Optional<Productmodel> findByProductModelId(Integer id) {
+		return productmodelRepository.findById(id);
+	}
+
+	public Optional<Unitmeasure> findByUnitMeasureCode(Integer id) {
+		return unitmeasureRepository.findById(id);
+	}
 	
 	
 	

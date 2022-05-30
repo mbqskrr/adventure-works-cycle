@@ -93,7 +93,7 @@ class ProductcategoryDAOTest {
 			assertNotNull(productcategoryDAO);
 			productcategoryDAO.save(productcategory);
 			
-			assertEquals(productcategoryDAO.findAll().size(), 1);
+			assertEquals(productcategoryDAO.findAll().size(), 2);
 		}
 		
 	}

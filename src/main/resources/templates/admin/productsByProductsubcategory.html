@@ -31,11 +31,13 @@
 								<th>daystomanufacture</th>
 								<th>productnumber</th>
 								<th>size</th>
+								<th> </th>
 								<th>weight</th>
+								<th> </th>
 								<th>sellstartdate</th>
 								<th>sellenddate</th>
-								<th>productmodel</th>
-								<th>product subcategory name</th>
+								<th>model</th>
+								<th>subcategory name</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -45,7 +47,9 @@
 								<td th:text="${p.daystomanufacture}"></td>
 								<td th:text="${p.productnumber}"></td>
 								<td th:text="${p.size}"></td>
+								<td th:text="${p.unitmeasure1.name}"></td>
 								<td th:text="${p.weight}"></td>
+								<td th:text="${p.unitmeasure2.name}"></td>
 								<td th:text="${p.sellstartdate}"></td>
 								<td th:text="${p.sellenddate}"></td>
 								<td th:text="${p.productmodel.name}"></td>
