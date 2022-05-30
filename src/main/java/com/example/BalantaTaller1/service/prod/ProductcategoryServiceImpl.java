@@ -13,6 +13,7 @@ import com.example.BalantaTaller1.repository.prod.ProductcategoryRepository;
 //import com.sun.istack.NotNull;
 
 @Service
+@Transactional
 public class ProductcategoryServiceImpl implements ProductcategoryService {
 
 	private ProductcategoryRepository productcategoryRepository;
@@ -23,7 +24,7 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 	}
 
 	@Override
-	@Transactional
+	//@Transactional
 	public Productcategory save(@Validated(ProductcategoryValidation.class) Productcategory pc) {
 		Productcategory tempPc = null;
 
@@ -35,7 +36,7 @@ public class ProductcategoryServiceImpl implements ProductcategoryService {
 	}
 
 	@Override
-	@Transactional
+	//@Transactional
 	public Productcategory edit(Productcategory pc) {
 
 		Productcategory temp = null;
