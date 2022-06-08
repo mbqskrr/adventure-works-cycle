@@ -9,11 +9,13 @@ import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+//import com.example.BalantaTaller1.model.prod.Productsubcategory;
 import com.example.BalantaTaller1.model.prod.Unitmeasure;
 
 @Repository
-//@Transactional
+@Transactional
 @Scope("singleton")
 public class UnitmeasureDAOImpl implements UnitmeasureDAO{
 	
@@ -31,6 +33,11 @@ public class UnitmeasureDAOImpl implements UnitmeasureDAO{
 	@Override
 	public void save(Unitmeasure um) {
 		entityManager.persist(um);
+	}
+
+	@Override
+	public Unitmeasure findById(Integer unitmeasurecode) {
+		return entityManager.find(Unitmeasure.class, unitmeasurecode);
 	}
 
 }

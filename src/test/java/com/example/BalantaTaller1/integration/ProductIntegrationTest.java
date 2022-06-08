@@ -18,29 +18,37 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 //import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+
+import com.example.BalantaTaller1.dao.ProductDAOImpl;
 import com.example.BalantaTaller1.main.BalantaTaller1Application;
 import com.example.BalantaTaller1.model.prod.Product;
 import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.model.prod.Productmodel;
 import com.example.BalantaTaller1.model.prod.Productsubcategory;
 import com.example.BalantaTaller1.model.prod.Unitmeasure;
-import com.example.BalantaTaller1.repository.prod.ProductRepository;
+
 /*import com.example.BalantaTaller1.repository.prod.ProductcategoryRepository;
 import com.example.BalantaTaller1.repository.prod.ProductmodelRepository;
 import com.example.BalantaTaller1.repository.prod.ProductsubcategoryRepository;
 import com.example.BalantaTaller1.repository.prod.UnitmeasureRepository;*/
-import com.example.BalantaTaller1.service.prod.ProductServiceImpl;
-import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImpl;
-import com.example.BalantaTaller1.service.prod.ProductsubcategoryServiceImpl;
+
+import com.example.BalantaTaller1.service.prod.ProductServiceImplDAO;
+
+import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImplDAO;
+
+import com.example.BalantaTaller1.service.prod.ProductsubcategoryServiceImplDAO;
 
 @ContextConfiguration(classes = BalantaTaller1Application.class)
-@SpringBootTest
+@ExtendWith(SpringExtension.class)
+@DataJpaTest
 class ProductIntegrationTest {
 
 	private Unitmeasure um1;
@@ -55,24 +63,20 @@ class ProductIntegrationTest {
 	private LocalDate discontinueddate;
 	private LocalDate sellstartdate;
 	private LocalDate sellenddate;
-
-	//private UnitmeasureRepository unitmeasureRepository;
-	private ProductRepository productRepository;
-	/*private ProductmodelRepository productmodelRepository;
-	private ProductsubcategoryRepository productsubcategoryRepository;
-	private ProductcategoryRepository productcategoryRepository;*/
-
-	private ProductServiceImpl productService;
-	private ProductcategoryServiceImpl productcategoryService;
-	private ProductsubcategoryServiceImpl productsubcategoryService;
+	
+	private ProductDAOImpl productDAO;
+	
+	private ProductServiceImplDAO productService;
+	private ProductcategoryServiceImplDAO productcategoryService;
+	private ProductsubcategoryServiceImplDAO productsubcategoryService;
 
 	@Autowired
-	public ProductIntegrationTest(/*UnitmeasureRepository unitmeasureRepository, */ProductRepository productRepository,
+	public ProductIntegrationTest(/*UnitmeasureRepository unitmeasureRepository, */ProductDAOImpl productDAO,
 			//ProductmodelRepository productmodelRepository, ProductsubcategoryRepository productsubcategoryRepository,
-			ProductServiceImpl productService, //ProductcategoryRepository productcategoryRepository,
-			ProductcategoryServiceImpl productcategoryService, ProductsubcategoryServiceImpl productsubcategoryService) {
+			ProductServiceImplDAO productService, //ProductcategoryRepository productcategoryRepository,
+			ProductcategoryServiceImplDAO productcategoryService, ProductsubcategoryServiceImplDAO productsubcategoryService) {
 		//this.unitmeasureRepository = unitmeasureRepository;
-		this.productRepository = productRepository;
+		this.productDAO = productDAO;
 		/*this.productmodelRepository = productmodelRepository;
 		this.productsubcategoryRepository = productsubcategoryRepository;*/
 		this.productService = productService;
@@ -108,7 +112,7 @@ class ProductIntegrationTest {
 		pc.setRowguid(14);
 		pc.setModifieddate(modifieddate);
 		pc.setProductsubcategories(null);
-		pc = productcategoryService.save(pc);
+		productcategoryService.save(pc);
 
 		psc = new Productsubcategory();
 		psc.setModifieddate(modifieddate);
@@ -116,7 +120,7 @@ class ProductIntegrationTest {
 		psc.setProducts(null);
 		psc.setRowguid(666);
 		psc.setProductcategory(pc);
-		psc = productsubcategoryService.save(psc);
+		productsubcategoryService.save(psc);
 
 		pm = new Productmodel();
 		pm.setCatalogdescription("Productos nuevos");
@@ -124,17 +128,17 @@ class ProductIntegrationTest {
 		pm.setModifieddate(modifieddate);
 		pm.setName("Todo terreno");
 		pm.setRowguid(69);
-		pm = productService.saveProductmodel(pm);
+		productService.saveProductmodel(pm);
 
 		um1 = new Unitmeasure(); // um1.setUnitmeasurecode("cm");
 		um1.setModifieddate(modifieddate);
 		um1.setName("centimetros");
-		um1 = productService.saveUnitmeasure(um1); 
+		productService.saveUnitmeasure(um1); 
 
 		um2 = new Unitmeasure(); // um2.setUnitmeasurecode("in");
 		um2.setModifieddate(modifieddate);
 		um2.setName("Pulgadas");
-		um2 = productService.saveUnitmeasure(um2);
+		productService.saveUnitmeasure(um2);
 
 	}
 
@@ -161,13 +165,13 @@ class ProductIntegrationTest {
 			p.setProductmodel(pm);
 			p.setUnitmeasure1(um1);
 			p.setUnitmeasure2(um2);
-			//p.setProductid(1);
+			p.setProductid(1);
 			p.setClass_("Producto");
-			product = productService.save(p);
+			
+			productService.save(p);
 
-			Product found = productRepository.findById(product.getProductid()).get();
+			Product found = productDAO.findById(1);
 			assertNotNull(found);
-			assertEquals(product.getProductid(), found.getProductid());
 			Assertions.assertThat(found).isInstanceOfAny(Productsubcategory.class);
 			Assertions.assertThat(found.getProductid()).isGreaterThan(0);
 			Assertions.assertThat(found).hasNoNullFieldsOrProperties();
@@ -201,7 +205,7 @@ class ProductIntegrationTest {
 			try {
 				product = productService.save(p);
 
-				Product found = productRepository.findById(product.getProductid()).get();
+				Product found = productDAO.findById(product.getProductid());
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
 			} catch (RuntimeException rte) {
@@ -233,7 +237,7 @@ class ProductIntegrationTest {
 			try {
 				product = productService.save(p);
 
-				Product found = productRepository.findById(product.getProductid()).get();
+				Product found = productDAO.findById(product.getProductid());
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
 			} catch (RuntimeException rte) {
@@ -265,7 +269,7 @@ class ProductIntegrationTest {
 			try {
 				product = productService.save(p);
 
-				Product found = productRepository.findById(product.getProductid()).get();
+				Product found = productDAO.findById(product.getProductid());
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
 			} catch (RuntimeException rte) {
@@ -297,7 +301,7 @@ class ProductIntegrationTest {
 			try {
 				product = productService.save(p);
 
-				Product found = productRepository.findById(product.getProductid()).get();
+				Product found = productDAO.findById(product.getProductid());
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
 			} catch (RuntimeException rte) {
@@ -330,7 +334,7 @@ class ProductIntegrationTest {
 			try {
 				product = productService.save(p);
 
-				Product found = productRepository.findById(product.getProductid()).get();
+				Product found = productDAO.findById(product.getProductid());
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
 			} catch (RuntimeException rte) {
@@ -362,7 +366,7 @@ class ProductIntegrationTest {
 			try {
 				product = productService.save(p);
 
-				Product found = productRepository.findById(product.getProductid()).get();
+				Product found = productDAO.findById(product.getProductid());
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
 			} catch (RuntimeException rte) {
@@ -394,7 +398,7 @@ class ProductIntegrationTest {
 			try {
 				product = productService.save(p);
 
-				Product found = productRepository.findById(product.getProductid()).get();
+				Product found = productDAO.findById(product.getProductid());
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
 			} catch (RuntimeException rte) {
@@ -478,7 +482,7 @@ class ProductIntegrationTest {
 
 			product = productService.edit(p1);
 
-			Product found = productRepository.findById(product.getProductid()).get();
+			Product found = productDAO.findById(product.getProductid());
 			assertNotNull(found);
 			assertEquals(product.getProductid(), found.getProductid());
 			Assertions.assertThat(found).isInstanceOfAny(Product.class);
@@ -514,7 +518,7 @@ class ProductIntegrationTest {
 			try {
 				product = productService.edit(p1);
 
-				Product found = productRepository.findById(product.getProductid()).get();
+				Product found = productDAO.findById(product.getProductid());
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
 			} catch (RuntimeException rte) {
@@ -549,7 +553,7 @@ class ProductIntegrationTest {
 			try {
 				product = productService.edit(p1);
 
-				Product found = productRepository.findById(product.getProductid()).get();
+				Product found = productDAO.findById(product.getProductid());
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
 			} catch (RuntimeException rte) {
@@ -584,7 +588,7 @@ class ProductIntegrationTest {
 			try {
 				product = productService.edit(p1);
 
-				Product found = productRepository.findById(product.getProductid()).get();
+				Product found = productDAO.findById(product.getProductid());
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
 			} catch (RuntimeException rte) {
@@ -619,7 +623,7 @@ class ProductIntegrationTest {
 			try {
 				product = productService.edit(p1);
 
-				Product found = productRepository.findById(product.getProductid()).get();
+				Product found = productDAO.findById(product.getProductid());
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
 			} catch (RuntimeException rte) {
@@ -655,7 +659,7 @@ class ProductIntegrationTest {
 			try {
 				product = productService.edit(p1);
 
-				Product found = productRepository.findById(product.getProductid()).get();
+				Product found = productDAO.findById(product.getProductid());
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
 			} catch (RuntimeException rte) {
@@ -691,7 +695,7 @@ class ProductIntegrationTest {
 			try {
 				product = productService.edit(p1);
 
-				Product found = productRepository.findById(product.getProductid()).get();
+				Product found = productDAO.findById(product.getProductid());
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
 			} catch (RuntimeException rte) {
@@ -726,7 +730,7 @@ class ProductIntegrationTest {
 			try {
 				product = productService.edit(p1);
 
-				Product found = productRepository.findById(product.getProductid()).get();
+				Product found = productDAO.findById(product.getProductid());
 				Assertions.assertThat(found).hasAllNullFieldsOrProperties();
 				assertNull(found);
 			} catch (RuntimeException rte) {

@@ -24,15 +24,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
+
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.example.BalantaTaller1.dao.ProductcategoryDAOImpl;
 import com.example.BalantaTaller1.main.BalantaTaller1Application;
 import com.example.BalantaTaller1.model.prod.Productcategory;
-import com.example.BalantaTaller1.repository.prod.ProductcategoryRepository;
-import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImpl;
+
 import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImplDAO;
 
 @ContextConfiguration(classes = BalantaTaller1Application.class)

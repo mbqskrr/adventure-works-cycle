@@ -18,7 +18,7 @@ import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.model.prod.Productsubcategory;
 
 @Repository
-//@Transactional
+@Transactional
 @Scope("singleton")
 public class ProductsubcategoryDAOImpl implements ProductsubcategoryDAO {
 
@@ -27,7 +27,7 @@ public class ProductsubcategoryDAOImpl implements ProductsubcategoryDAO {
 	private EntityManager entityManager;
 
 	@Override
-	@Transactional
+	//@Transactional
 	public void save(Productsubcategory psc) {
 		/*
 		 * EntityManager em = entityManagerFactory.createEntityManager();
@@ -42,7 +42,7 @@ public class ProductsubcategoryDAOImpl implements ProductsubcategoryDAO {
 	}
 
 	@Override
-	@Transactional
+	//@Transactional
 	public void update(Productsubcategory psc) {
 		/*
 		 * EntityManager em = entityManager.createEntityManager();
@@ -59,7 +59,7 @@ public class ProductsubcategoryDAOImpl implements ProductsubcategoryDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	@Transactional
+	//@Transactional
 	public List<Productsubcategory> findAll() {
 		// EntityManager em = entityManager.createEntityManager();
 		Query q = entityManager.createQuery("SELECT p FROM Productsubcategory p");
@@ -67,7 +67,7 @@ public class ProductsubcategoryDAOImpl implements ProductsubcategoryDAO {
 	}
 
 	@Override
-	@Transactional
+	//@Transactional
 	public Productsubcategory findById(Integer productsubcategoryid) {
 		// EntityManager em = entityManager.createEntityManager();
 		return entityManager.find(Productsubcategory.class, productsubcategoryid);
@@ -75,7 +75,7 @@ public class ProductsubcategoryDAOImpl implements ProductsubcategoryDAO {
 
 	// @SuppressWarnings("unchecked")
 	@Override
-	@Transactional
+	//@Transactional
 	public List<Productsubcategory> findByProductcategoryId(Integer productcategoryid) {
 		// EntityManager em = entityManager.createEntityManager();
 		// Query q = entityManager.createQuery("SELECT p FROM Productsubcategory p WHERE
@@ -89,7 +89,7 @@ public class ProductsubcategoryDAOImpl implements ProductsubcategoryDAO {
 
 	//@SuppressWarnings("unchecked")
 	@Override
-	@Transactional
+	//@Transactional
 	public List<Productsubcategory> findByProductcategoryName(String name) {
 		// EntityManager em = entityManager.createEntityManager();
 		/*
@@ -102,7 +102,7 @@ public class ProductsubcategoryDAOImpl implements ProductsubcategoryDAO {
 	}
 
 	@Override
-	@Transactional
+	//@Transactional
 	public List<Object[]> findByProductsubcategoryBetweenDatesOrderedByProductName(LocalDate date1,
 			LocalDate date2, Productcategory pc) {
 		String jpql = "SELECT psc, p "

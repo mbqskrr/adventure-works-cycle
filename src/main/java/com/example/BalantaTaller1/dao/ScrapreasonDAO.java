@@ -8,5 +8,6 @@ public interface ScrapreasonDAO {
 	
 	public void save(Scrapreason sr);
 	public List<Scrapreason> findAll();
+	public Scrapreason findById(Integer scrapreasonid);
 
 }

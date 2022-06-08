@@ -10,8 +10,6 @@ import com.example.BalantaTaller1.dao.ProductcategoryDAOImpl;
 import com.example.BalantaTaller1.dao.ProductsubcategoryDAOImpl;
 import com.example.BalantaTaller1.model.prod.Productcategory;
 import com.example.BalantaTaller1.model.prod.Productsubcategory;
-import com.example.BalantaTaller1.repository.prod.ProductcategoryRepository;
-import com.example.BalantaTaller1.repository.prod.ProductsubcategoryRepository;
 
 @Service
 @Transactional
@@ -29,19 +27,23 @@ public class ProductsubcategoryServiceImplDAO implements ProductsubcategoryServi
 
 	@Override
 	public Productsubcategory save(Productsubcategory psc) {
-		constraints(psc);
-		productsubcategoryDAO.save(psc);
+		Productcategory optional = this.productcategoryDAO.findById(psc.getProductcategory().getProductcategoryid());
+		if (!optional.equals(null)) {
+			constraints(psc);
+			psc.setProductcategory(optional);
+			productsubcategoryDAO.save(psc);
+		}
 		return psc;
 	}
 
 	@Override
 	public Productsubcategory edit(Productsubcategory psc) {
 		
-		Productcategory pcid = productcategoryDAO.findById(psc.getProductcategory().getProductcategoryid());
 		Productsubcategory pscid = productsubcategoryDAO.findById(psc.getProductsubcategoryid());
 
-		if (!pscid.equals(null) && !pcid.equals(null)) {
+		if (!pscid.equals(null)) {
 			constraints(psc);
+	
 			productsubcategoryDAO.update(psc);
 		}
 

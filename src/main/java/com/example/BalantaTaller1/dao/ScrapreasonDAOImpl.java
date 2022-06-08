@@ -36,4 +36,12 @@ public class ScrapreasonDAOImpl implements ScrapreasonDAO{
 		return q.getResultList();
 	}
 
+	@Transactional
+	@Override
+    public Scrapreason findById(Integer scrapreasonid) {
+        return entityManager.find(Scrapreason.class, scrapreasonid);
+    }
+
+	
+
 }

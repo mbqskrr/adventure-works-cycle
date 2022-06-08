@@ -8,4 +8,5 @@ public interface UnitmeasureDAO {
 	
 	public void save(Unitmeasure um);
 	public List<Unitmeasure> findAll();
+	Unitmeasure findById(Integer unitmeasurecode);
 }

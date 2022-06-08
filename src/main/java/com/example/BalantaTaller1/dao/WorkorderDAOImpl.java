@@ -56,6 +56,13 @@ public class WorkorderDAOImpl implements WorkorderDAO{
 		return entityManager.createQuery(jpql, Workorder.class).getResultList();
 	}
 
+	@Transactional
+	@Override
+	public List<Workorder> findByProductId(Integer productid){
+		String jpql = "SELECT w FROM Workorder w WHERE w.product.productid = '"+productid+"'";
+		return entityManager.createQuery(jpql, Workorder.class).getResultList();
+	}
+
 	@Override
 	@Transactional
 	public List<Workorder> findByOrderqty(Integer orderqty) {

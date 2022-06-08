@@ -18,4 +18,6 @@ public interface WorkorderDAO {
 	
 	public List<Workorder> findByOrderqty(Integer orderqtyorderqty);
 
+	public List<Workorder> findByProductId(Integer productid);
+
 }

@@ -19,21 +19,24 @@ import com.example.BalantaTaller1.model.prod.Productsubcategory;
 import com.example.BalantaTaller1.model.validation.ProductcategoryValidation;
 import com.example.BalantaTaller1.model.validation.ProductsubcategoryValidation;
 import com.example.BalantaTaller1.service.prod.ProductServiceImpl;
+import com.example.BalantaTaller1.service.prod.ProductServiceImplDAO;
 import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImpl;
+import com.example.BalantaTaller1.service.prod.ProductcategoryServiceImplDAO;
 import com.example.BalantaTaller1.service.prod.ProductsubcategoryServiceImpl;
+import com.example.BalantaTaller1.service.prod.ProductsubcategoryServiceImplDAO;
 
 
 
 @Controller
 public class AdminController {
 	
-	private ProductcategoryServiceImpl productcategoryService;
-	private ProductsubcategoryServiceImpl productsubcategoryService;
-	private ProductServiceImpl productService;
+	private ProductcategoryServiceImplDAO productcategoryService;
+	private ProductsubcategoryServiceImplDAO productsubcategoryService;
+	private ProductServiceImplDAO productService;
 	
 	@Autowired
-	public AdminController(ProductcategoryServiceImpl productcategoryService, ProductsubcategoryServiceImpl productsubcategoryService,
-			ProductServiceImpl productService) {
+	public AdminController(ProductcategoryServiceImplDAO productcategoryService, ProductsubcategoryServiceImplDAO productsubcategoryService,
+			ProductServiceImplDAO productService) {
 		this.productcategoryService = productcategoryService;
 		this.productsubcategoryService = productsubcategoryService;
 		this.productService = productService;

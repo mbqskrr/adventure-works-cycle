@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.BalantaTaller1.model.prod.Productmodel;
 
 @Repository
-//@Transactional
+@Transactional
 @Scope("singleton")
 public class ProductmodelDAOImpl implements ProductModelDAO{
 	
@@ -23,7 +23,7 @@ public class ProductmodelDAOImpl implements ProductModelDAO{
 	private EntityManager entityManager;
 
 	@Override
-	@Transactional
+	//@Transactional
 	public void save(Productmodel pm) {
 		// TODO Auto-generated method stub
 		entityManager.persist(pm);
@@ -31,10 +31,15 @@ public class ProductmodelDAOImpl implements ProductModelDAO{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	@Transactional
+	//@Transactional
 	public List<Productmodel> findAll() {
 		Query q = entityManager.createQuery("SELECT p FROM Productmodel p");
 		return q.getResultList();
+	}
+
+	@Override
+	public Productmodel findById(Integer productmodelid) {
+		return entityManager.find(Productmodel.class, productmodelid);
 	}
 
 }
